@@ -2,38 +2,13 @@
   "generated": "2026-08-05",
   "source": "semantic_scholar+manual (weekly auto-update via GitHub Actions)",
   "metrics": {
-    "publications": 20,
-    "citations": 66,
-    "hIndex": 4,
-    "venues": 12,
-    "citationsByYear": [
-      {
-        "year": 2021,
-        "citations": 1
-      },
-      {
-        "year": 2022,
-        "citations": 2
-      },
-      {
-        "year": 2023,
-        "citations": 9
-      },
-      {
-        "year": 2024,
-        "citations": 18
-      },
-      {
-        "year": 2025,
-        "citations": 10
-      },
-      {
-        "year": 2026,
-        "citations": 22
-      }
-    ],
-    "sourceLabel": "Google Scholar",
-    "yearSourceLabel": "Google Scholar"
+    "publications": 12,
+    "citations": 25,
+    "hIndex": 3,
+    "venues": 5,
+    "citationsByYear": [],
+    "sourceLabel": "Semantic Scholar",
+    "yearSourceLabel": "OpenAlex"
   },
   "publications": [
     {
@@ -49,13 +24,9 @@
         "art",
         "dig"
       ],
-      "citations": 10,
+      "citations": 6,
       "finding": "Exploiting the 1926 US public-domain cutoff: public domain status raises artist-level image availability on online platforms by ≈19%.",
       "links": [
-        {
-          "label": "DOI",
-          "url": "https://doi.org/10.1016/j.infoecopol.2026.101172"
-        },
         {
           "label": "Google Scholar",
           "url": "https://scholar.google.com/scholar?q=Digital+Reuse+and+Online+Availability+of+Visual+Artworks+Sahli"
@@ -65,8 +36,7 @@
           "url": "https://www.wipo.int/publications/en/series/index.jsp?id=138"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:_kc_bZDykSQC"
+      "manual": true
     },
     {
       "id": "legacy-artists",
@@ -79,20 +49,15 @@
       "tags": [
         "art"
       ],
-      "citations": 3,
+      "citations": 1,
       "finding": "Regression-discontinuity and event-study designs around artist death show how death reshapes exhibition activity and auction prices.",
       "links": [
-        {
-          "label": "DOI",
-          "url": "https://doi.org/10.1007/s10824-025-09550-4"
-        },
         {
           "label": "Google Scholar",
           "url": "https://scholar.google.com/scholar?q=Is+there+a+premium+for+legacy+artists+Sahli+Cuntz"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:ZeXyd9-uunAC"
+      "manual": true
     },
     {
       "id": "book-digitalization",
@@ -106,20 +71,15 @@
         "sus",
         "dig"
       ],
-      "citations": 1,
+      "citations": 0,
       "finding": "Combines lifecycle assessments with economic analysis to evaluate the net greenhouse-gas effect of the shift from print to digital books.",
       "links": [
-        {
-          "label": "DOI",
-          "url": "https://doi.org/10.1016/j.clrc.2026.100440"
-        },
         {
           "label": "Google Scholar",
           "url": "https://scholar.google.com/scholar?q=Does+the+digitalization+of+the+book+industry+reduce+its+environmental+impact+Sahli"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:r0BpntZqJG4C"
+      "manual": true
     },
     {
       "id": "million-dollar-baby",
@@ -133,20 +93,15 @@
         "ip",
         "art"
       ],
-      "citations": 13,
+      "citations": 3,
       "finding": "Thirty years of film-financing practice traced through interviews and U.S. Uniform Commercial Code filings: how movies are financed with IP as collateral.",
       "links": [
-        {
-          "label": "DOI",
-          "url": "https://doi.org/10.1080/13662716.2024.2328004"
-        },
         {
           "label": "Google Scholar",
           "url": "https://scholar.google.com/scholar?q=Million+Dollar+Baby+primer+film+finance+Cuntz+Sahli"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:aqlVkmm33-oC"
+      "manual": true
     },
     {
       "id": "intermediary-liability",
@@ -160,20 +115,15 @@
         "ip",
         "art"
       ],
-      "citations": 19,
+      "citations": 11,
       "finding": "The Cariou v. Prince decision triggered a temporary decline in global auctions of Appropriation Art — court rulings ripple through art markets.",
       "links": [
-        {
-          "label": "DOI",
-          "url": "https://doi.org/10.1007/s10824-023-09470-1"
-        },
         {
           "label": "Google Scholar",
           "url": "https://scholar.google.com/scholar?q=Intermediary+Liability+and+Trade+in+Follow-on+Innovation+Cuntz+Sahli"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:UeHWp8X0CEIC"
+      "manual": true
     },
     {
       "id": "ipres-sustainability",
@@ -187,7 +137,7 @@
         "sus",
         "dig"
       ],
-      "citations": 2,
+      "citations": 0,
       "finding": "Conference paper from the ReVerDi project examining evidence-based sustainability practices of collecting institutions.",
       "links": [
         {
@@ -195,8 +145,7 @@
           "url": "https://doi.org/10.5281/zenodo.16843717"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:-f6ydRqryjwC"
+      "manual": true
     },
     {
       "id": "elvis-ghost",
@@ -218,8 +167,7 @@
           "url": "https://scholar.google.com/scholar?q=Elvis+Ghost+or+Digital+Replica+Publicity+Rights+Cuntz+Sahli"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:IWHjjKOFINEC"
+      "manual": true
     },
     {
       "id": "digitization-diffusion",
@@ -268,8 +216,7 @@
       "citations": 0,
       "finding": "21,000+ exhibition records linked to 33,000 auction transactions to examine how museum visibility — and gender representation — translates into market outcomes.",
       "links": [],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:4JMBOYKVnBMC"
+      "manual": true
     },
     {
       "id": "covid-artists",
@@ -282,20 +229,15 @@
       "tags": [
         "art"
       ],
-      "citations": 17,
+      "citations": 4,
       "finding": "Musicians and performing artists were among the most vulnerable groups during the pandemic.",
       "links": [
-        {
-          "label": "DOI",
-          "url": "https://doi.org/10.2139/ssrn.4422313"
-        },
         {
           "label": "Google Scholar",
           "url": "https://scholar.google.com/scholar?q=Covid-19+impact+on+artistic+income+Cuntz+Sahli"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:d1gkVwhDpl0C"
+      "manual": true
     },
     {
       "id": "dissertation",
@@ -316,112 +258,7 @@
           "url": "https://scholar.google.com/scholar?q=Empirical+essays+economics+creative+industries+Sahli"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:qxL8FJ1GzNcC"
-    },
-    {
-      "id": "careers-of-female-artists-gender-bias-in",
-      "title": "Careers of Female Artists: Gender Bias in Institutional Visibilty and Secondary Market Outcomes",
-      "authors": "LJ Noll, M Sahli",
-      "venue": "ACEI Working Paper Series, 2026",
-      "year": 2026,
-      "status": "published",
-      "tags": [],
-      "citations": 1,
-      "links": [],
-      "manual": false,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:j3f4tGmQtD8C"
-    },
-    {
-      "id": "elvis-ghost-jordans-airness-and-the-new",
-      "title": "Elvis’ ghost, Jordan’s Airness, and the new economics of publicity rights",
-      "authors": "B Lutes, A Cuntz, M Sahli",
-      "venue": "https://cepr.org/voxeu/columns/elvis-ghost-jordans-airness-and-new-economics …, 2025",
-      "year": 2025,
-      "status": "published",
-      "tags": [],
-      "citations": 0,
-      "links": [],
-      "manual": false,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:e5wmG9Sq2KIC"
-    },
-    {
-      "id": "voxeu-column-how-the-us-film-industry-mi",
-      "title": "VoxEU column: How the US film industry mitigates financial risk",
-      "authors": "A Cuntz, A Muscarnera, PC Oguguo, M Sahli",
-      "venue": "https://cepr.org/voxeu/columns/how-us-film-industry-mitigates-financial-risk, 2023",
-      "year": 2023,
-      "status": "published",
-      "tags": [],
-      "citations": 0,
-      "links": [],
-      "manual": false,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:8k81kl-MbHgC"
-    },
-    {
-      "id": "risky-trade-appropriation-art-copyright",
-      "title": "Risky Trade? Appropriation Art, Copyright and Secondary Market Effects",
-      "authors": "A Cuntz, M Sahli",
-      "venue": "https://culturaleconomics.org/risky-trade-appropriation-art-copyright-and …, 2023",
-      "year": 2023,
-      "status": "published",
-      "tags": [],
-      "citations": 0,
-      "links": [],
-      "manual": false,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:hqOjcs7Dif8C"
-    },
-    {
-      "id": "pommerehne-prize-presidents-prize-and-yo",
-      "title": "Pommerehne Prize, President’s Prize and Young Researchers Workshop Best Paper Award",
-      "authors": "F Etro, D Noonan",
-      "venue": "Journal of Cultural Economics 45 (3), 513-514, 2021",
-      "year": 2021,
-      "status": "published",
-      "tags": [],
-      "citations": 0,
-      "links": [],
-      "manual": false,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:2osOgNQ5qMEC"
-    },
-    {
-      "id": "voxeu-column-appropriation-artists-follo",
-      "title": "VoxEU column: Appropriation artists: Follow-on innovation versus intermediary liability and trade",
-      "authors": "A Cuntz, M Sahli",
-      "venue": "https://cepr.org/voxeu/columns/appropriation-artists-follow-innovation …, 2021",
-      "year": 2021,
-      "status": "published",
-      "tags": [],
-      "citations": 0,
-      "links": [],
-      "manual": false,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:Y0pCki6q_DkC"
-    },
-    {
-      "id": "cleaner-and-responsible-consumption",
-      "title": "Cleaner and Responsible Consumption",
-      "authors": "S Halli, C Kaya",
-      "venue": "—",
-      "year": null,
-      "status": "published",
-      "tags": [],
-      "citations": 0,
-      "links": [],
-      "manual": false,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:bEWYMUwI8FkC"
-    },
-    {
-      "id": "in-this-section",
-      "title": "In this section",
-      "authors": "A Cuntz, A Muscarnera, PC Oguguo, M Sahli",
-      "venue": "—",
-      "year": null,
-      "status": "published",
-      "tags": [],
-      "citations": 0,
-      "links": [],
-      "manual": false,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:iH-uZ7U-co4C"
+      "manual": true
     }
   ]
 }
