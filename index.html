@@ -90,6 +90,23 @@ html.dark .stand{background:#B9AB8B}
 html.dark .mousey{background:#CBBE9F}
 .mousey::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:4px;height:16px;background:#211E1B}
 .mousey::after{content:"";position:absolute;top:-34px;left:14px;width:34px;height:34px;border:3px solid #211E1B;border-radius:50%;border-bottom-color:transparent;border-left-color:transparent;transform:rotate(-40deg)}
+.mousey{cursor:pointer;transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.mousey:hover{transform:rotate(9deg) translateY(-4px)}
+.mousey.on{transform:rotate(9deg) translateY(2px);box-shadow:2px 3px 0 rgba(33,30,27,.14)}
+.mousey.wig{animation:mwig .9s ease}
+@keyframes mwig{0%,100%{transform:rotate(9deg)}30%{transform:rotate(2deg) translateY(-5px)}60%{transform:rotate(14deg) translateY(-2px)}}
+#paint{position:absolute;inset:0;z-index:2;display:none;touch-action:none;cursor:crosshair}
+.screen.paint #paint{display:block}
+.screen.paint .crt,.screen.paint .crtline{visibility:hidden}
+.ptools{position:absolute;bottom:9px;right:12px;z-index:5;display:none;gap:7px}
+.screen.paint .ptools{display:flex}
+.ptools button{font-family:'VT323',monospace;font-size:.9rem;background:transparent;color:var(--crt-tx);
+  border:1.5px solid var(--crt-tx);border-radius:5px;padding:0 10px;cursor:pointer;opacity:.7;
+  text-shadow:0 0 6px rgba(120,255,130,.5);transition:opacity .2s,background .2s}
+.ptools button:hover{opacity:1;background:rgba(141,255,146,.14)}
+.phint{position:absolute;top:12px;left:16px;z-index:5;font-family:'VT323',monospace;color:var(--crt-tx);
+  font-size:1.05rem;opacity:.55;display:none;pointer-events:none;text-shadow:0 0 6px rgba(120,255,130,.5)}
+.screen.paint .phint{display:block}
 @media(max-width:700px){.mousey{display:none}.postit{right:-4px}}
 .heroctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;justify-content:center}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:999px;font-weight:600;font-size:.9rem;text-decoration:none;transition:transform .2s,box-shadow .2s;border:1.5px solid var(--ink);cursor:pointer;font-family:inherit;background:transparent;color:var(--ink)}
@@ -327,6 +344,9 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
     <div class="monitor">
       <div class="screen" id="screenbox">
         <div class="crt" id="crt"><span class="cursor"></span></div>
+        <canvas id="paint"></canvas>
+        <div class="phint" id="phint">draw with the mouse</div>
+        <div class="ptools"><button id="pclear">clear</button><button id="pexit">exit</button></div>
         <form class="crtline" id="crtform" autocomplete="off"><span class="ps">$</span><input id="crtinput" maxlength="80" placeholder="type here + enter…" aria-label="Tell the SAHLI·TRON what you are looking for"></form>
       </div>
       <div class="chin">
@@ -341,7 +361,7 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
       <div class="krow"><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span></div>
       <div class="krow"><span class="key"></span><span class="key"></span><span class="key space"></span><span class="key"></span><span class="key"></span></div>
     </div>
-    <div class="mousey" aria-hidden="true"></div>
+    <div class="mousey" id="mousey" role="button" tabindex="0" title="Click me"></div>
   </div>
   <div class="heroctas">
     <a class="btn primary" href="#research">Explore my research</a>
@@ -571,7 +591,56 @@ async function answer(q){
   if(route && route.a){ await sleep(650); route.a(); }
 }
 crtform.onsubmit = e => { e.preventDefault(); const q = crtinput.value.trim().toLowerCase(); if(q){ answer(q); crtinput.value=''; } };
-$('#screenbox').onclick = () => crtinput.focus();
+$('#screenbox').onclick = () => { if(!painting) crtinput.focus(); };
+
+/* ---- easter egg: the mouse turns the CRT into a tiny paint program ---- */
+const cv = $('#paint'), mousey = $('#mousey'), screenBox = $('#screenbox');
+let painting = false, drawing = false, ctx = null, dpr = 1, last = null;
+
+function sizeCanvas(){
+  const r = cv.getBoundingClientRect();
+  dpr = window.devicePixelRatio || 1;
+  const keep = cv.width ? cv.toDataURL() : null;
+  cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+  ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.lineWidth = 2.6;
+  ctx.strokeStyle = '#8DFF92';
+  ctx.shadowColor = 'rgba(141,255,146,.9)'; ctx.shadowBlur = 7;
+  if(keep){ const im = new Image(); im.onload = ()=>ctx.drawImage(im,0,0,r.width,r.height); im.src = keep; }
+}
+function togglePaint(){
+  painting = !painting;
+  screenBox.classList.toggle('paint', painting);
+  mousey.classList.toggle('on', painting);
+  if(painting){ sizeCanvas(); $('#phint').style.display = ''; }
+}
+mousey.onclick = togglePaint;
+mousey.onkeydown = e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); togglePaint(); } };
+$('#pexit').onclick = e => { e.stopPropagation(); togglePaint(); };
+$('#pclear').onclick = e => { e.stopPropagation(); ctx && ctx.clearRect(0,0,cv.width/dpr,cv.height/dpr); };
+
+const at = e => { const r = cv.getBoundingClientRect(); return {x:e.clientX-r.left, y:e.clientY-r.top}; };
+cv.addEventListener('pointerdown', e=>{
+  drawing = true; last = at(e); cv.setPointerCapture(e.pointerId);
+  $('#phint').style.display = 'none';
+  ctx.beginPath(); ctx.arc(last.x, last.y, 1.3, 0, 6.284); ctx.fillStyle='#8DFF92'; ctx.fill();
+});
+cv.addEventListener('pointermove', e=>{
+  if(!drawing) return;
+  const p = at(e);
+  ctx.beginPath(); ctx.moveTo(last.x,last.y); ctx.lineTo(p.x,p.y); ctx.stroke();
+  last = p;
+});
+addEventListener('pointerup', ()=>{ drawing = false; last = null; });
+addEventListener('resize', ()=>{ if(painting) sizeCanvas(); });
+
+/* one quiet wiggle when the landing first appears, so the mouse looks clickable */
+new IntersectionObserver((es,obs)=>es.forEach(e=>{
+  if(!e.isIntersecting) return; obs.unobserve(e.target);
+  setTimeout(()=>{ if(!painting){ mousey.classList.add('wig');
+    setTimeout(()=>mousey.classList.remove('wig'), 1000); } }, 4200);
+}),{threshold:.4}).observe(mousey);
 
 /* ---- photo: fake loading counter + tilt ---- */
 const osload = $('#osload');
