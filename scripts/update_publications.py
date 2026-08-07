@@ -34,6 +34,30 @@ SERPAPI_KEY = os.environ.get("SERPAPI_KEY", "")
 OPENALEX_QUERY = "https://api.openalex.org/authors?search=Matthias%20Sahli&per-page=25"
 # Once known, pin the OpenAlex author id here (e.g. "A5023456789") for robustness:
 OPENALEX_AUTHOR_ID = ""
+
+# GREEDY MIRROR MODE: your Google Scholar profile is the single source of truth.
+# EVERYTHING listed there is taken over 1:1 (papers, columns, whatever you keep
+# on the profile). If you delete an entry on Scholar, the next run removes it
+# from the website too (only auto-added entries — your manual working papers
+# in data/publications.json are never touched).
+#
+# Map Scholar duplicates onto existing manual entries: {auto_added_id: existing_id}.
+# Citations + Scholar link are merged into the existing entry, the duplicate is removed.
+DUPLICATE_OF = {
+    # ACEI working-paper version of the gender paper = the Noll co-authored working paper
+    "careers-of-female-artists-gender-bias-in": "gender-auctions",
+}
+
+# Status buckets used on the website:
+#   published = peer-reviewed | review = submitted / under review / R&R
+#   progress  = in preparation | other = book chapters, dissertation, columns, notes
+# New Scholar entries are SORTED into a bucket (never dropped). "review" and
+# "progress" only ever come from you — Scholar doesn't know submission stages.
+def classify(venue, year, title):
+    v, t = (venue or ""), (title or "").lower()
+    if v.startswith("http") or not year or any(w in t for w in ("prize", "award", "voxeu column", "in this section")):
+        return "other"
+    return "published"
 MIN_YEAR = 2019                     # drops false matches (e.g. a 2003 antenna paper by another M. Sahli)
 ROOT = Path(__file__).resolve().parent.parent
 DATA_FILE = ROOT / "data" / "publications.json"
@@ -127,6 +151,7 @@ def main():
             sp = get("https://serpapi.com/search.json?engine=google_scholar_author"
                      f"&author_id={SCHOLAR_AUTHOR_ID}&api_key={SERPAPI_KEY}&num=100&hl=en")
             arts = sp.get("articles") or []
+            seen = set()
             for a in arts:
                 title = a.get("title","")
                 cby = (a.get("cited_by") or {})
@@ -135,29 +160,35 @@ def main():
                         f"&hl=en&user={SCHOLAR_AUTHOR_ID}&citation_for_view={cid}") if cid else None
                 hit = match(title, pubs)
                 if hit:
+                    seen.add(hit["id"])
                     if isinstance(cby.get("value"), int):
                         hit["citations"] = cby["value"]           # Scholar count wins (merged versions)
                     if surl:
                         hit["scholarUrl"] = surl
-                    if hit.get("status") == "working" and a.get("publication"):
-                        log.append(f"HINT: '{hit['id']}' is a working paper here but Scholar lists "
-                                   f"“{a['publication']}” — published now? Update status/venue in data/publications.json.")
+                    if hit.get("status") in ("review", "progress") and a.get("publication"):
+                        log.append(f"HINT: '{hit['id']}' is '{hit.get('note') or hit['status']}' here, but Scholar "
+                                   f"now lists “{a['publication']}” — accepted? Then set status to 'published', "
+                                   "update the venue and drop the note in data/publications.json.")
                 else:
-                    # your Scholar profile is curated by you → new entries there are auto-added as published
+                    # your Scholar profile is curated by you → every new entry there is taken over
                     new_id = re.sub(r"[^a-z0-9]+", "-", norm(title))[:40].strip("-") or "untitled"
-                    year = a.get("year")
+                    raw_year = a.get("year")
+                    year = int(raw_year) if str(raw_year).isdigit() else None
+                    venue = a.get("publication") or "—"
+                    status = classify(venue, year, title)
                     pubs.append({
                         "id": new_id, "title": title,
                         "authors": a.get("authors") or "M. Sahli et al.",
-                        "venue": a.get("publication") or "—",
-                        "year": int(year) if str(year).isdigit() else None,
-                        "status": "published", "tags": [],
+                        "venue": venue, "year": year,
+                        "status": status, "tags": [],
                         "citations": cby.get("value") or 0,
                         "links": [], "manual": False,
                         **({"scholarUrl": surl} if surl else {}),
                     })
-                    log.append(f"NEW paper auto-added from your Scholar profile: {title} "
-                               "(add tags/finding in data/publications.json when you like)")
+                    seen.add(new_id)
+                    log.append(f"NEW entry auto-added from Scholar as '{status}': {title}"
+                               + ("  → add tags/finding in data/publications.json if you like"
+                                  if status == "published" else ""))
             ct = sp.get("cited_by", {}).get("table", [])
             for row in ct:
                 if "citations" in row: data["metrics"]["citations"] = row["citations"].get("all", data["metrics"]["citations"])
@@ -167,11 +198,26 @@ def main():
                 data["metrics"]["citationsByYear"] = [{"year": g["year"], "citations": g.get("citations", 0)} for g in graph]
                 data["metrics"]["yearSourceLabel"] = "Google Scholar"
             data["metrics"]["sourceLabel"] = "Google Scholar"
+            # mirror: auto-added entries that you deleted on Scholar disappear here too
+            if arts:
+                for p in [p for p in pubs if p.get("manual") is False and p["id"] not in seen]:
+                    pubs.remove(p)
+                    log.append(f"removed (no longer on your Scholar profile): {p['title']}")
             log.append(f"google scholar via serpapi: ok ({len(arts)} articles)")
         except Exception as e:
             log.append(f"serpapi FAILED (kept API fallback data): {e}")
     else:
         log.append("no SERPAPI_KEY set — using Semantic Scholar/OpenAlex numbers")
+
+    # ---------------- cleanup: merge known duplicates (auto-added ↔ manual entries)
+    by_id = {p["id"]: p for p in pubs}
+    for dup_id, target_id in DUPLICATE_OF.items():
+        dup, target = by_id.get(dup_id), by_id.get(target_id)
+        if dup and target:
+            target["citations"] = max(target.get("citations") or 0, dup.get("citations") or 0)
+            if dup.get("scholarUrl"): target["scholarUrl"] = dup["scholarUrl"]
+            pubs.remove(dup)
+            log.append(f"merged duplicate '{dup_id}' into '{target_id}'")
 
     # ---------------- recompute derived metrics
     data["metrics"]["publications"] = len(pubs)
