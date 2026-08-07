@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CV — Matthias Sahli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Same design DNA as sahlimatthias.com: Inter, the same accent palette,
+   the same status badges — adapted for A4 print (white page, tighter rhythm). */
+:root{
+  --ink:#1F2023; --ink2:#4A4E55; --ink3:#83888F; --line:#DCDFE4; --rule:#EDEFF2;
+  --red:#C93A2B; --blue:#3B6EA5; --ochre:#C77016; --purple:#7D5BA6; --green:#3E7E44;
+  --bfh:#697D91;
+}
+@page{ size:A4; margin:15mm 15mm 17mm 15mm; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:#fff;
+     font-size:9.1pt;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+a{color:inherit;text-decoration:none}
+
+/* ---------- header ---------- */
+header{display:flex;align-items:center;gap:7mm;
+       padding-bottom:12px;border-bottom:2.4pt solid var(--ink)}
+.hphoto{width:23mm;height:23mm;border-radius:50%;flex-shrink:0;display:block}
+.htxt{flex:1;min-width:0}
+.hname{font-size:21pt;font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.hrole{font-size:10pt;font-weight:600;color:var(--ink2);margin-top:3px}
+.haff{font-size:9pt;color:var(--ink2)}
+.hcontact{margin-top:6px;font-size:8.4pt;color:var(--ink2)}
+.hlinks{margin-top:2px;font-size:8.4pt;color:var(--ink2)}
+.hlinks span{color:var(--ink3);margin:0 6px}
+.hlinks a{border-bottom:.5pt solid #B7BBC2;font-weight:500}
+.hlinks a{white-space:nowrap}
+.hcontact span{color:var(--ink3);margin:0 5px}
+.hcontact a{border-bottom:.5pt solid #B7BBC2;font-weight:500}
+.hside{flex-shrink:0;width:63mm;text-align:right;font-size:8.2pt;color:var(--ink2);line-height:1.55}
+.hside .l{margin-top:2px}
+.hside span{color:var(--ink3);margin:0 5px}
+.hside a{border-bottom:.5pt solid #B7BBC2;font-weight:500;white-space:nowrap}
+.hside span{margin:0 4px}
+
+/* ---------- sections ---------- */
+section{margin-top:12px;break-inside:auto}
+h2{font-size:8pt;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+   color:var(--ink);display:flex;align-items:center;gap:7px;margin-bottom:7px;
+   padding-bottom:4px;border-bottom:.8pt solid var(--line);break-after:avoid}
+h2::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--dot,var(--red));flex-shrink:0}
+.lead{font-size:9.1pt;color:var(--ink2);text-align:justify;hyphens:auto}
+
+/* two-column rows: years | content */
+.rows{display:grid;grid-template-columns:26mm 1fr;column-gap:7mm}
+.rows > div{padding:2px 0;break-inside:avoid}
+.yr{font-size:8.2pt;font-weight:600;color:var(--ink3);white-space:nowrap;padding-top:.5px}
+.it b{font-weight:700}
+.it span{color:var(--ink2)}
+.it em{font-style:normal;color:var(--ink2)}
+
+/* ---------- publications ---------- */
+.pgroup{font-size:7.6pt;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+        color:var(--ink3);margin:9px 0 4px;break-after:avoid}
+.pgroup:first-child{margin-top:2px}
+.pub{display:grid;grid-template-columns:2.6mm 1fr;column-gap:0;margin-bottom:5.5px;break-inside:avoid}
+.pnum{font-size:9.5pt;color:var(--ink3);line-height:1.28}
+.ptitle{font-weight:700;line-height:1.38}
+.pmeta{font-size:8.5pt;color:var(--ink2);margin-top:.5px}
+.pmeta i{font-style:italic}
+.badge{display:inline-block;font-size:6.6pt;font-weight:700;letter-spacing:.05em;
+       text-transform:uppercase;border:.8pt solid;border-radius:20px;padding:.4px 5px;
+       margin-left:5px;vertical-align:1px;white-space:nowrap}
+.cit{font-size:7.6pt;font-weight:600;color:var(--ink3);white-space:nowrap}
+.metrics{page-break-inside:avoid}
+
+/* metric strip */
+.metrics{display:flex;gap:0;border:.8pt solid var(--line);border-radius:5px;overflow:hidden;margin-bottom:9px}
+.metric{flex:1;padding:6px 10px;border-right:.8pt solid var(--line)}
+.metric:last-child{border-right:none}
+.metric b{display:block;font-size:13pt;font-weight:800;line-height:1.1;letter-spacing:-.02em}
+.metric span{font-size:7.4pt;color:var(--ink3);font-weight:500}
+
+/* talks & compact lists */
+.talks{display:grid;grid-template-columns:16mm 1fr;column-gap:5mm;font-size:8.7pt}
+.talks > div{padding:1.3px 0;break-inside:avoid}
+.talks .tw{color:var(--ink3);font-weight:600;font-size:8.2pt}
+.talks .tt span{color:var(--ink2)}
+ul.plain{list-style:none;font-size:8.8pt;color:var(--ink2)}
+ul.plain li{padding:1.6px 0;break-inside:avoid}
+.kv{display:grid;grid-template-columns:26mm 1fr;column-gap:7mm;font-size:8.8pt}
+.kv > div{padding:1.8px 0}
+.kv .k{font-weight:600;color:var(--ink3);font-size:8.2pt}
+.kv .v{color:var(--ink2)}
+.refgrid{display:grid;grid-template-columns:1fr 1fr;column-gap:8mm;font-size:8.8pt}
+.refgrid > div{padding:1.8px 0}
+.refgrid b{font-weight:600}
+.refgrid span{color:var(--ink2)}
+.sched{font-size:6.6pt;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+       color:var(--blue);border:.8pt solid var(--blue);border-radius:20px;padding:.3px 5px;margin-left:3px;white-space:nowrap}
+.eval{color:var(--green) !important;font-weight:600;font-size:8.2pt}
+.refnote{font-size:8.2pt;color:var(--ink3);margin-top:5px;font-style:italic}
+</style>
+</head>
+<body>
+
+<header>
+  <img class="hphoto" src="__PHOTO__" alt="">
+  <div class="htxt">
+    <div class="hname">__NAME__</div>
+    <div class="hrole">__ROLE__</div>
+    <div class="haff">__AFF__</div>
+    <div class="hcontact">__ADDRESS__</div>
+    <div class="hlinks">__LINKS__</div>
+  </div>
+</header>
+
+__BODY__
+
+</body>
+</html>

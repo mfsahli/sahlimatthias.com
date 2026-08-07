@@ -1,0 +1,349 @@
+{
+  "_comment": "Everything in the CV that does NOT come from Google Scholar. Publications, citation counts and the h-index are pulled from data/publications.json automatically. Edit this file to update the CV; then run scripts/build_cv.py.",
+  "person": {
+    "name": "Matthias Florian Sahli",
+    "role": "Postdoctoral Researcher",
+    "affiliation": "Bern University of Applied Sciences, Business School",
+    "address": "Brückenstrasse 73, 3005 Bern, Switzerland",
+    "email": "matthias.sahli@bfh.ch",
+    "links": [
+      {
+        "label": "sahlimatthias.com",
+        "url": "https://sahlimatthias.com"
+      },
+      {
+        "label": "Google Scholar",
+        "url": "https://scholar.google.com/citations?user=ui-NYv8AAAAJ"
+      },
+      {
+        "label": "ORCID",
+        "url": "https://orcid.org/0000-0002-4631-3657"
+      }
+    ]
+  },
+  "summary": "I am a postdoctoral researcher at the Bern University of Applied Sciences (BFH) Business School, and was previously a researcher at the World Intellectual Property Organization (WIPO) of the United Nations. I received my PhD in Economics from the University of Neuchâtel in 2023. My research focuses on the economics of intellectual property, innovation, digitization, sustainability and the creative industries. The goal of my work is to provide solid empirical evidence that supports current policy discussions. To do this, I invest considerable time and creativity in developing new datasets and conducting rigorous econometric analyses.",
+  "positions": [
+    {
+      "years": "2024 – present",
+      "org": "Bern University of Applied Sciences (BFH)",
+      "place": "Business School, Bern, Switzerland",
+      "role": "Postdoctoral Researcher"
+    },
+    {
+      "years": "2019 – 2024",
+      "org": "World Intellectual Property Organization (WIPO)",
+      "place": "Department for Economics and Data Analytics, Geneva, Switzerland",
+      "role": "PhD Research Fellow (2019–2023), then Postdoctoral Research Fellow (2023–2024)"
+    }
+  ],
+  "education": [
+    {
+      "years": "2019 – 2023",
+      "org": "University of Neuchâtel",
+      "place": "Neuchâtel, Switzerland",
+      "role": "PhD in Economics"
+    },
+    {
+      "years": "2016 – 2019",
+      "org": "University of Bern",
+      "place": "Bern, Switzerland",
+      "role": "MSc in Economics"
+    },
+    {
+      "years": "2012 – 2016",
+      "org": "University of Bern",
+      "place": "Bern, Switzerland",
+      "role": "BSc in Economics, minor in Political Sciences"
+    },
+    {
+      "years": "2006 – 2011",
+      "org": "Gymnasium Hofwil & Schule für Gestaltung Bern",
+      "place": "Münchenbuchsee, Switzerland",
+      "role": "Matura; talent promotion class in fine arts"
+    }
+  ],
+  "visiting": [
+    {
+      "years": "2020",
+      "org": "Copenhagen Business School (CBS)",
+      "place": "Copenhagen, Denmark",
+      "role": "Visiting student"
+    },
+    {
+      "years": "2020",
+      "org": "University of Southern Denmark (SDU)",
+      "place": "Odense, Denmark",
+      "role": "Visiting student"
+    },
+    {
+      "years": "2017",
+      "org": "École Polytechnique Fédérale de Lausanne (EPFL)",
+      "place": "Lausanne, Switzerland",
+      "role": "Visiting student"
+    }
+  ],
+  "otherPositions": [
+    {
+      "years": "2017 – 2019",
+      "org": "Swiss Federal Institute of Intellectual Property (IPI)",
+      "place": "Bern, Switzerland",
+      "role": "Internship (2017–2018), then Junior Economist, Office of the Chief Economist (2018–2019)"
+    },
+    {
+      "years": "2013 – 2019",
+      "org": "Velokurier Bern",
+      "place": "Bern, Switzerland",
+      "role": "Bike messenger; member of the cooperative (passive member since)"
+    },
+    {
+      "years": "2011 – 2012",
+      "org": "Stiftung RGZ",
+      "place": "Zurich, Switzerland",
+      "role": "Community service, school for people with multiple disabilities"
+    }
+  ],
+  "teaching": [
+    {
+      "years": "2026 –",
+      "org": "HES-SO — Haute École de Gestion Genève",
+      "role": "Economics of Innovation (guest lectures)"
+    },
+    {
+      "years": "2025 –",
+      "org": "Bern University of Applied Sciences (BFH), Business School",
+      "role": "Entrepreneurial Law (Master) · Digitalrecht (Bachelor) · Data Literacy (continuing education); lecturer and module coordination",
+      "eval": "Student evaluation 5.25 / 6 (6 = best possible score)"
+    },
+    {
+      "years": "2025",
+      "org": "EPFL, College of Management",
+      "role": "MGT-404 Management of Intellectual Property (Master)",
+      "eval": "Student evaluation 1.24 / 4 (1 = best possible score)"
+    },
+    {
+      "years": "ongoing",
+      "org": "BFH",
+      "role": "Supervision of bachelor's and master's theses, practice projects and applied R&D projects"
+    }
+  ],
+  "talks": [
+    {
+      "date": "11/2026",
+      "what": "DINAcon — Conference for Digital Sustainability, Kongresszentrum Bern",
+      "where": "Bern, Switzerland",
+      "scheduled": true
+    },
+    {
+      "date": "11/2026",
+      "what": "Swiss National Library",
+      "where": "Bern, Switzerland",
+      "scheduled": true
+    },
+    {
+      "date": "10/2026",
+      "what": "DUN — Dachverband der Urheber- und Nachbarrechtsnutzer",
+      "where": "Switzerland",
+      "scheduled": true
+    },
+    {
+      "date": "06/2026",
+      "what": "European Academy of Management Annual Conference (EURAM 2026)",
+      "where": "Kristiansand, Norway",
+      "scheduled": true
+    },
+    {
+      "date": "06/2025",
+      "what": "International Conference on Cultural Economics (ACEI)",
+      "where": "Rotterdam, Netherlands",
+      "note": "3 papers"
+    },
+    {
+      "date": "06/2025",
+      "what": "IP-Network BFH — IP and Economics",
+      "where": "Bern, Switzerland"
+    },
+    {
+      "date": "04/2025",
+      "what": "BFH sounding board meeting",
+      "where": "Bern, Switzerland"
+    },
+    {
+      "date": "06/2024",
+      "what": "DRUID24",
+      "where": "Nice, France"
+    },
+    {
+      "date": "03/2024",
+      "what": "EPFL STIP Research Retreat",
+      "where": "Crans-Montana, Switzerland"
+    },
+    {
+      "date": "02/2024",
+      "what": "Cultural Economics Online Seminars — symposium on causal inference in cultural economics",
+      "where": "online"
+    },
+    {
+      "date": "10/2023",
+      "what": "Unlocking value from digital heritage collections — invited panellist (Wikimedia Italy)",
+      "where": "Turin, Italy"
+    },
+    {
+      "date": "07/2023",
+      "what": "SERCI Annual Congress",
+      "where": "Bournemouth, UK"
+    },
+    {
+      "date": "03/2023",
+      "what": "Digital Economy Workshop, University of Lausanne",
+      "where": "Lausanne, Switzerland"
+    },
+    {
+      "date": "11/2022",
+      "what": "WIPO internal research seminar",
+      "where": "Geneva, Switzerland"
+    },
+    {
+      "date": "09/2022",
+      "what": "SERCI Annual Congress, University of Colorado Law School",
+      "where": "Boulder, USA"
+    },
+    {
+      "date": "09/2022",
+      "what": "European Policy for Intellectual Property Conference (EPIP), University of Cambridge",
+      "where": "Cambridge, UK"
+    },
+    {
+      "date": "07/2022",
+      "what": "Urban Creativity Conference, University of Lisbon",
+      "where": "Lisbon, Portugal"
+    },
+    {
+      "date": "06/2022",
+      "what": "Munich Summer Institute (MSI)",
+      "where": "Munich, Germany"
+    },
+    {
+      "date": "04/2022",
+      "what": "Cultural Economics Online Seminar",
+      "where": "online"
+    },
+    {
+      "date": "09/2021",
+      "what": "EPIP PhD Workshop",
+      "where": "Madrid, Spain"
+    },
+    {
+      "date": "07/2021",
+      "what": "ACEI Young Researchers Workshop, 21st Conference on Cultural Economics",
+      "where": "Lille, France"
+    },
+    {
+      "date": "06/2021",
+      "what": "IRENE PhD Meeting, University of Neuchâtel",
+      "where": "Neuchâtel, Switzerland"
+    },
+    {
+      "date": "03/2021",
+      "what": "IP & Innovation PhD Virtual Seminar, University of Lausanne",
+      "where": "online"
+    },
+    {
+      "date": "12/2020",
+      "what": "Research Workshop, Copenhagen Business School",
+      "where": "Copenhagen, Denmark"
+    },
+    {
+      "date": "11/2020",
+      "what": "PhD Seminar Series, University of Southern Denmark",
+      "where": "Odense, Denmark"
+    },
+    {
+      "date": "09/2020",
+      "what": "PhD Seminar Series, ETH Zurich (Law and Economics, Prof. S. Bechtold)",
+      "where": "Zurich, Switzerland"
+    },
+    {
+      "date": "06/2020",
+      "what": "First Econ Online Seminar, WIPO",
+      "where": "Geneva, Switzerland"
+    },
+    {
+      "date": "10/2018",
+      "what": "Reinventing the world — the power of Industry 4.0",
+      "where": "Belgrade, Serbia"
+    }
+  ],
+  "organized": [
+    {
+      "date": "2025 – 2026",
+      "what": "ICT4S 2026 International Conference, Bern University of Applied Sciences",
+      "role": "Organizing Committee"
+    },
+    {
+      "date": "11/2022",
+      "what": "An Industry Practitioners Event on Intellectual Property Rights and U.S. Movie Finance, WIPO Geneva",
+      "role": "Co-organizer"
+    }
+  ],
+  "policy": [
+    {
+      "year": "2018",
+      "what": "Value of IP in the New Economy. WTO TRIPS submission (IP/C/W/648)",
+      "role": "Co-author"
+    },
+    {
+      "year": "2017",
+      "what": "Intellectual Property & Innovation: Inclusive Innovation and MSME Trade. WTO TRIPS submission (IP/C/W/635)",
+      "role": "Co-author"
+    }
+  ],
+  "grants": [
+    {
+      "year": "2026",
+      "what": "Swisscom study — “From Data to Action: Do Digital GHG Management Tools Drive Real-World Emission Reductions?” (CHF 32,409)"
+    },
+    {
+      "year": "2021",
+      "what": "Best Paper Award, Young Researchers Workshop, 21st International Conference on Cultural Economics, Lille (USD 500)"
+    },
+    {
+      "year": "2020",
+      "what": "Travel grant for the study visit at Copenhagen Business School — Commission de Recherche FNS / Fonds des Donations, University of Neuchâtel"
+    }
+  ],
+  "service": {
+    "reviewing": "Journal of Cultural Economics (2) · European Journal of Law and Economics · Humanities and Social Sciences Communications · Socio-Economic Review · Economics of Governance (1)",
+    "memberships": "Society for Economic Research on Copyright Issues (2022–2024) · European Policy for Intellectual Property (2022–2024) · Association for Cultural Economics International (until 2027)"
+  },
+  "doctoralCourses": [
+    "Workshop and lecture series in law and economics — ETH Zurich and the Universities of Lucerne, St. Gallen and Zurich (Prof. E. Ash, Prof. S. Bechtold, Prof. G. Hertig, Prof. S. Lüchinger, Prof. A. Stremitzer), Spring 2021",
+    "Obtaining data from the internet: data crawling for research in business and economics — University of Zurich (Prof. C. Peukert, Prof. J. Claussen), Spring 2021"
+  ],
+  "interests": "Intellectual property · economics of innovation · industrial organization · economic policy · applied econometrics · creative industries · art markets · sustainability · digitization",
+  "skills": {
+    "languages": "Swiss German (native) · German · English · French",
+    "software": "Stata · R · Python (basics) · LaTeX · web crawling"
+  },
+  "references": {
+    "note": "E-mail addresses available on request.",
+    "people": [
+      {
+        "name": "Prof. Dr. Gaétan de Rassenfosse",
+        "org": "EPFL"
+      },
+      {
+        "name": "Prof. Dr. Jan Bieser",
+        "org": "Bern University of Applied Sciences"
+      },
+      {
+        "name": "Dr. Carsten Fink",
+        "org": "Chief Economist, WIPO"
+      },
+      {
+        "name": "Dr. Alexander Cuntz",
+        "org": "Senior Economist, WIPO"
+      }
+    ]
+  },
+  "summaryShort": "Postdoctoral researcher at the Bern University of Applied Sciences (BFH) Business School, previously at the World Intellectual Property Organization (WIPO) of the United Nations; PhD in Economics, University of Neuchâtel (2023). I work on the economics of intellectual property, innovation, digitization and the creative industries, building new datasets and running rigorous econometric analyses to inform policy."
+}
