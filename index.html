@@ -94,6 +94,8 @@ html.dark .mousey{background:#CBBE9F}
 .heroctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;justify-content:center}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:999px;font-weight:600;font-size:.9rem;text-decoration:none;transition:transform .2s,box-shadow .2s;border:1.5px solid var(--ink);cursor:pointer;font-family:inherit;background:transparent;color:var(--ink)}
 .btn.primary{background:var(--ink);color:var(--paper)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+html.dark .btn.blue{color:#16202B}
 .btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
 .scrollhint{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);animation:hintbob 2s infinite}
 @keyframes hintbob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
@@ -197,7 +199,11 @@ a.stat:hover::after{opacity:1}
 .pub .links a:hover{color:var(--red)}
 .pub .hint{position:absolute;right:22px;bottom:14px;font-size:.65rem;color:var(--ink3);transition:.2s}
 .pub.open .hint{opacity:0}
-.status-working h3::after{content:"working paper";font-size:.6rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ochre);border:1px solid var(--ochre);border-radius:999px;padding:2px 8px;margin-left:10px;vertical-align:middle;white-space:nowrap}
+.sbadge{display:inline-block;font-size:.6rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border:1px solid;border-radius:999px;padding:2px 9px;margin-left:10px;vertical-align:middle;white-space:nowrap}
+.grouphead{display:flex;align-items:center;gap:12px;margin:26px 0 2px;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.grouphead:first-child{margin-top:0}
+.grouphead::after{content:"";flex:1;height:1px;background:var(--line)}
+.grouphead .gc{font-weight:500;letter-spacing:.02em;text-transform:none;color:var(--ink3)}
 #noresults{display:none;color:var(--ink3);font-size:.9rem;padding:20px 0;text-align:center}
 
 /* ---------- data & tools / teaching / beyond ---------- */
@@ -213,27 +219,55 @@ a.stat:hover::after{opacity:1}
 .course .inst{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
 .course h3{font-size:1rem;margin:5px 0 4px}
 .course p{font-size:.84rem;color:var(--ink2)}
-.evalbadge{display:inline-block;margin-top:10px;font-size:.72rem;font-weight:600;color:var(--paper);background:var(--ink);border-radius:999px;padding:4px 11px}
 @media(max-width:760px){.teach{grid-template-columns:1fr}}
-.thesisbox{margin-top:44px;border:2.5px dashed var(--ink3);border-radius:18px;padding:30px 30px 26px;position:relative}
-.thesisbox::before{content:"for students";position:absolute;top:-12px;left:26px;background:var(--paper);color:var(--ink3);font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:0 10px}
-.thesishead h3{font-size:1.25rem;margin-bottom:6px}
-.thesishead p{color:var(--ink2);font-size:.92rem;max-width:70ch;margin-bottom:22px}
-.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:760px){.tgrid{grid-template-columns:1fr}}
-.tcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:var(--shadow)}
-.tcard:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
-.tcard .tlevel{font-size:.64rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
-.tcard h4{font-size:.98rem;font-weight:700;margin:3px 0 2px;letter-spacing:-.01em}
-.tcard .tpitch{font-size:.84rem;color:var(--ink2)}
-.tcard .tmore{max-height:0;overflow:hidden;transition:max-height .4s ease;font-size:.84rem;color:var(--ink2)}
-.tcard.open .tmore{max-height:220px;padding-top:10px}
-.tcard .tmore b{color:var(--ink)}
-.tcard .claim{display:inline-block;margin-top:10px;font-size:.78rem;font-weight:600;text-decoration:none;border-bottom:1.5px solid var(--red);padding-bottom:1px}
-.tcard .claim:hover{color:var(--red)}
-.thesiscta{margin-top:20px;font-size:.9rem;color:var(--ink2)}
-.thesiscta a{font-weight:700;text-decoration:none;border-bottom:2px solid var(--red)}
-.thesiscta a:hover{color:var(--red)}
+
+/* ---------- thesis topic explorer ---------- */
+.thesisbox{margin-top:56px;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-lg);overflow:hidden;position:relative;scroll-margin-top:78px}
+.tbar{height:5px;background:var(--blue)}
+.thesisinner{padding:26px 32px 30px}
+@media(max-width:600px){.thesisinner{padding:22px 20px 26px}}
+.tlabel{display:inline-block;font-size:.63rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--paper);background:var(--ink);border-radius:999px;padding:4px 12px;margin-bottom:14px}
+.thesishead h3{font-size:1.5rem;margin-bottom:7px;letter-spacing:-.02em}
+.thesishead p{color:var(--ink2);font-size:.93rem;max-width:68ch}
+.tcount{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:.76rem;color:var(--ink3);font-weight:500}
+.tcount b{font-size:1.05rem;font-weight:700;color:var(--ink)}
+.tstep{margin-top:16px;transition:opacity .5s ease,filter .5s ease}
+.tstep.locked{opacity:.38;filter:saturate(.35);pointer-events:none}
+.tsteplabel{display:flex;align-items:center;gap:9px;font-size:.82rem;font-weight:600;color:var(--ink2);margin-bottom:11px}
+.tnum{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;background:var(--ink);color:var(--card);font-size:.68rem;font-weight:700;flex-shrink:0}
+.tstep.done .tnum{background:var(--green)}
+.tpick{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);border:1px solid var(--red);border-radius:999px;padding:1px 8px}
+.tstep.done .tpick{display:none}
+.tchips{display:flex;flex-wrap:wrap;gap:9px}
+.tchip{border:1.5px solid var(--line);background:var(--paper);border-radius:12px;padding:9px 15px;cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .2s,box-shadow .2s;font-family:inherit;text-align:left;color:var(--ink)}
+.tchip:hover{border-color:var(--ink3);transform:translateY(-2px);box-shadow:var(--shadow)}
+.tchip.on{background:var(--ink);color:var(--card);border-color:var(--ink);transform:translateY(-2px);box-shadow:var(--shadow)}
+.tchip b{display:block;font-size:.87rem;font-weight:600}
+.tchip span{display:block;font-size:.7rem;opacity:.62;margin-top:1px}
+.thesisbox.live .tchip{opacity:0;animation:chipin .5s cubic-bezier(.2,.9,.3,1) forwards;animation-delay:var(--d,0s)}
+@keyframes chipin{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+.tchip.nudge{animation:nudge .8s ease}
+@keyframes nudge{0%,100%{transform:none}45%{transform:translateY(-5px);box-shadow:0 8px 20px color-mix(in srgb,var(--red) 30%,transparent);border-color:var(--red)}}
+.tdice{border:none;background:none;color:var(--ink3);font-family:inherit;font-size:.78rem;font-weight:600;cursor:pointer;padding:9px 6px;transition:color .2s}
+.tdice:hover{color:var(--red)}
+.tjoin{font-size:1.35rem;font-weight:700;color:var(--line);text-align:center;margin:10px 0 2px;line-height:1;user-select:none;transition:color .45s ease}
+.tjoin.hot{color:var(--red)}
+#tresult{margin-top:12px}
+.tres{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px;box-shadow:var(--shadow-lg);animation:tpop .45s cubic-bezier(.2,.9,.3,1)}
+@keyframes tpop{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.tres .trmeta{font-size:.66rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px}
+.tres h4{font-size:1.2rem;font-weight:700;letter-spacing:-.015em;line-height:1.3}
+.tres .trpitch{color:var(--ink2);font-size:.93rem;margin-top:7px}
+.trgrid{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;margin-top:20px}
+@media(max-width:760px){.trgrid{grid-template-columns:1fr;gap:18px}}
+.trgrid h5{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:7px}
+.trgrid ol{margin:0 0 0 18px;padding:0}
+.trgrid li{font-size:.89rem;color:var(--ink2);margin-bottom:8px;padding-left:3px}
+.trgrid p{font-size:.86rem;color:var(--ink2);margin-bottom:16px}
+.trfoot{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.aiflag{font-size:.76rem;color:var(--ink2);max-width:52ch;line-height:1.5}
+.aiflag b{color:var(--ink)}
+.tempty{color:var(--ink3);font-size:.88rem;padding:16px 0}
 .beyond{display:flex;flex-wrap:wrap;gap:10px}
 .bpill{border:1.5px dashed var(--line);border-radius:999px;padding:9px 18px;font-size:.83rem;color:var(--ink2);transition:.25s;cursor:default}
 .bpill:hover{border-color:var(--red);color:var(--ink);border-style:solid;transform:translateY(-2px)}
@@ -254,7 +288,7 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
 <nav><div class="wrap navin">
   <a class="logo" href="#top">Matthias Sahli</a>
   <div class="navlinks">
-    <a href="#about">About</a><a href="#research">Research</a><a href="#data">Data &amp; Tools</a><a href="#teaching">Teaching</a><a class="navcv" href="https://scholar.google.com/citations?user=ui-NYv8AAAAJ" target="_blank" rel="noopener">Scholar ↗</a>
+    <a href="#about">About</a><a href="#research">Research</a><a href="#data">Data &amp; Tools</a><a href="#teaching">Teaching</a><a href="#thesis">Theses</a><a class="navcv" href="https://scholar.google.com/citations?user=ui-NYv8AAAAJ" target="_blank" rel="noopener">Scholar ↗</a>
     <div class="dots">
       <button class="dot r" title="Back to top" aria-label="Back to top"></button>
       <button class="dot o" title="Jump to research" aria-label="Jump to research"></button>
@@ -288,6 +322,7 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
   </div>
   <div class="heroctas">
     <a class="btn primary" href="#research">Explore my research</a>
+    <a class="btn blue" href="#thesis">Find a thesis topic</a>
     <a class="btn" href="mailto:matthias.sahli@bfh.ch">Get in touch</a>
   </div>
   <div class="scrollhint">↓ scroll</div>
@@ -350,19 +385,33 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
   <div class="sechead"><span class="secdot" style="background:var(--blue)"></span><h2>Teaching</h2></div>
   <p class="seclead">IP strategy for people who build things — non-legalistic, value- and strategy-focused.</p>
   <div class="teach rv">
-    <div class="course"><div class="inst">EPFL · College of Management</div><h3>MGT-404 Management of Intellectual Property</h3><p>Master level, 2025.</p><span class="evalbadge">★ Student eval 1.24 / 4 (1 = best)</span></div>
-    <div class="course"><div class="inst">BFH · Business School</div><h3>Digitalrecht · Entrepreneurial Law · Data Literacy</h3><p>Bachelor &amp; Master modules, module coordination, since 2025.</p><span class="evalbadge">★ Student eval 5.25 / 6</span></div>
+    <div class="course"><div class="inst">EPFL · College of Management</div><h3>MGT-404 Management of Intellectual Property</h3><p>Master level, 2025.</p></div>
+    <div class="course"><div class="inst">BFH · Business School</div><h3>Digitalrecht · Entrepreneurial Law · Data Literacy</h3><p>Bachelor &amp; Master modules, module coordination, since 2025.</p></div>
     <div class="course"><div class="inst">HES-SO · Haute École de Gestion Genève</div><h3>Economics of Innovation</h3><p>Guest lectures, since 2026.</p></div>
     <div class="course"><div class="inst">BFH</div><h3>Thesis supervision</h3><p>Practice projects, bachelor's &amp; master's theses, applied R&amp;D projects.</p></div>
   </div>
 
   <div id="thesis" class="thesisbox rv">
-    <div class="thesishead">
-      <h3>💡 Looking for a thesis topic?</h3>
-      <p>I supervise theses at the intersection of economics, data and the creative world. Below are directions I'm currently excited about — click one to see what you'd actually do. Your own idea beats all of them.</p>
+    <div class="tbar"></div>
+    <div class="thesisinner">
+      <div class="thesishead">
+        <span class="tlabel">For students</span>
+        <h3>💡 Find your thesis topic</h3>
+        <p>Combine a way of working with a field you're curious about, and you get a concrete starting point: research questions, the data you'd use, the methods — built from my own projects and datasets.</p>
+        <div class="tcount"><b id="tcombos">20</b> starting points · 4 ways of working × 5 fields</div>
+      </div>
+      <div class="tstep" id="tstep1">
+        <div class="tsteplabel"><span class="tnum">1</span> How do you want to work? <span class="tpick">pick one</span></div>
+        <div class="tchips" id="tapproach"></div>
+      </div>
+      <div class="tjoin" id="tjoin1">×</div>
+      <div class="tstep locked" id="tstep2">
+        <div class="tsteplabel"><span class="tnum">2</span> What are you curious about? <span class="tpick">pick one</span></div>
+        <div class="tchips" id="tfield"></div>
+      </div>
+      <div class="tjoin" id="tjoin2">=</div>
+      <div id="tresult"><div class="tempty">Your starting point appears here.</div></div>
     </div>
-    <div class="tgrid" id="tgrid"></div>
-    <div class="thesiscta">None of these? <a href="mailto:matthias.sahli@bfh.ch?subject=Thesis%20idea%20pitch">Pitch me your own idea →</a></div>
   </div>
 </div></section>
 
@@ -402,11 +451,16 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
 <div class="tooltip" id="tooltip"></div>
 
 <script id="site-data" type="application/json">
-{"generated": "2026-08-05", "source": "semantic_scholar+manual (weekly auto-update via GitHub Actions)", "metrics": {"publications": 20, "citations": 66, "hIndex": 4, "venues": 12, "citationsByYear": [{"year": 2021, "citations": 1}, {"year": 2022, "citations": 2}, {"year": 2023, "citations": 9}, {"year": 2024, "citations": 18}, {"year": 2025, "citations": 10}, {"year": 2026, "citations": 22}], "sourceLabel": "Google Scholar", "yearSourceLabel": "Google Scholar"}, "publications": [{"id": "digital-reuse", "title": "Digital Reuse and Online Availability of Visual Artworks", "short": "Digital Reuse of Visual Artworks", "authors": "M. Sahli, A. Cuntz & P. J. Heald", "venue": "Information Economics and Policy", "year": 2026, "status": "published", "tags": ["ip", "art", "dig"], "citations": 10, "finding": "Exploiting the 1926 US public-domain cutoff: public domain status raises artist-level image availability on online platforms by ≈19%.", "links": [{"label": "DOI", "url": "https://doi.org/10.1016/j.infoecopol.2026.101172"}, {"label": "Google Scholar", "url": "https://scholar.google.com/scholar?q=Digital+Reuse+and+Online+Availability+of+Visual+Artworks+Sahli"}, {"label": "WIPO Working Paper No. 75", "url": "https://www.wipo.int/publications/en/series/index.jsp?id=138"}], "manual": true, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:_kc_bZDykSQC"}, {"id": "legacy-artists", "title": "Is There a Premium for Legacy Artists? The Death Effect in Exhibition Shows and Auction Transactions", "short": "Premium for legacy artists (death effect)", "authors": "M. Sahli & A. Cuntz", "venue": "Journal of Cultural Economics", "year": 2025, "status": "published", "tags": ["art"], "citations": 3, "finding": "Regression-discontinuity and event-study designs around artist death show how death reshapes exhibition activity and auction prices.", "links": [{"label": "DOI", "url": "https://doi.org/10.1007/s10824-025-09550-4"}, {"label": "Google Scholar", "url": "https://scholar.google.com/scholar?q=Is+there+a+premium+for+legacy+artists+Sahli+Cuntz"}], "manual": true, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:ZeXyd9-uunAC"}, {"id": "book-digitalization", "title": "Does the Digitalization of the Book Industry Reduce Its Environmental Impact?", "short": "Digitalization of the book industry", "authors": "M. Sahli, J. Bieser et al.", "venue": "Cleaner and Responsible Consumption", "year": 2026, "status": "published", "tags": ["sus", "dig"], "citations": 1, "finding": "Combines lifecycle assessments with economic analysis to evaluate the net greenhouse-gas effect of the shift from print to digital books.", "links": [{"label": "DOI", "url": "https://doi.org/10.1016/j.clrc.2026.100440"}, {"label": "Google Scholar", "url": "https://scholar.google.com/scholar?q=Does+the+digitalization+of+the+book+industry+reduce+its+environmental+impact+Sahli"}], "manual": true, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:r0BpntZqJG4C"}, {"id": "million-dollar-baby", "title": "Million Dollar Baby — A Primer on Film Finance Practices in the U.S. Movie Industry", "short": "Million Dollar Baby (film finance)", "authors": "A. Cuntz, A. Muscarnera, P. C. Oguguo & M. Sahli", "venue": "Industry & Innovation", "year": 2024, "status": "published", "tags": ["ip", "art"], "citations": 13, "finding": "Thirty years of film-financing practice traced through interviews and U.S. Uniform Commercial Code filings: how movies are financed with IP as collateral.", "links": [{"label": "DOI", "url": "https://doi.org/10.1080/13662716.2024.2328004"}, {"label": "Google Scholar", "url": "https://scholar.google.com/scholar?q=Million+Dollar+Baby+primer+film+finance+Cuntz+Sahli"}], "manual": true, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:aqlVkmm33-oC"}, {"id": "intermediary-liability", "title": "Intermediary Liability and Trade in Follow-on Innovation", "short": "Intermediary liability & follow-on innovation", "authors": "A. Cuntz & M. Sahli", "venue": "Journal of Cultural Economics", "year": 2023, "status": "published", "tags": ["ip", "art"], "citations": 19, "finding": "The Cariou v. Prince decision triggered a temporary decline in global auctions of Appropriation Art — court rulings ripple through art markets.", "links": [{"label": "DOI", "url": "https://doi.org/10.1007/s10824-023-09470-1"}, {"label": "Google Scholar", "url": "https://scholar.google.com/scholar?q=Intermediary+Liability+and+Trade+in+Follow-on+Innovation+Cuntz+Sahli"}], "manual": true, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:UeHWp8X0CEIC"}, {"id": "ipres-sustainability", "title": "Sustainability in Context: An Evidence-based (Digital) Preservation Lifecycle Investigation", "short": "Sustainability in digital preservation (iPRES)", "authors": "M. Pennock, M. Sahli & J. Chenoweth", "venue": "iPRES 2025, Wellington", "year": 2025, "status": "published", "tags": ["sus", "dig"], "citations": 2, "finding": "Conference paper from the ReVerDi project examining evidence-based sustainability practices of collecting institutions.", "links": [{"label": "DOI", "url": "https://doi.org/10.5281/zenodo.16843717"}], "manual": true, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:-f6ydRqryjwC"}, {"id": "elvis-ghost", "title": "Elvis' Ghost or Digital Replica? Publicity Rights and Integrated IP Strategy", "short": "Elvis' Ghost (publicity rights & AI)", "authors": "A. Cuntz, B. Lutes & M. Sahli", "venue": "WIPO Economic Working Paper No. 89", "year": 2025, "status": "working", "note": "under review", "tags": ["ip"], "citations": 0, "finding": "Upon the loss of publicity rights, celebrities become less popular and engage in less commercial activity — with direct implications for AI-generated digital replicas.", "links": [{"label": "Google Scholar", "url": "https://scholar.google.com/scholar?q=Elvis+Ghost+or+Digital+Replica+Publicity+Rights+Cuntz+Sahli"}], "manual": true, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:IWHjjKOFINEC"}, {"id": "digitization-diffusion", "title": "From Digitization to Diffusion: Downstream Reuse of Digitized Heritage on Wikimedia Commons", "short": "From digitization to diffusion", "authors": "M. Sahli et al.", "venue": "under review, Journal of Cultural Economics", "year": 2025, "status": "working", "tags": ["dig", "art"], "citations": 0, "finding": "Tracks what happens after national libraries digitize their collections: 64% of images released to Wikimedia Commons are reused at least once.", "links": [], "manual": true}, {"id": "libraries-lcsa", "title": "Evaluating the Sustainability of National Libraries: A Life Cycle Sustainability Assessment", "short": "Sustainability of national libraries", "authors": "M. Sahli et al.", "venue": "submitted, Nature Sustainability", "year": 2025, "status": "working", "tags": ["sus"], "citations": 0, "finding": "Life Cycle Sustainability Assessment of the British Library, the Dutch National Library and the Swiss National Library.", "links": [], "manual": true}, {"id": "gender-auctions", "title": "Going Once, Going Twice, Sold: Gender Effects of Exhibitions on Sale Probability and Prices at Art Auctions", "short": "Gender effects at art auctions", "authors": "M. Sahli & L. J. Noll", "venue": "under review, Management Science", "year": 2024, "status": "working", "tags": ["art"], "citations": 0, "finding": "21,000+ exhibition records linked to 33,000 auction transactions to examine how museum visibility — and gender representation — translates into market outcomes.", "links": [], "manual": true, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:4JMBOYKVnBMC"}, {"id": "covid-artists", "title": "The Covid-19 Impact on Artistic Income: Evidence from Germany", "short": "Covid-19 impact on artistic income", "authors": "A. Cuntz & M. Sahli", "venue": "CEPR Press (book chapter) & Covid Economics 82", "year": 2022, "status": "other", "tags": ["art"], "citations": 17, "finding": "Musicians and performing artists were among the most vulnerable groups during the pandemic.", "links": [{"label": "DOI", "url": "https://doi.org/10.2139/ssrn.4422313"}, {"label": "Google Scholar", "url": "https://scholar.google.com/scholar?q=Covid-19+impact+on+artistic+income+Cuntz+Sahli"}], "manual": true, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:d1gkVwhDpl0C"}, {"id": "dissertation", "title": "Empirical Essays on the Economics of Creative Industries", "short": "PhD dissertation", "authors": "M. Sahli", "venue": "Doctoral dissertation, University of Neuchâtel", "year": 2023, "status": "other", "tags": ["art", "ip"], "citations": 0, "links": [{"label": "Google Scholar", "url": "https://scholar.google.com/scholar?q=Empirical+essays+economics+creative+industries+Sahli"}], "manual": true, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:qxL8FJ1GzNcC"}, {"id": "careers-of-female-artists-gender-bias-in", "title": "Careers of Female Artists: Gender Bias in Institutional Visibilty and Secondary Market Outcomes", "authors": "LJ Noll, M Sahli", "venue": "ACEI Working Paper Series, 2026", "year": 2026, "status": "published", "tags": [], "citations": 1, "links": [], "manual": false, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:j3f4tGmQtD8C"}, {"id": "elvis-ghost-jordans-airness-and-the-new", "title": "Elvis’ ghost, Jordan’s Airness, and the new economics of publicity rights", "authors": "B Lutes, A Cuntz, M Sahli", "venue": "https://cepr.org/voxeu/columns/elvis-ghost-jordans-airness-and-new-economics …, 2025", "year": 2025, "status": "published", "tags": [], "citations": 0, "links": [], "manual": false, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:e5wmG9Sq2KIC"}, {"id": "voxeu-column-how-the-us-film-industry-mi", "title": "VoxEU column: How the US film industry mitigates financial risk", "authors": "A Cuntz, A Muscarnera, PC Oguguo, M Sahli", "venue": "https://cepr.org/voxeu/columns/how-us-film-industry-mitigates-financial-risk, 2023", "year": 2023, "status": "published", "tags": [], "citations": 0, "links": [], "manual": false, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:8k81kl-MbHgC"}, {"id": "risky-trade-appropriation-art-copyright", "title": "Risky Trade? Appropriation Art, Copyright and Secondary Market Effects", "authors": "A Cuntz, M Sahli", "venue": "https://culturaleconomics.org/risky-trade-appropriation-art-copyright-and …, 2023", "year": 2023, "status": "published", "tags": [], "citations": 0, "links": [], "manual": false, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:hqOjcs7Dif8C"}, {"id": "pommerehne-prize-presidents-prize-and-yo", "title": "Pommerehne Prize, President’s Prize and Young Researchers Workshop Best Paper Award", "authors": "F Etro, D Noonan", "venue": "Journal of Cultural Economics 45 (3), 513-514, 2021", "year": 2021, "status": "published", "tags": [], "citations": 0, "links": [], "manual": false, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:2osOgNQ5qMEC"}, {"id": "voxeu-column-appropriation-artists-follo", "title": "VoxEU column: Appropriation artists: Follow-on innovation versus intermediary liability and trade", "authors": "A Cuntz, M Sahli", "venue": "https://cepr.org/voxeu/columns/appropriation-artists-follow-innovation …, 2021", "year": 2021, "status": "published", "tags": [], "citations": 0, "links": [], "manual": false, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:Y0pCki6q_DkC"}, {"id": "cleaner-and-responsible-consumption", "title": "Cleaner and Responsible Consumption", "authors": "S Halli, C Kaya", "venue": "—", "year": null, "status": "published", "tags": [], "citations": 0, "links": [], "manual": false, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:bEWYMUwI8FkC"}, {"id": "in-this-section", "title": "In this section", "authors": "A Cuntz, A Muscarnera, PC Oguguo, M Sahli", "venue": "—", "year": null, "status": "published", "tags": [], "citations": 0, "links": [], "manual": false, "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:iH-uZ7U-co4C"}]}
+{"generated": "2026-08-07", "source": "google_scholar (mirror) + manual pipeline info", "metrics": {"publications": 13, "citations": 66, "hIndex": 4, "venues": 6, "citationsByYear": [], "sourceLabel": "Google Scholar", "yearSourceLabel": "Google Scholar"}, "publications": [{"id": "digital-reuse", "title": "Digital Reuse and Online Availability of Visual Artworks", "short": "Digital Reuse of Visual Artworks", "authors": "M. Sahli, A. Cuntz & P. J. Heald", "venue": "Information Economics and Policy", "year": 2026, "status": "published", "tags": ["ip", "art", "dig"], "citations": 6, "finding": "Exploiting the 1926 US public-domain cutoff: public domain status raises artist-level image availability on online platforms by ≈19%.", "links": [{"label": "WIPO Working Paper No. 75", "url": "https://www.wipo.int/publications/en/series/index.jsp?id=138"}, {"label": "VoxEU column", "url": "https://cepr.org/voxeu/columns"}], "manual": true}, {"id": "book-digitalization", "title": "Does the Digitalization of the Book Industry Reduce Its Environmental Impact?", "short": "Digitalization of the book industry", "authors": "M. Sahli, J. Bieser et al.", "venue": "Cleaner and Responsible Consumption", "year": 2026, "status": "published", "tags": ["sus", "dig"], "citations": 0, "finding": "Combines lifecycle assessments with economic analysis to evaluate the net greenhouse-gas effect of the shift from print to digital books.", "links": [], "manual": true}, {"id": "legacy-artists", "title": "Is There a Premium for Legacy Artists? The Death Effect in Exhibition Shows and Auction Transactions", "short": "Premium for legacy artists (death effect)", "authors": "M. Sahli & A. Cuntz", "venue": "Journal of Cultural Economics", "year": 2025, "status": "published", "tags": ["art"], "citations": 1, "finding": "Regression-discontinuity and event-study designs around artist death show how death reshapes exhibition activity and auction prices.", "links": [], "manual": true}, {"id": "ipres-sustainability", "title": "Sustainability in Context: An Evidence-based (Digital) Preservation Lifecycle Investigation", "short": "Sustainability in digital preservation (iPRES)", "authors": "M. Pennock, M. Sahli & J. Chenoweth", "venue": "iPRES 2025, Wellington", "year": 2025, "status": "published", "tags": ["sus", "dig"], "citations": 0, "finding": "Conference paper from the ReVerDi project examining evidence-based sustainability practices of collecting institutions.", "links": [{"label": "DOI", "url": "https://doi.org/10.5281/zenodo.16843717"}], "manual": true}, {"id": "million-dollar-baby", "title": "Million Dollar Baby — A Primer on Film Finance Practices in the U.S. Movie Industry", "short": "Million Dollar Baby (film finance)", "authors": "A. Cuntz, A. Muscarnera, P. C. Oguguo & M. Sahli", "venue": "Industry & Innovation", "year": 2024, "status": "published", "tags": ["ip", "art"], "citations": 3, "finding": "Thirty years of film-financing practice traced through interviews and U.S. Uniform Commercial Code filings: how movies are financed with IP as collateral.", "links": [], "manual": true}, {"id": "intermediary-liability", "title": "Intermediary Liability and Trade in Follow-on Innovation", "short": "Intermediary liability & follow-on innovation", "authors": "A. Cuntz & M. Sahli", "venue": "Journal of Cultural Economics", "year": 2023, "status": "published", "tags": ["ip", "art"], "citations": 11, "finding": "The Cariou v. Prince decision triggered a temporary decline in global auctions of Appropriation Art — court rulings ripple through art markets.", "links": [], "manual": true}, {"id": "digitization-diffusion", "title": "From Digitization to Diffusion: Evidence on the Economic Value of Open Cultural Heritage", "short": "From digitization to diffusion", "authors": "M. Sahli, J. Bieser, J. Chenoweth, J. Suckling, J. Love, E. Lin, M. Martens, M. Pennock & U. Pottgiesser", "venue": "Working paper", "year": 2026, "status": "review", "note": "R&R at Journal of Cultural Economics", "tags": ["dig", "art"], "citations": 0, "finding": "Tracks what happens after national libraries digitize their collections: 64% of images released to Wikimedia Commons are reused at least once.", "links": [], "manual": true}, {"id": "gender-auctions", "title": "Gender Gaps in Museum Exhibitions and Art Auctions: Evidence from Linked Exhibition and Auction Records", "short": "Gender gaps in exhibitions & auctions", "authors": "L. J. Noll & M. Sahli", "venue": "ACEI Working Paper Series", "year": 2026, "status": "review", "note": "Submitted to Journal of Economic Behavior & Organization", "tags": ["art"], "citations": 1, "finding": "21,000+ exhibition records linked to 33,000 auction transactions to examine how museum visibility — and gender representation — translates into market outcomes.", "links": [], "manual": true}, {"id": "elvis-ghost", "title": "Elvis' Ghost or Digital Replica? Publicity Rights and Integrated IP Strategy", "short": "Elvis' Ghost (publicity rights & AI)", "authors": "A. Cuntz, B. Lutes & M. Sahli", "venue": "WIPO Economic Working Paper No. 89", "year": 2025, "status": "review", "note": "Submitted to Strategic Management Journal", "tags": ["ip"], "citations": 0, "finding": "Upon the loss of publicity rights, celebrities become less popular and engage in less commercial activity — with direct implications for AI-generated digital replicas.", "links": [], "manual": true}, {"id": "libraries-lcsa", "title": "Evaluating the Sustainability of National Libraries: A Life Cycle Sustainability Assessment", "short": "Sustainability of national libraries", "authors": "M. Sahli et al.", "venue": "Working paper", "year": 2025, "status": "review", "note": "Submitted to npj Heritage Science", "tags": ["sus"], "citations": 0, "finding": "Life Cycle Sustainability Assessment of the British Library, the Dutch National Library and the Swiss National Library.", "links": [], "manual": true}, {"id": "open-by-design", "title": "Open by Design: An Empirical Comparison of National Library Digitization Strategies on Wikimedia Commons", "short": "Open by Design (library digitization)", "authors": "M. Sahli, E. Bertacchini & J. Bieser", "venue": "Working paper", "year": 2026, "status": "progress", "note": "In preparation", "tags": ["dig"], "citations": 0, "links": [], "manual": true}, {"id": "covid-artists", "title": "The Covid-19 Impact on Artistic Income: Evidence from Germany", "short": "Covid-19 impact on artistic income", "authors": "A. Cuntz & M. Sahli", "venue": "CEPR Press & Covid Economics 82", "year": 2022, "status": "other", "note": "Book chapter", "tags": ["art"], "citations": 4, "finding": "Musicians and performing artists were among the most vulnerable groups during the pandemic.", "links": [], "manual": true}, {"id": "dissertation", "title": "Empirical Essays on the Economics of Creative Industries", "short": "PhD dissertation", "authors": "M. Sahli", "venue": "University of Neuchâtel", "year": 2023, "status": "other", "note": "PhD dissertation", "tags": ["art", "ip"], "citations": 0, "links": [], "manual": true}]}
 </script>
 
 <script>
-const DATA = JSON.parse(document.getElementById('site-data').textContent);
+/* Publication data. The baked-in copy below is only a fallback for the first
+   paint (and for opening this file offline) — on the live site the page then
+   re-reads data/publications.json, which the weekly workflow rewrites from
+   Google Scholar. So the list is always as current as your Scholar profile,
+   even if index.html itself hasn't been touched in months. */
+let DATA = JSON.parse(document.getElementById('site-data').textContent);
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const SCHOLAR = 'https://scholar.google.com/citations?user=ui-NYv8AAAAJ';
 
@@ -485,10 +539,6 @@ async function answer(q){
 crtform.onsubmit = e => { e.preventDefault(); const q = crtinput.value.trim().toLowerCase(); if(q){ answer(q); crtinput.value=''; } };
 $('#screenbox').onclick = () => crtinput.focus();
 
-/* ---- post-it: newest published paper ---- */
-const newest = DATA.publications.filter(p=>p.status==='published').sort((a,b)=>b.year-a.year)[0];
-if(newest) $('#postittext').textContent = `“${newest.short || newest.title}” — ${newest.venue}`;
-
 /* ---- photo: fake loading counter + tilt ---- */
 const osload = $('#osload');
 new IntersectionObserver((es,obs)=>es.forEach(e=>{
@@ -519,19 +569,6 @@ const TL = [
 $('#timeline').innerHTML = TL.map(([y,t,n,u],i)=>`<div class="tl${i===0?' open':''}"><div class="yr">${y}</div><div class="ti">${t}</div><div class="note">${n}${u?` <a href="${u}" target="_blank" rel="noopener" onclick="event.stopPropagation()">website ↗</a>`:''}</div></div>`).join('');
 $$('.tl').forEach(el=>el.onclick=()=>el.classList.toggle('open'));
 
-/* ---- stats (each tile links to Google Scholar) ---- */
-const M = DATA.metrics;
-const SRC = M.sourceLabel || 'Semantic Scholar';
-$('#chartsub').textContent = `Source: ${SRC} · updated weekly`;
-$('#yearsub').textContent = `Source: ${M.yearSourceLabel || 'OpenAlex'} · updated weekly`;
-const stats = [
-  [M.publications,'Publications & papers','incl. working papers'],
-  [M.citations,'Citations',SRC],
-  [M.hIndex,'h-index',SRC],
-  [M.venues,'Peer-reviewed venues','journals & conferences']
-];
-$('#stats').innerHTML = stats.map(([n,l,s])=>`<a class="stat" href="${SCHOLAR}" target="_blank" rel="noopener"><div class="n" data-n="${n}">0</div><div class="l">${l}</div><div class="src">${s}</div></a>`).join('');
-
 function countUp(el){
   const target = +el.dataset.n, dur = 1100, t0 = performance.now();
   const step = t => { const p = Math.min(1,(t-t0)/dur); el.textContent = Math.round(target*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(step); };
@@ -544,29 +581,63 @@ function showTip(e,text){ tip.textContent = text; tip.classList.add('on'); moveT
 function moveTip(e){ tip.style.left = Math.min(e.clientX+14, innerWidth-260)+'px'; tip.style.top = (e.clientY+16)+'px'; }
 function hideTip(){ tip.classList.remove('on'); }
 
-/* ---- citations by paper ---- */
-const cited = DATA.publications.filter(p=>p.citations>0).sort((a,b)=>b.citations-a.citations);
-const maxC = Math.max(...cited.map(p=>p.citations),1);
-$('#hbars').innerHTML = cited.map(p=>`
-  <div class="hbar" data-url="${p.scholarUrl||SCHOLAR}" data-tip="${(p.short||p.title).replace(/"/g,'&quot;')} — ${p.citations} citation${p.citations>1?'s':''} (${p.venue}, ${p.year}) · click for Scholar">
-    <div class="bl">${p.short||p.title}</div>
-    <div class="tr"><div class="fill" data-w="${(p.citations/maxC*100).toFixed(1)}"></div></div>
-    <div class="val">${p.citations}</div>
-  </div>`).join('');
-$$('.hbar').forEach(b=>{ b.onmousemove = e=>{showTip(e,b.dataset.tip)}; b.onmouseleave = hideTip; b.onclick = ()=>open(b.dataset.url,'_blank'); b.style.cursor='pointer'; });
+/* ---- everything that depends on the publication data lives here, so it can
+       be re-painted the moment fresher data arrives from data/publications.json ---- */
+function paintData(){
+  const M = DATA.metrics || {}, SRC = M.sourceLabel || 'Google Scholar';
 
-/* ---- citations per year (appears once OpenAlex data flows in) ---- */
-if(M.citationsByYear && M.citationsByYear.length){
-  $('#yearchart').style.display = 'block';
-  const maxY = Math.max(...M.citationsByYear.map(d=>d.citations),1);
-  $('#yearcols').innerHTML = M.citationsByYear.map(d=>`<div class="col" data-h="${(d.citations/maxY*100).toFixed(1)}" data-tip="${d.year}: ${d.citations} citations" style="height:3px"></div>`).join('');
-  $('#yearlabels').innerHTML = M.citationsByYear.map(d=>`<span>${String(d.year).slice(2)}</span>`).join('');
-  $$('.col').forEach(c=>{ c.onmousemove = e=>showTip(e,c.dataset.tip); c.onmouseleave = hideTip; c.onclick = ()=>open(SCHOLAR,'_blank'); });
+  // publication alert on the post-it
+  const newest = DATA.publications.filter(p=>p.status==='published' && p.year).sort((a,b)=>b.year-a.year)[0];
+  if(newest) $('#postittext').textContent = `“${newest.short || newest.title}” — ${newest.venue}`;
+
+  // metric tiles
+  $('#chartsub').textContent = `Source: ${SRC} · updated weekly`;
+  $('#yearsub').textContent  = `Source: ${M.yearSourceLabel || SRC} · updated weekly`;
+  $('#stats').innerHTML = [
+    [M.publications,'Publications & papers','incl. working papers'],
+    [M.citations,'Citations',SRC],
+    [M.hIndex,'h-index',SRC],
+    [M.venues,'Peer-reviewed venues','journals & conferences']
+  ].map(([n,l,s])=>`<a class="stat" href="${SCHOLAR}" target="_blank" rel="noopener"><div class="n" data-n="${n||0}">0</div><div class="l">${l}</div><div class="src">${s}</div></a>`).join('');
+
+  // citations by paper
+  const cited = DATA.publications.filter(p=>p.citations>0).sort((a,b)=>b.citations-a.citations);
+  const maxC = Math.max(...cited.map(p=>p.citations),1);
+  $('#hbars').innerHTML = cited.map(p=>`
+    <div class="hbar" data-url="${p.scholarUrl||SCHOLAR}" data-tip="${(p.short||p.title).replace(/"/g,'&quot;')} — ${p.citations} citation${p.citations>1?'s':''} (${p.venue}, ${p.year}) · click for Scholar">
+      <div class="bl">${p.short||p.title}</div>
+      <div class="tr"><div class="fill" data-w="${(p.citations/maxC*100).toFixed(1)}"></div></div>
+      <div class="val">${p.citations}</div>
+    </div>`).join('');
+  $$('.hbar').forEach(b=>{ b.onmousemove = e=>showTip(e,b.dataset.tip); b.onmouseleave = hideTip; b.onclick = ()=>open(b.dataset.url,'_blank'); b.style.cursor='pointer'; });
+
+  // citations per year
+  const cby = M.citationsByYear || [];
+  $('#yearchart').style.display = cby.length ? 'block' : 'none';
+  if(cby.length){
+    const maxY = Math.max(...cby.map(d=>d.citations),1);
+    $('#yearcols').innerHTML = cby.map(d=>`<div class="col" data-h="${(d.citations/maxY*100).toFixed(1)}" data-tip="${d.year}: ${d.citations} citations" style="height:3px"></div>`).join('');
+    $('#yearlabels').innerHTML = cby.map(d=>`<span>${String(d.year).slice(2)}</span>`).join('');
+    $$('.col').forEach(c=>{ c.onmousemove = e=>showTip(e,c.dataset.tip); c.onmouseleave = hideTip; c.onclick = ()=>open(SCHOLAR,'_blank'); });
+  }
+
+  renderPubs();
+  $('#stamp').textContent = 'updated ' + (DATA.generated || '—');
+
+  // if a section is already on screen, run its animations right away
+  $$('.rv.on').forEach(el=>{
+    el.querySelectorAll('.n[data-n]').forEach(countUp);
+    el.querySelectorAll('.fill[data-w]').forEach(f=>f.style.width=f.dataset.w+'%');
+    el.querySelectorAll('.col[data-h]').forEach(c=>c.style.height=c.dataset.h+'%');
+  });
 }
 
 /* ---- filters ---- */
 const TAGS = {ip:['IP & Copyright','var(--red)'], art:['Art Markets & Creative Industries','var(--blue)'], dig:['Digitization & Heritage','var(--ochre)'], sus:['Sustainability','var(--purple)']};
-const STATUSES = {all:'All', published:'Peer-reviewed', working:'Working papers', other:'Chapters & other'};
+/* four buckets. "note" carries the exact stage, e.g. "R&R at Journal of Cultural Economics" */
+const STATUSES = {all:'All', published:'Peer-reviewed', review:'Under review', progress:'Work in progress', other:'Other'};
+const STATUS_ORDER = {published:0, review:1, progress:2, other:3};
+const STATUS_COLOR = {review:'var(--ochre)', progress:'var(--purple)', other:'var(--ink3)'};
 let fStatus = 'all', fTags = new Set(), q = '';
 $('#statusfilters').innerHTML = Object.entries(STATUSES).map(([k,v])=>`<button class="chip st${k==='all'?' on':''}" data-k="${k}">${v}</button>`).join('');
 $('#tagfilters').innerHTML = Object.entries(TAGS).map(([k,[v,c]])=>`<button class="chip tg" data-k="${k}"><span class="cd" style="background:${c}"></span>${v}</button>`).join('');
@@ -578,9 +649,11 @@ $('#pubsearch').oninput = e=>{ q=e.target.value.toLowerCase(); renderPubs(); };
 function pubCard(p){
   const tags = (p.tags||[]).filter(t=>TAGS[t]).map(t=>`<span class="tag" style="color:${TAGS[t][1]};border-color:${TAGS[t][1]}">${TAGS[t][0]}</span>`).join('');
   const links = (p.links||[]).map(l=>`<a href="${l.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${l.label} ↗</a>`).join('');
-  return `<div class="pub status-${p.status}" data-id="${p.id}">
-    <div class="top"><h3>${p.title}</h3>${p.citations?`<a class="cit" href="${p.scholarUrl||SCHOLAR}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="See on Google Scholar">${p.citations} cit. ↗</a>`:''}</div>
-    <div class="meta">${p.authors} · <em>${p.venue}</em>${p.year?' · '+p.year:''}${p.note?' · '+p.note:''}</div>
+  const col = STATUS_COLOR[p.status];
+  const badge = (p.note && col) ? `<span class="sbadge" style="color:${col};border-color:${col}">${p.note}</span>` : '';
+  return `<div class="pub" data-id="${p.id}">
+    <div class="top"><h3>${p.title}${badge}</h3>${p.citations?`<a class="cit" href="${p.scholarUrl||SCHOLAR}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="See on Google Scholar">${p.citations} cit. ↗</a>`:''}</div>
+    <div class="meta">${p.authors} · <em>${p.venue}</em>${p.year?' · '+p.year:''}</div>
     <div class="tags">${tags}</div>
     <div class="more">${p.finding?`<div class="finding">${p.finding}</div>`:''}<div class="links">${links}</div></div>
     <span class="hint">click to expand</span>
@@ -592,33 +665,197 @@ function renderPubs(){
     if(fTags.size && ![...fTags].some(t=>(p.tags||[]).includes(t))) return false;
     if(q && !(p.title+' '+p.authors+' '+p.venue).toLowerCase().includes(q)) return false;
     return true;
-  }).sort((a,b)=>(b.year||0)-(a.year||0));
-  $('#publist').innerHTML = list.map(pubCard).join('');
+  }).sort((a,b)=> (STATUS_ORDER[a.status]??9)-(STATUS_ORDER[b.status]??9) || (b.year||0)-(a.year||0));
+
+  // group headers whenever more than one bucket is on screen
+  const buckets = [...new Set(list.map(p=>p.status))];
+  let html = '', last = null;
+  list.forEach(p=>{
+    if(buckets.length>1 && p.status!==last){
+      const n = list.filter(x=>x.status===p.status).length;
+      html += `<div class="grouphead">${STATUSES[p.status]||'Other'} <span class="gc">(${n})</span></div>`;
+      last = p.status;
+    }
+    html += pubCard(p);
+  });
+  $('#publist').innerHTML = html;
   $('#noresults').style.display = list.length?'none':'block';
   $$('.pub').forEach(el=>el.onclick=()=>el.classList.toggle('open'));
 }
-renderPubs();
 
-/* ---- thesis topic board (edit the THESIS array to change topics) ---- */
-const THESIS = [
-  {lv:'BSc / MSc', t:'Do open museum collections pay off?', p:'Scrape an online museum collection and measure how "open" images travel the web.',
-   d:'<b>You would:</b> build a small crawler (Python), link artworks to Wikimedia/Google reuse, and estimate what openness changes.<br><b>Methods:</b> web scraping, panel data, diff-in-diff.'},
-  {lv:'MSc', t:'AI replicas & the right to your own face', p:'What happens to celebrity markets when digital replicas get cheap?',
-   d:'<b>You would:</b> collect data on AI voice/face clones and licensing cases, building on our publicity-rights research (WIPO WP No. 89).<br><b>Methods:</b> event studies, text analysis.'},
-  {lv:'BSc / MSc', t:'Gender gaps at art auctions', p:'Who gets shown — and who gets sold? Extend our 33,000-auction dataset.',
-   d:'<b>You would:</b> link exhibition and auction records, test how museum visibility translates into prices for female vs. male artists.<br><b>Methods:</b> regressions, matching, event studies.'},
-  {lv:'BSc', t:'Streaming vs. shelf: the climate bill', p:'Is digital consumption of books, music or film really greener?',
-   d:'<b>You would:</b> combine lifecycle assessment data with usage statistics for one media sector, extending our book-industry paper.<br><b>Methods:</b> LCA + economic analysis.'},
-  {lv:'BSc / MSc', t:'Build a crawler, find a market', p:'Sneaker drops, concert resale, design auctions — pick a creative market and measure it.',
-   d:'<b>You would:</b> propose a market, build the scraper, produce a first descriptive analysis of pricing or availability.<br><b>Methods:</b> web scraping, descriptive stats, hedonic pricing.'},
-  {lv:'MSc / practice project', t:'IP strategy for a real startup', p:'Work with a Swiss startup on how to protect and monetize what they build.',
-   d:'<b>You would:</b> map a startup\'s IP position (BRIDGE/BFH context), benchmark against competitors, and propose a value-focused strategy.<br><b>Methods:</b> case study, interviews, IP data.'}
+/* ---- thesis topic explorer ----------------------------------------------
+   Two axes → 20 starting points, written from my own projects and datasets.
+   To edit: change T_APPROACH / T_FIELD (the chips) and T_TOPICS (the content,
+   keyed "approach|field"). Everything runs client-side — no API, no tracking. */
+const T_APPROACH = [
+  {k:'empirical', l:'Test an effect', s:'Empirical & causal'},
+  {k:'data',      l:'Build a dataset', s:'Crawling & new data'},
+  {k:'strategy',  l:'Strategy & cases', s:'Firms, interviews, practice'},
+  {k:'impact',    l:'Measure impact', s:'Sustainability assessment'}
 ];
-$('#tgrid').innerHTML = THESIS.map((x,i)=>`<div class="tcard" data-i="${i}">
-  <div class="tlevel">${x.lv}</div><h4>${x.t}</h4><div class="tpitch">${x.p}</div>
-  <div class="tmore">${x.d}<br><a class="claim" href="mailto:matthias.sahli@bfh.ch?subject=${encodeURIComponent('Thesis topic: '+x.t)}" onclick="event.stopPropagation()">I want this one →</a></div>
-</div>`).join('');
-$$('.tcard').forEach(el=>el.onclick=()=>el.classList.toggle('open'));
+const T_FIELD = [
+  {k:'ip',     l:'Copyright & IP'},
+  {k:'ai',     l:'AI & creators'},
+  {k:'open',   l:'Open data & heritage'},
+  {k:'market', l:'Art & creative markets'},
+  {k:'media',  l:'Books, film & media'}
+];
+const T_TOPICS = {
+'empirical|ip':{lv:'BSc / MSc',t:'What copyright is actually worth to a business',
+ p:'Copyright is treated as a legal question. Treat it as a commercial one: measure how a change in protection moves real firm outcomes.',
+ rq:['Do new products reach the market faster once works enter the public domain?','Does tighter enforcement on a platform change what sellers offer there?','Who captures the value created — the original rights holder or downstream firms?'],
+ d:'My public-domain and museum-availability datasets, plus platform catalogues you collect yourself.',m:'Difference-in-differences around a legal cutoff or court ruling; event study.'},
+'empirical|ai':{lv:'MSc',t:'Is AI content crowding out human creators?',
+ p:'Generative AI arrived in creative marketplaces almost overnight. Test what it did to the people selling there.',
+ rq:['After AI tools became widely available, how did listings, prices and sales of human-made work change?','Do buyers pay a premium for a visible "human-made" label?','Which creator segments lost most — and which managed to adapt?'],
+ d:'Marketplace listings (stock photo platforms, Etsy, music services) crawled over time; platform AI-disclosure policies as the shock.',m:'Difference-in-differences around policy dates; hedonic pricing; text or image classification.'},
+'empirical|open':{lv:'BSc / MSc',t:'Does opening your collection pay off?',
+ p:'Museums and libraries fear that giving images away for free costs them income and control. Test whether it actually does.',
+ rq:['Does releasing a collection openly increase downstream reuse and reach?','Does openness affect visitor numbers, licensing income or donations?','Do institutions that open early gain a lasting visibility advantage?'],
+ d:'My Wikimedia Commons reuse dataset combined with the dates institutions changed their policy.',m:'Difference-in-differences with staggered adoption; reuse tracking.'},
+'empirical|market':{lv:'BSc / MSc',t:'What visibility is worth in the art market',
+ p:'A museum exhibition is marketing. Measure what that marketing is worth at auction — and who receives it.',
+ rq:['Does a museum show raise later hammer prices and the probability of selling at all?','Is the return different for female and male artists?','Does the prestige of the institution matter more than the exhibition itself?'],
+ d:'My linked dataset: 21,000+ exhibition records matched to 33,000 auction transactions.',m:'Event studies, matching, hedonic price models.'},
+'empirical|media':{lv:'MSc',t:'Did going digital change what gets produced?',
+ p:'Digital distribution rewrote the cost structure of publishing, film and music. Test what that did to the product portfolio.',
+ rq:['Did digital channels change how many and how varied the titles released are?','Do smaller firms benefit more from the shift than incumbents?','Does digital revenue substitute for physical revenue, or add to it?'],
+ d:'Industry catalogues, box-office or publisher data, and the figures behind our book-industry study.',m:'Panel regressions with fixed effects; market-structure analysis.'},
+
+'data|ip':{lv:'BSc / MSc',t:'A map of who is allowed to use what',
+ p:'Licensing terms are everywhere and systematically measured nowhere. Build the dataset that makes them comparable.',
+ rq:['How do licensing terms differ across platforms and sectors?','Have they become more or less restrictive over the past decade?','Do restrictive terms actually go together with less reuse?'],
+ d:'You build it: terms of service, licence tags, stock platforms, museum and library websites.',m:'Web scraping (Python), text classification, descriptive and correlational analysis.'},
+'data|ai':{lv:'BSc / MSc',t:'Tracking the AI wave in one creative market',
+ p:'Pick a single market and build the time series nobody has: how much of it is now machine-made.',
+ rq:['How fast is AI-labelled content growing in this market?','Does it cluster in particular niches or price segments?','How do platform disclosure rules change what sellers are willing to declare?'],
+ d:'Your own crawler on a marketplace of your choice, run repeatedly over several weeks.',m:'Web scraping, panel construction, descriptive analytics, classification.'},
+'data|open':{lv:'BSc / MSc',t:'Follow the images',
+ p:'Institutions upload thousands of images and then lose sight of them. Build the trail of where they end up.',
+ rq:['What share of an institution\'s uploads is ever reused?','Where does reuse happen — encyclopedias, press, education, commerce?','What makes one image travel and another disappear?'],
+ d:'The Wikimedia Commons API and GLAM upload batches; extends my diffusion project directly.',m:'API harvesting, reuse metrics, regression on image and collection characteristics.'},
+'data|market':{lv:'BSc / MSc',t:'Measure a market nobody has measured',
+ p:'Sneaker resale, concert tickets, design auctions, watches — pick one and build the first clean dataset of it.',
+ rq:['How are prices formed in this market?','What drives the resale premium?','Is there evidence of speculation or systematic arbitrage?'],
+ d:'Your own crawler on the platform of your choice — I will help you scope it so it stays feasible.',m:'Web scraping, hedonic pricing, time-series descriptives.'},
+'data|media':{lv:'MSc',t:'The supply chain behind a book or a film',
+ p:'Build the dataset that shows what it really takes — financially and materially — to bring a media product to market.',
+ rq:['What are the cost and material stages of a title from production to reader or viewer?','How does this differ between digital and physical formats?','Where do the biggest hidden costs sit?'],
+ d:'Publisher and studio records, UCC filings (as in our film-finance work), lifecycle inventories.',m:'Data collection, practitioner interviews, cost decomposition.'},
+
+'strategy|ip':{lv:'MSc / practice project',t:'IP strategy for a real company',
+ p:'Work with a Swiss startup or SME on what they should actually protect — and, just as importantly, what they should not.',
+ rq:['What does this firm\'s IP position look like next to its competitors?','Which assets create value, and which only create cost?','What would a genuinely value-focused IP strategy look like here?'],
+ d:'Company documents and interviews (via BFH and BRIDGE contacts), patent and trademark registers.',m:'Case study, interviews, register analysis, competitor benchmarking.'},
+'strategy|ai':{lv:'MSc',t:'Whose face is it? Managing likeness in the AI era',
+ p:'Companies now license faces and voices they can synthesise indefinitely. Map how they govern that in practice.',
+ rq:['How do firms and agencies contract for likeness and voice rights today?','What internal rules govern the use of AI in campaigns?','Which reputational risks do managers see — and how do they price them?'],
+ d:'Contracts, brand guidelines and expert interviews; builds on our publicity-rights research.',m:'Interviews, document analysis, comparative case study.'},
+'strategy|open':{lv:'MSc',t:'The business model of giving things away',
+ p:'Some museums open everything, others sell licences. Compare the strategies and what they actually deliver.',
+ rq:['Which business models do cultural institutions build around their digital collections?','What do open institutions gain and lose commercially?','How is the decision justified internally, and who drives it?'],
+ d:'Institutional reports, licensing pages, interviews with digital and commercial leads.',m:'Comparative case study, business model analysis, interviews.'},
+'strategy|market':{lv:'BSc / MSc',t:'How galleries and auction houses compete',
+ p:'The art trade is a business with portfolios, channels and pricing power. Study it as one.',
+ rq:['How do intermediaries build and manage their roster of artists?','How has digital selling changed the model?','What determines who gets represented in the first place?'],
+ d:'Gallery and auction house records, expert interviews, exhibition data.',m:'Case study, interviews, descriptive market analysis.'},
+'strategy|media':{lv:'MSc',t:'How creative projects get financed',
+ p:'Films, games and books are financed against assets you cannot touch. Map how those deals are actually structured.',
+ rq:['What role does IP play as collateral in financing?','How are risk and creative control split between the parties?','What changed once streaming platforms became financiers?'],
+ d:'UCC filings, contracts and practitioner interviews; builds on our film-finance paper.',m:'Document analysis, interviews, deal-structure comparison.'},
+
+'impact|ip':{lv:'MSc',t:'What preservation really costs',
+ p:'Legal duties to archive and preserve have a physical and financial footprint. Quantify it.',
+ rq:['What resources does long-term digital preservation actually consume?','How do rights restrictions change preservation practice and cost?','Where could institutions save without losing access?'],
+ d:'Institutional data from the ReVerDi project, storage and energy figures.',m:'Lifecycle costing, life cycle assessment, institutional interviews.'},
+'impact|ai':{lv:'BSc / MSc',t:'The footprint of a creative AI workflow',
+ p:'Measure what it really costs — in energy, money and time — to put generative AI into a creative production process.',
+ rq:['What is the footprint of AI-assisted versus conventional production?','Does AI substitute for work, or quietly add more of it?','At what level of use does it stop paying off?'],
+ d:'Workflow logs, published energy benchmarks, interviews with firms using these tools.',m:'Life cycle assessment, cost-benefit analysis, process comparison.'},
+'impact|open':{lv:'MSc',t:'Is digital access greener than a visit?',
+ p:'Digitizing a collection has a footprint; so does every visitor\'s train ride. Compare them properly instead of assuming.',
+ rq:['What is the footprint of digitizing and hosting a collection?','How does it compare with physical access?','At what level of online use does digitization pay off environmentally?'],
+ d:'ReVerDi data from national libraries (British Library, KB Netherlands, Swiss National Library).',m:'Life Cycle Sustainability Assessment, scenario modelling.'},
+'impact|market':{lv:'BSc / MSc',t:'The carbon cost of the art world',
+ p:'Fairs, air freight, climate-controlled storage, collectors flying in — nobody has properly priced the art market\'s footprint.',
+ rq:['What is the footprint of a major art fair or an auction cycle?','Which activities dominate it?','What would credible reduction look like without breaking the business model?'],
+ d:'Fair and auction schedules, logistics data, published sustainability reports.',m:'Life cycle assessment, scenario analysis, benchmarking.'},
+'impact|media':{lv:'BSc',t:'Print or screen — which is actually greener?',
+ p:'Extend our book-industry study to another medium and settle the question with numbers rather than intuition.',
+ rq:['What is the footprint of digital versus physical consumption in this medium?','How much does user behaviour — device, re-reads, streaming quality — change the answer?','Where exactly is the break-even point?'],
+ d:'Our book-industry assessment as the template, plus usage statistics for the medium you pick.',m:'Life cycle assessment combined with economic analysis.'}
+};
+
+let tA = null, tF = null, tTouched = false;
+$('#tcombos').textContent = T_APPROACH.length * T_FIELD.length;
+const chipHTML = (arr,off,dice) => arr.map((x,i)=>`<button class="tchip" data-k="${x.k}" style="--d:${(off+i)*.07}s"><b>${x.l}</b>${x.s?`<span>${x.s}</span>`:''}</button>`).join('')
+  + (dice?'<button class="tdice" id="tdice">🎲 surprise me</button>':'');
+$('#tapproach').innerHTML = chipHTML(T_APPROACH,0,true);
+$('#tfield').innerHTML = chipHTML(T_FIELD,T_APPROACH.length,false);
+
+function renderTopic(){
+  const box = $('#tresult');
+  if(!tA || !tF){ return; }
+  const x = T_TOPICS[tA+'|'+tF];
+  if(!x){ box.innerHTML = '<div class="tempty">No ready-made idea for this combination yet — but that is often where the good ones hide. <a href="mailto:matthias.sahli@bfh.ch">Write me</a> and we build it from scratch.</div>'; return; }
+  const aL = T_APPROACH.find(a=>a.k===tA).l, fL = T_FIELD.find(f=>f.k===tF).l;
+  const subject = encodeURIComponent('Thesis topic: '+x.t);
+  const body = encodeURIComponent(`Hi Matthias,\n\nI came across this starting point on your website and would like to discuss it:\n\n"${x.t}" (${aL} × ${fL})\n\nA bit about me:\n- Programme / level:\n- When I want to start:\n- What interests me about it:\n\nBest regards,`);
+  box.innerHTML = `<div class="tres">
+    <div class="trmeta">${x.lv} · ${aL} × ${fL}</div>
+    <h4>${x.t}</h4>
+    <p class="trpitch">${x.p}</p>
+    <div class="trgrid">
+      <div><h5>Research questions to start from</h5><ol>${x.rq.map(r=>`<li>${r}</li>`).join('')}</ol></div>
+      <div><h5>Data you'd work with</h5><p>${x.d}</p><h5>Methods</h5><p>${x.m}</p></div>
+    </div>
+    <div class="trfoot">
+      <span class="aiflag"><b>⚡ Generated with AI</b> from my published work — a starting point, not a finished topic. Every thesis I supervise gets shaped in conversation, so please get in touch and we'll find the angle that fits you.</span>
+      <a class="btn primary" href="mailto:matthias.sahli@bfh.ch?subject=${subject}&body=${body}">Let's talk about it →</a>
+    </div>
+  </div>`;
+}
+/* step 2 stays locked until step 1 is answered — makes the "combine two" idea obvious */
+function syncSteps(){
+  $('#tstep1').classList.toggle('done', !!tA);
+  $('#tstep2').classList.toggle('locked', !tA);
+  $('#tstep2').classList.toggle('done', !!tF);
+  $('#tjoin1').classList.toggle('hot', !!tA);
+  $('#tjoin2').classList.toggle('hot', !!(tA && tF));
+}
+function wireChips(sel, set){
+  $$(sel+' .tchip').forEach(c=>c.onclick=()=>{
+    tTouched = true;
+    $$(sel+' .tchip').forEach(x=>x.classList.toggle('on', x===c));
+    set(c.dataset.k); syncSteps(); renderTopic();
+  });
+}
+wireChips('#tapproach', k=>tA=k);
+wireChips('#tfield',    k=>tF=k);
+$('#tdice').onclick = ()=>{
+  tTouched = true;
+  tA = T_APPROACH[Math.floor(Math.random()*T_APPROACH.length)].k;
+  tF = T_FIELD[Math.floor(Math.random()*T_FIELD.length)].k;
+  $$('#tapproach .tchip').forEach(x=>x.classList.toggle('on', x.dataset.k===tA));
+  $$('#tfield .tchip').forEach(x=>x.classList.toggle('on', x.dataset.k===tF));
+  syncSteps(); renderTopic();
+};
+
+/* wake the panel up when it scrolls into view: chips cascade in, and if nobody
+   has clicked after a moment, row 1 gives a single quiet nudge */
+new IntersectionObserver((es,obs)=>es.forEach(e=>{
+  if(!e.isIntersecting) return;
+  obs.unobserve(e.target);
+  e.target.classList.add('live');
+  setTimeout(()=>{
+    if(tTouched) return;
+    $$('#tapproach .tchip').forEach((c,i)=>setTimeout(()=>{
+      if(tTouched) return;
+      c.classList.add('nudge');
+      setTimeout(()=>c.classList.remove('nudge'), 900);
+    }, i*110));
+  }, 2600);
+}),{threshold:.25}).observe($('#thesis'));
 
 /* ---- reveals ---- */
 const io = new IntersectionObserver(es=>es.forEach(e=>{
@@ -631,9 +868,17 @@ const io = new IntersectionObserver(es=>es.forEach(e=>{
 }),{threshold:.18});
 $$('.rv').forEach(el=>io.observe(el));
 
+/* ---- first paint, then pull the freshest data the workflow has written ---- */
+paintData();
+fetch('data/publications.json', {cache:'no-store'})
+  .then(r => r.ok ? r.json() : null)
+  .then(d => {
+    if(d && Array.isArray(d.publications) && d.publications.length){ DATA = d; paintData(); }
+  })
+  .catch(()=>{ /* offline or opened as a local file — the baked-in copy stays */ });
+
 /* ---- misc ---- */
 $('#yy').textContent = new Date().getFullYear();
-$('#stamp').textContent = 'updated ' + (DATA.generated || '—');
 </script>
 </body>
 </html>
