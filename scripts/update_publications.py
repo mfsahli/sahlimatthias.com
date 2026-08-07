@@ -167,6 +167,13 @@ def main():
                     seen.add(hit["id"])
                     if isinstance(cby.get("value"), int):
                         hit["citations"] = cby["value"]           # Scholar count wins (merged versions)
+                    # auto-added entries are re-sorted on every run, so columns,
+                    # award notices etc. cannot get stuck in the wrong bucket
+                    if hit.get("manual") is False:
+                        newst = classify(hit.get("venue"), hit.get("year"), hit.get("title"))
+                        if newst != hit.get("status"):
+                            log.append(f"re-sorted '{hit['id']}': {hit.get('status')} -> {newst}")
+                            hit["status"] = newst
                     if surl:
                         hit["scholarUrl"] = surl
                     if hit.get("status") in ("review", "progress") and a.get("publication"):
