@@ -43,9 +43,13 @@ OPENALEX_AUTHOR_ID = ""
 #
 # Map Scholar duplicates onto existing manual entries: {auto_added_id: existing_id}.
 # Citations + Scholar link are merged into the existing entry, the duplicate is removed.
+# Older/renamed versions of a paper that Scholar still lists separately.
+# Their citations and Scholar link are folded into the entry on the right,
+# and the duplicate is removed. (Cleanest long-term fix: merge the versions
+# on your Scholar profile itself — then only one entry ever arrives here.)
 DUPLICATE_OF = {
-    # ACEI working-paper version of the gender paper = the Noll co-authored working paper
-    "careers-of-female-artists-gender-bias-in": "gender-auctions",
+    "careers-of-female-artists-gender-bias-in": "gender-auctions",   # ACEI WP version
+    "going-once-going-twice-sold-investigatin": "gender-auctions",   # 2024 title
 }
 
 # Status buckets used on the website:
