@@ -231,8 +231,13 @@ def main():
             log.append(f"merged duplicate '{dup_id}' into '{target_id}'")
 
     # ---------------- recompute derived metrics
-    data["metrics"]["publications"] = len(pubs)
-    data["metrics"]["venues"] = len({p["venue"] for p in pubs if p.get("status") == "published"})
+    # entries you hid in the control room stay in the file (so Scholar keeps
+    # updating their citation count) but count for nothing that is displayed
+    visible = [p for p in pubs if not p.get("hidden")]
+    data["metrics"]["publications"] = len(visible)
+    data["metrics"]["venues"] = len({p["venue"] for p in visible if p.get("status") == "published"})
+    if len(visible) != len(pubs):
+        log.append(f"{len(pubs) - len(visible)} entr(y/ies) hidden in the control room, not counted")
     data["generated"] = datetime.date.today().isoformat()
 
     # ---------------- write data file
