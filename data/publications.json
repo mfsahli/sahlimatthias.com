@@ -1,8 +1,8 @@
 {
-  "generated": "2026-08-07",
+  "generated": "2026-08-08",
   "source": "google_scholar (mirror) + manual pipeline info",
   "metrics": {
-    "publications": 20,
+    "publications": 21,
     "citations": 66,
     "hIndex": 4,
     "venues": 5,
@@ -400,6 +400,22 @@
       "links": [],
       "manual": false,
       "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:iH-uZ7U-co4C"
+    },
+    {
+      "id": "organisational-environmental-life-cycle",
+      "title": "Organisational environmental life cycle assessment of three European national libraries",
+      "short": "Organisational environmental life cycle asse…",
+      "authors": "James Suckling1, Jan Bieser, Michael Day, Nick Ilott, Mi Lin,  Jeff Love, Marco Martens, Richard Murphy, Matthias Nepfer, Maureen Pennock, Uta Pottgiesser, Matthias Sahli, Oliver Sievi, and Jonathan Chenoweth",
+      "venue": "Working paper",
+      "year": 2026,
+      "status": "progress",
+      "note": "In preparation",
+      "tags": [
+        "sus"
+      ],
+      "citations": 0,
+      "links": [],
+      "manual": true
     }
   ]
 }
