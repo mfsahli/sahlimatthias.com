@@ -145,6 +145,8 @@ main{padding:34px 0 90px}
   cursor:pointer;display:grid;place-items:center;transition:all .18s;color:var(--ink2)}
 .mini:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-1px)}
 .mini.del:hover{border-color:var(--red);color:var(--red)}
+.mini.eye.off{border-color:var(--red);color:var(--red)}
+.row.dim .ttl,.row.dim .sub,.row.dim .when{opacity:.45}
 .mini.armed{background:var(--red);border-color:var(--red);color:#fff;width:auto;padding:0 10px;font-size:.7rem;font-weight:700}
 .empty{padding:38px 20px;text-align:center;color:var(--ink3);font-size:.88rem}
 .foothint{font-size:.78rem;color:var(--ink3);margin-top:14px;line-height:1.5}
@@ -531,13 +533,13 @@ function computeTodos(){
   if (stale.length) t.push({ n: stale.length, txt: 'upcoming talks are already in the past', one: 'upcoming talk is already in the past',
     tab: 'talk', f: x => x.scheduled && monthKey(x.date) < nowKey(), lb: 'overdue talks' });
 
-  const noLink = pubs.filter(p => !(p.links || []).length);
+  const noLink = pubs.filter(p => !p.hidden && !(p.links || []).length);
   if (noLink.length) t.push({ n: noLink.length, txt: 'papers without a working paper or DOI link', one: 'paper without a working paper or DOI link',
-    tab: 'paper', f: p => !(p.links || []).length, lb: 'papers without a link' });
+    tab: 'paper', f: p => !p.hidden && !(p.links || []).length, lb: 'papers without a link' });
 
-  const longReview = pubs.filter(p => p.status === 'review' && p.year && p.year <= thisYear() - 1);
+  const longReview = pubs.filter(p => !p.hidden && p.status === 'review' && p.year && p.year <= thisYear() - 1);
   if (longReview.length) t.push({ n: longReview.length, txt: 'papers have been under review for over a year', one: 'paper has been under review for over a year',
-    tab: 'paper', f: p => p.status === 'review' && p.year && p.year <= thisYear() - 1, lb: 'long under review' });
+    tab: 'paper', f: p => !p.hidden && p.status === 'review' && p.year && p.year <= thisYear() - 1, lb: 'long under review' });
 
   const noUrl = out.filter(m => !m.url);
   if (noUrl.length) t.push({ n: noUrl.length, txt: 'media entries without a link', one: 'media entry without a link',
@@ -584,12 +586,13 @@ $$('.add').forEach(b => b.onclick = () => openWizard(b.dataset.new, null));
 function render(){
   if (!CV || !PUBS) return;
   const talks = CV.talks || [], pubs = PUBS.publications || [], others = otherItems();
+  const shown = pubs.filter(p => !p.hidden).length, hidden = pubs.length - shown;
   $('#ntalk').textContent  = ' ' + talks.length;
-  $('#npaper').textContent = ' ' + pubs.length;
+  $('#npaper').textContent = ' ' + shown + (hidden ? ' +' + hidden : '');
   $('#nother').textContent = ' ' + others.length;
   const upcoming = talks.filter(t => t.scheduled).length;
   $('#sub').innerHTML = talks.length + ' talks (' + upcoming + ' upcoming) · ' + pubs.length +
-    ' papers · ' + others.length + ' other entries · data from ' + esc(PUBS.generated || '–');
+    ' papers' + (hidden ? ' (' + hidden + ' hidden)' : '') + ' · ' + others.length + ' other entries · data from ' + esc(PUBS.generated || '–');
 
   const chip = $('#fchip');
   chip.classList.toggle('on', !!FILTER);
@@ -600,7 +603,12 @@ function render(){
   wireRows();
 }
 
-const acts = (noDel) => '<div class="acts"><button class="mini ed" title="Edit">✎</button>' +
+const acts = (noDel, hideState) => '<div class="acts">' +
+  (hideState === undefined ? '' :
+    '<button class="mini eye' + (hideState ? ' off' : '') + '" title="' +
+    (hideState ? 'Show again on the website and in the CV' : 'Hide from the website and the CV') + '">' +
+    (hideState ? '🚫' : '👁') + '</button>') +
+  '<button class="mini ed" title="Edit">✎</button>' +
   (noDel ? '' : '<button class="mini del" title="Delete">🗑</button>') + '</div>';
 
 function talkList(talks){
@@ -635,11 +643,12 @@ function paperList(pubs){
     const col = (STATUS[o.p.status] || [, 'var(--ink3)'])[1];
     const note = o.p.note ? '<span class="pill" style="color:' + col + '">' + esc(o.p.note) + '</span>' : '';
     const auto = o.p.manual === false ? '<span class="pill" style="color:var(--ink3)">automatic</span>' : '';
-    h += '<div class="row" data-i="' + o.i + '">' +
+    const hid  = o.p.hidden ? '<span class="pill" style="color:var(--red)">hidden</span>' : '';
+    h += '<div class="row' + (o.p.hidden ? ' dim' : '') + '" data-i="' + o.i + '">' +
       '<div class="when">' + esc(o.p.year || '') + '</div>' +
-      '<div class="body"><div class="ttl">' + esc(o.p.title) + note + auto + '</div>' +
+      '<div class="body"><div class="ttl">' + esc(o.p.title) + note + auto + hid + '</div>' +
       '<div class="sub">' + esc(o.p.authors || '') + (o.p.venue ? ' · ' + esc(o.p.venue) : '') + '</div></div>' +
-      acts() + '</div>';
+      acts(false, !!o.p.hidden) + '</div>';
   });
   return h;
 }
@@ -672,6 +681,8 @@ function wireRows(){
     const open = () => TAB === 'other' ? openWizard('other', i, k) : openWizard(TAB, i);
     r.onclick = e => { if (!e.target.closest('.acts')) open(); };
     r.querySelector('.ed').onclick = open;
+    const eye = r.querySelector('.eye');
+    if (eye) eye.onclick = () => toggleHidden(i);
     const d = r.querySelector('.del');
     if (!d) return;
     d.onclick = () => {
@@ -1150,7 +1161,7 @@ function uniqueId(base, skip){
   return base + '-' + n;
 }
 function recomputeMetrics(){
-  const pubs = PUBS.publications || [];
+  const pubs = (PUBS.publications || []).filter(p => !p.hidden);
   PUBS.metrics = PUBS.metrics || {};
   PUBS.metrics.publications = pubs.length;
   PUBS.metrics.venues = new Set(pubs.filter(p => p.status === 'published' && p.venue).map(p => p.venue)).size;
@@ -1185,7 +1196,8 @@ async function save(){
       p.citations = d.citations || 0;
       if ((d.finding || '').trim()) p.finding = d.finding.trim();
       p.links  = d.links || [];
-      p.manual = true;
+      p.manual = d.manual === false ? false : true;
+      if (d.hidden) p.hidden = true;
       PUBS.publications = PUBS.publications || [];
       if (W.editIndex === null) PUBS.publications.push(p); else PUBS.publications[W.editIndex] = p;
       recomputeMetrics();
@@ -1210,6 +1222,24 @@ async function save(){
     toast('Not saved: ' + esc(err.message) + ' Press ↻ and try again.', true);
   } finally {
     if (W){ $('#next').disabled = false; paintStep(); }
+  }
+}
+
+/* hiding keeps the entry in the file, so Scholar goes on updating its citation
+   count, but takes it off the website, out of the CV and out of the counters */
+async function toggleHidden(i){
+  const p = PUBS.publications[i];
+  const now = !p.hidden;
+  try {
+    if (now) p.hidden = true; else delete p.hidden;
+    recomputeMetrics();
+    await writeFile(FILE_PUBS, PUBS, (now ? 'paper: hide ' : 'paper: show ') + (p.title || '').slice(0, 60));
+    render();
+    toast(now ? 'Hidden. Gone from the website right away, out of the CV in about two minutes.'
+              : 'Visible again. The CV is being rebuilt.');
+  } catch (err){
+    toast('Not saved: ' + esc(err.message), true);
+    boot();
   }
 }
 
