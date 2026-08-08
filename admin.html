@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow,noarchive">
-<title>Kontrollraum</title>
+<title>Control room</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
@@ -228,25 +228,25 @@ main{padding:34px 0 90px}
   <div class="gatecard">
     <div class="gatetop"><span>SAHLI·TRON 2000 — CONTROL ROOM<span class="cur"></span></span></div>
     <div class="gatebody">
-      <h1>Kontrollraum</h1>
-      <p>Talks, Papers und alles Weitere ergänzen, ohne Code anzufassen. Website und CV aktualisieren sich danach von selbst.</p>
+      <h1>Control room</h1>
+      <p>Add talks, papers and everything else without touching code. The website and the CV update themselves afterwards.</p>
       <label class="field">
-        <span class="lb">GitHub-Token</span>
+        <span class="lb">GitHub token</span>
         <input id="tok" class="inp" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
       </label>
       <label class="check">
         <input id="remember" type="checkbox" checked>
-        <span>Auf diesem Gerät gespeichert lassen. Ohne Haken gilt der Token nur für diesen Tab.</span>
+        <span>Keep it stored on this device. Without the tick the token only lasts for this tab.</span>
       </label>
-      <button id="dologin" class="btn primary wide">Öffnen</button>
+      <button id="dologin" class="btn primary wide">Open</button>
       <div id="loginerr" class="err hide"></div>
       <div class="help">
-        Der Token wird nicht auf der Website hinterlegt, sondern nur bei GitHub geprüft.
-        Verloren gegangen? Auf GitHub widerrufen und einen neuen erstellen.
+        The token is never stored on the website, it is only verified with GitHub.
+        Lost it? Revoke it on GitHub and create a new one.
         <br><br>
-        <a href="#" id="cfgtoggle">Repository ändern</a>
+        <a href="#" id="cfgtoggle">Change repository</a>
         <span id="cfgbox" class="hide">
-          <input id="repoinp" class="inp" style="margin-top:8px" placeholder="benutzer/repository">
+          <input id="repoinp" class="inp" style="margin-top:8px" placeholder="user/repository">
         </span>
       </div>
     </div>
@@ -256,44 +256,44 @@ main{padding:34px 0 90px}
 <!-- ============================================================ APP -->
 <div id="app" class="hide">
   <div class="top"><div class="wrap topin">
-    <div class="mark"><span class="led"></span>Kontrollraum</div>
+    <div class="mark"><span class="led"></span>Control room</div>
     <div class="spacer"></div>
-    <button class="iconbtn" id="reload" title="Neu laden">↻</button>
-    <button class="iconbtn" id="theme" title="Hell / dunkel">◐</button>
-    <button class="iconbtn" id="logout">Abmelden</button>
+    <button class="iconbtn" id="reload" title="Reload">↻</button>
+    <button class="iconbtn" id="theme" title="Light / dark">◐</button>
+    <button class="iconbtn" id="logout">Sign out</button>
   </div></div>
 
   <main class="wrap">
-    <h1 class="hello">Was gibt's Neues?</h1>
+    <h1 class="hello">What's new?</h1>
     <p class="hellosub" id="sub"></p>
 
     <div class="adds">
       <button class="add" data-new="talk" style="--ac:var(--blue)">
         <div class="ic">🎤</div><h3>Talk</h3>
-        <p>Konferenz, Vortrag, Panel.</p><div class="go">→</div>
+        <p>Conference, seminar, panel.</p><div class="go">→</div>
       </button>
       <button class="add" data-new="paper" style="--ac:var(--red)">
         <div class="ic">📄</div><h3>Paper</h3>
-        <p>Working Paper, Submission, Publikation.</p><div class="go">→</div>
+        <p>Working paper, submission, publication.</p><div class="go">→</div>
       </button>
       <button class="add" data-new="other" style="--ac:var(--ochre)">
-        <div class="ic">✳️</div><h3>Weiteres</h3>
-        <p>Medienecho, Lehre, Förderung, Service.</p><div class="go">→</div>
+        <div class="ic">✳️</div><h3>Everything else</h3>
+        <p>Media, teaching, funding, service.</p><div class="go">→</div>
       </button>
     </div>
 
-    <div class="todos hide" id="todos"><h4>Fällig</h4><div id="todolist"></div></div>
+    <div class="todos hide" id="todos"><h4>Needs attention</h4><div id="todolist"></div></div>
 
     <div class="tabs">
       <button class="tab on" data-tab="talk">Talks<span class="n" id="ntalk"></span></button>
       <button class="tab" data-tab="paper">Papers<span class="n" id="npaper"></span></button>
-      <button class="tab" data-tab="other">Weiteres<span class="n" id="nother"></span></button>
-      <input id="q" class="search" placeholder="Suchen…">
+      <button class="tab" data-tab="other">Else<span class="n" id="nother"></span></button>
+      <input id="q" class="search" placeholder="Search…">
     </div>
     <button class="fchip" id="fchip"></button>
     <div class="list" id="list"></div>
-    <p class="foothint">Jede Änderung ist ein Commit auf GitHub, mit Zeitstempel und Vorher-Nachher.
-      Gelöschtes wandert ins Archiv der Datei statt verloren zu gehen.</p>
+    <p class="foothint">Every change is a commit on GitHub, with a timestamp and a before-and-after.
+      Deleted entries move into the file's archive instead of disappearing.</p>
   </main>
 </div>
 
@@ -308,10 +308,10 @@ main{padding:34px 0 90px}
     </div>
     <div class="sbody" id="sbody"></div>
     <div class="foot">
-      <button class="btn ghost" id="back">← Zurück</button>
+      <button class="btn ghost" id="back">← Back</button>
       <div class="spacer"></div>
       <span class="note" id="fnote"></span>
-      <button class="btn primary" id="next">Weiter →</button>
+      <button class="btn primary" id="next">Next →</button>
     </div>
   </div>
 </div>
@@ -343,30 +343,30 @@ const STATUS = {
   published: ['Peer-reviewed', 'var(--green)'],
   review   : ['Under review',  'var(--ochre)'],
   progress : ['Work in progress', 'var(--purple)'],
-  other    : ['Anderes', 'var(--ink3)']
+  other    : ['Other', 'var(--ink3)']
 };
 const MONTHS = ['01','02','03','04','05','06','07','08','09','10','11','12'];
-const MONTHNAMES = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const MONTHNAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 /* the six shapes behind the "Weiteres" card, each writing into its own array */
 const KINDS = {
-  outreach : {icon:'📣', label:'Medienecho & Outreach', arr:'outreach',
-              hint:'Podcast, Kolumne, Blogbeitrag, Videoaufzeichnung, Bericht.'},
-  teaching : {icon:'🎓', label:'Lehre', arr:'teaching',
-              hint:'Neues Modul, neuer Kurs, neue Hochschule.'},
-  grants   : {icon:'🏆', label:'Förderung & Preis', arr:'grants',
-              hint:'Drittmittel, Auszeichnung, Reisestipendium.'},
-  policy   : {icon:'🏛️', label:'Policy-Arbeit', arr:'policy',
-              hint:'Eingabe, Stellungnahme, Beratungsmandat.'},
-  organized: {icon:'📅', label:'Organisierte Konferenz', arr:'organized',
-              hint:'Konferenz, Workshop oder Seminar, das du mitorganisiert hast.'},
-  highlight: {icon:'✨', label:'Startseiten-Highlight', arr:'highlights',
-              hint:'Die kurzen Pillen im Abschnitt „Beyond papers" auf der Startseite.'},
-  service  : {icon:'🔍', label:'Peer Review & Mitgliedschaften', arr:'service', single:true,
-              hint:'Zwei Zeilen, die du direkt überschreibst.'}
+  outreach : {icon:'📣', label:'Media & outreach', arr:'outreach',
+              hint:'Podcast, column, blog post, recording, report.'},
+  teaching : {icon:'🎓', label:'Teaching', arr:'teaching',
+              hint:'A new module, a new course, a new school.'},
+  grants   : {icon:'🏆', label:'Funding & awards', arr:'grants',
+              hint:'Third-party funding, prize, travel grant.'},
+  policy   : {icon:'🏛️', label:'Policy work', arr:'policy',
+              hint:'Submission, statement, advisory mandate.'},
+  organized: {icon:'📅', label:'Organized event', arr:'organized',
+              hint:'A conference, workshop or seminar you helped organize.'},
+  highlight: {icon:'✨', label:'Homepage highlight', arr:'highlights',
+              hint:'The short pills in the Beyond papers strip on the homepage.'},
+  service  : {icon:'🔍', label:'Peer review & memberships', arr:'service', single:true,
+              hint:'Two lines you overwrite directly.'}
 };
-const OUTREACH_KINDS = {podcast:'Podcast', column:'Kolumne', blog:'Blog', video:'Videoaufzeichnung',
-                        report:'Bericht / Note', press:'Presse'};
+const OUTREACH_KINDS = {podcast:'Podcast', column:'Column', blog:'Blog', video:'Recording',
+                        report:'Report / note', press:'Press'};
 
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -398,10 +398,10 @@ async function gh(path, opts = {}){
   if (!r.ok){
     let m = r.status + '';
     try { const j = await r.json(); m += ' · ' + (j.message || ''); } catch(e){}
-    if (r.status === 401) m = 'Token ungültig oder abgelaufen.';
-    if (r.status === 404) m = 'Repository oder Datei nicht gefunden (' + REPO + ').';
-    if (r.status === 403) m = 'Der Token hat keine Schreibrechte auf dieses Repository.';
-    if (r.status === 409) m = 'Die Datei wurde zwischenzeitlich geändert.';
+    if (r.status === 401) m = 'Token invalid or expired.';
+    if (r.status === 404) m = 'Repository or file not found (' + REPO + ').';
+    if (r.status === 403) m = 'The token has no write access to this repository.';
+    if (r.status === 409) m = 'The file changed in the meantime.';
     throw new Error(m);
   }
   return r.status === 204 ? null : r.json();
@@ -428,8 +428,8 @@ function toast(msg, bad){
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('on'), bad ? 9000 : 6500);
 }
-const savedToast = () => toast('Gespeichert. Die Website zeigt es sofort, der CV wird in rund zwei Minuten neu gebaut. ' +
-  '<a href="https://github.com/' + REPO + '/actions" target="_blank" rel="noopener">Fortschritt ansehen</a>');
+const savedToast = () => toast('Saved. The website shows it right away, the CV is rebuilt in about two minutes. ' +
+  '<a href="https://github.com/' + REPO + '/actions" target="_blank" rel="noopener">Watch it happen</a>');
 
 /* ================================================================== login */
 $('#cfgtoggle').onclick = e => {
@@ -447,7 +447,7 @@ async function login(){
   if (val) TOKEN = val;
   if (!TOKEN) return;
   const btn = $('#dologin');
-  btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Prüfe…';
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Checking…';
   $('#loginerr').classList.add('hide');
   try {
     await gh('');
@@ -459,20 +459,20 @@ async function login(){
     $('#loginerr').textContent = err.message;
     $('#loginerr').classList.remove('hide');
   } finally {
-    btn.disabled = false; btn.textContent = 'Öffnen';
+    btn.disabled = false; btn.textContent = 'Open';
   }
 }
 
 async function boot(){
   $('#gate').classList.add('hide');
   $('#app').classList.remove('hide');
-  $('#sub').textContent = 'Lade Daten…';
+  $('#sub').textContent = 'Loading…';
   try {
     const [cv, pubs] = await Promise.all([readFile(FILE_CV), readFile(FILE_PUBS)]);
     CV = cv; PUBS = pubs;
     render();
   } catch (err){
-    $('#sub').textContent = 'Konnte nicht laden: ' + err.message;
+    $('#sub').textContent = 'Could not load: ' + err.message;
   }
 }
 
@@ -508,7 +508,7 @@ function otherText(o){
 }
 function otherTitle(o){
   const it = o.it;
-  if (o.kind === 'service') return 'Peer Review & Mitgliedschaften';
+  if (o.kind === 'service') return 'Peer review & memberships';
   if (o.kind === 'highlight') return it.text || '';
   if (o.kind === 'teaching') return it.org || '';
   return it.what || '';
@@ -516,7 +516,7 @@ function otherTitle(o){
 function otherSub(o){
   const it = o.it;
   if (o.kind === 'service') return (it.reviewing || '').slice(0, 70) + '…';
-  if (o.kind === 'highlight') return 'Startseite · Beyond papers';
+  if (o.kind === 'highlight') return 'Homepage · Beyond papers';
   if (o.kind === 'teaching') return it.role || '';
   if (o.kind === 'outreach') return [OUTREACH_KINDS[it.kind] || '', it.where].filter(Boolean).join(' · ');
   return it.role || '';
@@ -528,28 +528,28 @@ function computeTodos(){
   const t = [], talks = CV.talks || [], pubs = PUBS.publications || [], out = CV.outreach || [];
 
   const stale = talks.filter(x => x.scheduled && monthKey(x.date) < nowKey());
-  if (stale.length) t.push({ n: stale.length, txt: 'geplante Talks liegen in der Vergangenheit', one: 'geplanter Talk liegt in der Vergangenheit',
-    tab: 'talk', f: x => x.scheduled && monthKey(x.date) < nowKey(), lb: 'überfällige Talks' });
+  if (stale.length) t.push({ n: stale.length, txt: 'upcoming talks are already in the past', one: 'upcoming talk is already in the past',
+    tab: 'talk', f: x => x.scheduled && monthKey(x.date) < nowKey(), lb: 'overdue talks' });
 
   const noLink = pubs.filter(p => !(p.links || []).length);
-  if (noLink.length) t.push({ n: noLink.length, txt: 'Papers ohne Link zu Working Paper oder DOI', one: 'Paper ohne Link zu Working Paper oder DOI',
-    tab: 'paper', f: p => !(p.links || []).length, lb: 'Papers ohne Link' });
+  if (noLink.length) t.push({ n: noLink.length, txt: 'papers without a working paper or DOI link', one: 'paper without a working paper or DOI link',
+    tab: 'paper', f: p => !(p.links || []).length, lb: 'papers without a link' });
 
   const longReview = pubs.filter(p => p.status === 'review' && p.year && p.year <= thisYear() - 1);
-  if (longReview.length) t.push({ n: longReview.length, txt: 'Papers seit über einem Jahr im Review-Status', one: 'Paper seit über einem Jahr im Review-Status',
-    tab: 'paper', f: p => p.status === 'review' && p.year && p.year <= thisYear() - 1, lb: 'lange im Review' });
+  if (longReview.length) t.push({ n: longReview.length, txt: 'papers have been under review for over a year', one: 'paper has been under review for over a year',
+    tab: 'paper', f: p => p.status === 'review' && p.year && p.year <= thisYear() - 1, lb: 'long under review' });
 
   const noUrl = out.filter(m => !m.url);
-  if (noUrl.length) t.push({ n: noUrl.length, txt: 'Medieneinträge ohne Link', one: 'Medieneintrag ohne Link',
-    tab: 'other', f: o => o.kind === 'outreach' && !o.it.url, lb: 'Medien ohne Link' });
+  if (noUrl.length) t.push({ n: noUrl.length, txt: 'media entries without a link', one: 'media entry without a link',
+    tab: 'other', f: o => o.kind === 'outreach' && !o.it.url, lb: 'media without a link' });
 
   const noDate = out.filter(m => !m.date);
-  if (noDate.length) t.push({ n: noDate.length, txt: 'Medieneinträge ohne Jahr', one: 'Medieneintrag ohne Jahr',
-    tab: 'other', f: o => o.kind === 'outreach' && !o.it.date, lb: 'Medien ohne Jahr' });
+  if (noDate.length) t.push({ n: noDate.length, txt: 'media entries without a year', one: 'media entry without a year',
+    tab: 'other', f: o => o.kind === 'outreach' && !o.it.date, lb: 'media without a year' });
 
   const rec = talks.filter(x => /recording|aufzeichnung/i.test(x.note || '') && !x.url);
-  if (rec.length) t.push({ n: rec.length, txt: 'Talks mit Aufzeichnung, aber ohne Link', one: 'Talk mit Aufzeichnung, aber ohne Link',
-    tab: 'talk', f: x => /recording|aufzeichnung/i.test(x.note || '') && !x.url, lb: 'Aufzeichnungen ohne Link' });
+  if (rec.length) t.push({ n: rec.length, txt: 'talks have a recording but no link', one: 'talk has a recording but no link',
+    tab: 'talk', f: x => /recording|aufzeichnung/i.test(x.note || '') && !x.url, lb: 'recordings without a link' });
 
   return t;
 }
@@ -560,7 +560,7 @@ function paintTodos(){
   box.classList.remove('hide');
   $('#todolist').innerHTML = t.map((x, i) =>
     '<div class="todo"><b>' + x.n + '</b> ' + esc(x.n === 1 && x.one ? x.one : x.txt) +
-    '<button data-todo="' + i + '">zeigen</button></div>').join('');
+    '<button data-todo="' + i + '">show</button></div>').join('');
   $$('#todolist button').forEach(b => b.onclick = () => {
     const x = t[+b.dataset.todo];
     TAB = x.tab; FILTER = x.f; FILTER_LABEL = x.lb; QUERY = ''; $('#q').value = '';
@@ -588,27 +588,27 @@ function render(){
   $('#npaper').textContent = ' ' + pubs.length;
   $('#nother').textContent = ' ' + others.length;
   const upcoming = talks.filter(t => t.scheduled).length;
-  $('#sub').innerHTML = talks.length + ' Talks (' + upcoming + ' geplant) · ' + pubs.length +
-    ' Papers · ' + others.length + ' weitere Einträge · Stand ' + esc(PUBS.generated || '–');
+  $('#sub').innerHTML = talks.length + ' talks (' + upcoming + ' upcoming) · ' + pubs.length +
+    ' papers · ' + others.length + ' other entries · data from ' + esc(PUBS.generated || '–');
 
   const chip = $('#fchip');
   chip.classList.toggle('on', !!FILTER);
-  chip.textContent = FILTER ? 'Gefiltert: ' + FILTER_LABEL + '  ×' : '';
+  chip.textContent = FILTER ? 'Filtered: ' + FILTER_LABEL + '  ×' : '';
 
   $('#list').innerHTML = TAB === 'talk' ? talkList(talks) : TAB === 'paper' ? paperList(pubs) : otherList(others);
   paintTodos();
   wireRows();
 }
 
-const acts = (noDel) => '<div class="acts"><button class="mini ed" title="Bearbeiten">✎</button>' +
-  (noDel ? '' : '<button class="mini del" title="Löschen">🗑</button>') + '</div>';
+const acts = (noDel) => '<div class="acts"><button class="mini ed" title="Edit">✎</button>' +
+  (noDel ? '' : '<button class="mini del" title="Delete">🗑</button>') + '</div>';
 
 function talkList(talks){
   const idx = talks.map((t, i) => ({ t, i }))
     .filter(o => !FILTER || FILTER(o.t))
     .filter(o => !QUERY || ((o.t.what || '') + ' ' + (o.t.where || '') + ' ' + (o.t.date || '')).toLowerCase().includes(QUERY))
     .sort((a, b) => monthKey(b.t.date) - monthKey(a.t.date));
-  if (!idx.length) return '<div class="empty">Nichts gefunden.</div>';
+  if (!idx.length) return '<div class="empty">Nothing found.</div>';
   const up = idx.filter(o => o.t.scheduled), past = idx.filter(o => !o.t.scheduled);
   const row = o => '<div class="row" data-i="' + o.i + '">' +
       '<div class="when">' + esc(o.t.date) + '</div>' +
@@ -617,8 +617,8 @@ function talkList(talks){
       '<div class="sub">' + esc(o.t.where || '') + (o.t.note ? ' · ' + esc(o.t.note) : '') + '</div></div>' +
       acts() + '</div>';
   let h = '';
-  if (up.length)   h += '<div class="grp">Geplant</div>'  + up.map(row).join('');
-  if (past.length) h += '<div class="grp">Gehalten</div>' + past.map(row).join('');
+  if (up.length)   h += '<div class="grp">Upcoming</div>'  + up.map(row).join('');
+  if (past.length) h += '<div class="grp">Past</div>' + past.map(row).join('');
   return h;
 }
 
@@ -628,13 +628,13 @@ function paperList(pubs){
     .filter(o => !FILTER || FILTER(o.p))
     .filter(o => !QUERY || ((o.p.title || '') + ' ' + (o.p.authors || '') + ' ' + (o.p.venue || '')).toLowerCase().includes(QUERY))
     .sort((a, b) => (order[a.p.status] ?? 9) - (order[b.p.status] ?? 9) || (b.p.year || 0) - (a.p.year || 0));
-  if (!idx.length) return '<div class="empty">Nichts gefunden.</div>';
+  if (!idx.length) return '<div class="empty">Nothing found.</div>';
   let h = '', last = null;
   idx.forEach(o => {
-    if (o.p.status !== last){ last = o.p.status; h += '<div class="grp">' + esc((STATUS[last] || ['Anderes'])[0]) + '</div>'; }
+    if (o.p.status !== last){ last = o.p.status; h += '<div class="grp">' + esc((STATUS[last] || ['Other'])[0]) + '</div>'; }
     const col = (STATUS[o.p.status] || [, 'var(--ink3)'])[1];
     const note = o.p.note ? '<span class="pill" style="color:' + col + '">' + esc(o.p.note) + '</span>' : '';
-    const auto = o.p.manual === false ? '<span class="pill" style="color:var(--ink3)">automatisch</span>' : '';
+    const auto = o.p.manual === false ? '<span class="pill" style="color:var(--ink3)">automatic</span>' : '';
     h += '<div class="row" data-i="' + o.i + '">' +
       '<div class="when">' + esc(o.p.year || '') + '</div>' +
       '<div class="body"><div class="ttl">' + esc(o.p.title) + note + auto + '</div>' +
@@ -648,7 +648,7 @@ function otherList(items){
   const idx = items
     .filter(o => !FILTER || FILTER(o))
     .filter(o => !QUERY || otherText(o).toLowerCase().includes(QUERY));
-  if (!idx.length) return '<div class="empty">Nichts gefunden.</div>';
+  if (!idx.length) return '<div class="empty">Nothing found.</div>';
   let h = '';
   Object.keys(KINDS).forEach(k => {
     const g = idx.filter(o => o.kind === k);
@@ -658,7 +658,7 @@ function otherList(items){
       h += '<div class="row" data-kind="' + k + '" data-i="' + o.i + '">' +
         '<div class="when">' + esc(otherWhen(o)) + '</div>' +
         '<div class="body"><div class="ttl">' + esc(otherTitle(o)) +
-          (o.kind === 'outreach' && !o.it.url ? '<span class="pill" style="color:var(--ochre)">kein Link</span>' : '') + '</div>' +
+          (o.kind === 'outreach' && !o.it.url ? '<span class="pill" style="color:var(--ochre)">no link</span>' : '') + '</div>' +
         '<div class="sub">' + esc(otherSub(o)) + '</div></div>' +
         acts(KINDS[k].single) + '</div>';
     });
@@ -677,7 +677,7 @@ function wireRows(){
     d.onclick = () => {
       if (!d.classList.contains('armed')){
         $$('#list .mini.del').forEach(x => { x.classList.remove('armed'); x.textContent = '🗑'; });
-        d.classList.add('armed'); d.textContent = 'Wirklich löschen?';
+        d.classList.add('armed'); d.textContent = 'Really delete?';
         setTimeout(() => { d.classList.remove('armed'); d.textContent = '🗑'; }, 4000);
         return;
       }
@@ -723,8 +723,8 @@ function openWizard(kind, i, sub){
   const ac = kind === 'talk' ? 'var(--blue)' : kind === 'paper' ? 'var(--red)' : 'var(--ochre)';
   $('#sheet').classList.remove('hide');
   $('#sheet').style.setProperty('--ac', ac);
-  const name = kind === 'talk' ? 'Talk' : kind === 'paper' ? 'Paper' : (sub ? KINDS[sub].label : 'Weiteres');
-  $('#kick').textContent = (W.editIndex === null && !(sub && KINDS[sub].single) ? 'Neu · ' : 'Bearbeiten · ') + name;
+  const name = kind === 'talk' ? 'Talk' : kind === 'paper' ? 'Paper' : (sub ? KINDS[sub].label : 'Entry');
+  $('#kick').textContent = (W.editIndex === null && !(sub && KINDS[sub].single) ? 'New · ' : 'Edit · ') + name;
   paintStep();
 }
 function closeWizard(){ $('#sheet').classList.add('hide'); W = null; }
@@ -778,10 +778,10 @@ function valid(){
 function paintStep(){
   const total = steps(), s = W.step;
   $('#prog').style.width = ((s + 1) / total * 100) + '%';
-  $('#stepno').textContent = 'Schritt ' + (s + 1) + ' von ' + total;
+  $('#stepno').textContent = 'Step ' + (s + 1) + ' of ' + total;
   const min = (W.kind === 'other' && W.editIndex !== null) ? 1 : 0;
   $('#back').style.visibility = s === min ? 'hidden' : 'visible';
-  $('#next').textContent = s === total - 1 ? (W.editIndex === null ? 'Speichern' : 'Änderung speichern') : 'Weiter →';
+  $('#next').textContent = s === total - 1 ? (W.editIndex === null ? 'Save' : 'Save change') : 'Next →';
   $('#fnote').textContent = '';
   $('#sbody').innerHTML = (W.kind === 'talk' ? talkStep : W.kind === 'paper' ? paperStep : otherStep)(s);
   wireStep();
@@ -799,35 +799,35 @@ function paintStep(){
 function talkStep(s){
   const d = W.draft;
   if (s === 0) return '' +
-    '<h2 class="q">Wo hast du gesprochen?</h2>' +
-    '<p class="qh">Name der Konferenz, des Seminars oder der Veranstaltung, so wie er im CV stehen soll.</p>' +
+    '<h2 class="q">Where did you speak?</h2>' +
+    '<p class="qh">The name of the conference, seminar or event, exactly as it should read in the CV.</p>' +
     '<textarea class="big" rows="2" id="f_what" placeholder="EURAM 2026 &mdash; European Academy of Management">' + esc(d.what) + '</textarea>';
 
   if (s === 1){
     const m = /^(\d{2})\/(\d{4})$/.exec(d.date) || ['', MONTHS[new Date().getMonth()], String(thisYear())];
     return '' +
-      '<h2 class="q">Wann und wo?</h2>' +
-      '<p class="qh">Monat und Jahr genügen. Ob der Talk als geplant oder gehalten erscheint, ergibt sich daraus, du kannst es unten aber überschreiben.</p>' +
+      '<h2 class="q">When and where?</h2>' +
+      '<p class="qh">Month and year are enough. Whether it counts as upcoming or past follows from that, but you can override it below.</p>' +
       '<div class="two">' +
-        '<div><span class="lb2">Monat</span><select class="inp" id="f_month">' +
+        '<div><span class="lb2">Month</span><select class="inp" id="f_month">' +
           MONTHS.map((mm, k) => '<option value="' + mm + '"' + (mm === m[1] ? ' selected' : '') + '>' + MONTHNAMES[k] + '</option>').join('') +
         '</select></div>' +
-        '<div><span class="lb2">Jahr</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(m[2]) + '"></div>' +
+        '<div><span class="lb2">Year</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(m[2]) + '"></div>' +
       '</div>' +
-      '<div class="sub"><span class="lb2">Ort</span>' +
+      '<div class="sub"><span class="lb2">Place</span>' +
       '<input class="inp" id="f_where" placeholder="Bern, Switzerland" value="' + esc(d.where || '') + '"></div>' +
       '<div class="sub"><span class="lb2">Status</span><div class="chips">' +
-        '<button class="chip' + (d.scheduled ? ' on' : '') + '" data-sched="1">Geplant</button>' +
-        '<button class="chip' + (d.scheduled ? '' : ' on') + '" data-sched="0">Bereits gehalten</button>' +
+        '<button class="chip' + (d.scheduled ? ' on' : '') + '" data-sched="1">Upcoming</button>' +
+        '<button class="chip' + (d.scheduled ? '' : ' on') + '" data-sched="0">Already given</button>' +
       '</div></div>';
   }
 
   return '' +
-    '<h2 class="q">Zusatz und Aufzeichnung</h2>' +
-    '<p class="qh">Beides optional. Der Zusatz erscheint in Klammern, etwa „invited", „keynote" oder „3 papers".</p>' +
-    '<span class="lb2">Zusatz</span>' +
+    '<h2 class="q">Anything to add?</h2>' +
+    '<p class="qh">Both optional. The note appears in brackets, for instance invited, keynote or 3 papers.</p>' +
+    '<span class="lb2">Note</span>' +
     '<input class="inp" id="f_note" placeholder="invited" value="' + esc(d.note || '') + '">' +
-    '<div class="sub"><span class="lb2">Link zur Aufzeichnung oder Folien</span>' +
+    '<div class="sub"><span class="lb2">Link to a recording or slides</span>' +
     '<input class="inp" id="f_url" placeholder="https://…" value="' + esc(d.url || '') + '"></div>' +
     '<div class="prev" id="pv" style="margin-top:22px"></div>';
 }
@@ -843,65 +843,65 @@ function paperStep(s){
   const d = W.draft;
 
   if (s === 0) return '' +
-    '<h2 class="q">Wie heisst das Paper?</h2>' +
-    '<p class="qh">Der vollständige Titel. Alles Weitere fragt sich danach von selbst.</p>' +
+    '<h2 class="q">What is the paper called?</h2>' +
+    '<p class="qh">The full title. Everything else follows from there.</p>' +
     '<textarea class="big" rows="3" id="f_title" placeholder="Open by Design: An Empirical Comparison …">' + esc(d.title) + '</textarea>';
 
   if (s === 1){
     const opt = (k, t, sub) => '<button class="opt' + (d.status === k ? ' on' : '') + '" data-st="' + k +
       '" style="--oc:' + STATUS[k][1] + '"><b>' + t + '</b><span>' + sub + '</span></button>';
-    let h = '<h2 class="q">Wo steht es gerade?</h2>' +
-      '<p class="qh">Das bestimmt, unter welcher Überschrift es auf der Website und im CV erscheint.</p>' +
+    let h = '<h2 class="q">Where does it stand?</h2>' +
+      '<p class="qh">This decides which heading it appears under, on the website and in the CV.</p>' +
       '<div class="opts">' +
-      opt('published', 'Veröffentlicht', 'Peer-reviewed in einem Journal erschienen oder angenommen.') +
-      opt('review',    'Eingereicht',    'Submitted, under review oder R&amp;R bei einem Journal.') +
-      opt('progress',  'In Arbeit',      'Working Paper, in Vorbereitung, noch nicht eingereicht.') +
-      opt('other',     'Anderes',        'Buchkapitel, Dissertation, Policy-Bericht, Kolumne.') +
+      opt('published', 'Published', 'Peer-reviewed, out in a journal or accepted.') +
+      opt('review',    'Submitted',      'Submitted, under review or R&amp;R at a journal.') +
+      opt('progress',  'In progress',    'Working paper, in preparation, not submitted yet.') +
+      opt('other',     'Other',          'Book chapter, dissertation, policy report, column.') +
       '</div>';
     if (d.status === 'published'){
       h += '<div class="sub"><span class="lb2">Journal</span>' +
            '<input class="inp" id="f_venue" placeholder="Journal of Cultural Economics" value="' + esc(d.venue || '') + '"></div>';
     } else if (d.status){
       const presets = NOTE_PRESETS[d.status] || [];
-      h += '<div class="sub"><span class="lb2">' + (d.status === 'review' ? 'Bei welchem Journal?' : 'Wie genau?') + '</span>' +
+      h += '<div class="sub"><span class="lb2">' + (d.status === 'review' ? 'At which journal?' : 'How exactly?') + '</span>' +
            '<div class="chips">' + presets.map(p => '<button class="chip' +
              ((d.note || '').startsWith(p.trim()) ? ' on' : '') + '" data-note="' + esc(p) + '">' + esc(p.trim()) + '</button>').join('') +
            '</div><input class="inp" id="f_note" style="margin-top:11px" placeholder="' +
              (d.status === 'review' ? 'Submitted to Journal of Economic Behavior &amp; Organization' : 'In preparation') +
              '" value="' + esc(d.note || '') + '">' +
-           '<div class="help" style="margin-top:7px">Erscheint als farbige Markierung hinter dem Titel.</div></div>';
+           '<div class="help" style="margin-top:7px">Shows up as a coloured badge behind the title.</div></div>';
     }
     return h;
   }
 
   if (s === 2) return '' +
-    '<h2 class="q">Wer, wann, wo?</h2>' +
-    '<p class="qh">Autorenreihenfolge wie in der Publikation. Der Kurztitel wird nur in den Grafiken verwendet.</p>' +
-    '<div><span class="lb2">Autor:innen</span>' +
+    '<h2 class="q">Who, when, where?</h2>' +
+    '<p class="qh">Author order as in the publication. The short title is only used in the charts.</p>' +
+    '<div><span class="lb2">Authors</span>' +
     '<input class="inp" id="f_authors" placeholder="M. Sahli, A. Cuntz &amp; P. J. Heald" value="' + esc(d.authors || '') + '"></div>' +
     '<div class="sub two">' +
-      '<div><span class="lb2">Jahr</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(d.year || '') + '"></div>' +
-      '<div><span class="lb2">' + (d.status === 'published' ? 'Journal' : 'Reihe / Venue') + '</span>' +
+      '<div><span class="lb2">Year</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(d.year || '') + '"></div>' +
+      '<div><span class="lb2">' + (d.status === 'published' ? 'Journal' : 'Series / venue') + '</span>' +
       '<input class="inp" id="f_venue" placeholder="' + (d.status === 'published' ? 'Journal of Cultural Economics' : 'Working paper') + '" value="' + esc(d.venue || '') + '"></div>' +
     '</div>' +
-    '<div class="sub"><span class="lb2">Kurztitel (optional)</span>' +
+    '<div class="sub"><span class="lb2">Short title (optional)</span>' +
     '<input class="inp" id="f_short" placeholder="' + esc(autoShort(d.title)) + '" value="' + esc(d.short || '') + '"></div>' +
-    '<div class="sub"><span class="lb2">Themen</span><div class="chips">' +
+    '<div class="sub"><span class="lb2">Topics</span><div class="chips">' +
       Object.entries(TAGS).map(([k, v]) => '<button class="chip' + (d.tags.includes(k) ? ' on' : '') +
         '" data-tag="' + k + '"><span class="cd" style="background:' + v[1] + '"></span>' + esc(v[0]) + '</button>').join('') +
     '</div></div>';
 
   const links = (d.links || []).concat([{ label: '', url: '' }]);
   return '' +
-    '<h2 class="q">Kernbefund und Links</h2>' +
-    '<p class="qh">Beides optional, aber der Link ist wertvoll: er ist die einzige Stelle, an der die Working-Paper-Version festgehalten wird.</p>' +
-    '<span class="lb2">Kernbefund</span>' +
-    '<textarea class="inp" id="f_finding" rows="3" placeholder="Ein bis zwei Sätze, was rauskommt.">' + esc(d.finding || '') + '</textarea>' +
+    '<h2 class="q">Key finding and links</h2>' +
+    '<p class="qh">Both optional, but the link matters: it is the only place the working paper version is kept.</p>' +
+    '<span class="lb2">Key finding</span>' +
+    '<textarea class="inp" id="f_finding" rows="3" placeholder="One or two sentences on what comes out.">' + esc(d.finding || '') + '</textarea>' +
     '<div class="sub"><span class="lb2">Links</span><div id="links">' +
       links.map((l, i) => '<div class="linkrow" data-li="' + i + '">' +
-        '<input class="inp lk-label" placeholder="Titel, z. B. DOI" value="' + esc(l.label) + '">' +
+        '<input class="inp lk-label" placeholder="Label, e.g. DOI" value="' + esc(l.label) + '">' +
         '<input class="inp lk-url" placeholder="https://…" value="' + esc(l.url) + '">' +
-        '<button class="mini lk-del" title="Entfernen">×</button></div>').join('') +
+        '<button class="mini lk-del" title="Remove">×</button></div>').join('') +
     '</div></div>' +
     '<div class="prev" id="pv" style="margin-top:22px"></div>';
 }
@@ -916,8 +916,8 @@ function otherStep(s){
   const d = W.draft, k = W.sub;
 
   if (s === 0) return '' +
-    '<h2 class="q">Worum geht es?</h2>' +
-    '<p class="qh">Alles, was weder Talk noch Paper ist, und im CV trotzdem nicht fehlen darf.</p>' +
+    '<h2 class="q">What is it?</h2>' +
+    '<p class="qh">Everything that is neither a talk nor a paper, and still belongs in the CV.</p>' +
     '<div class="opts">' + Object.entries(KINDS).map(([key, v]) =>
       '<button class="opt' + (k === key ? ' on' : '') + '" data-sub="' + key + '" style="--oc:var(--ochre)">' +
       '<b>' + v.icon + '  ' + esc(v.label) + '</b><span>' + esc(v.hint) + '</span></button>').join('') +
@@ -925,77 +925,77 @@ function otherStep(s){
 
   if (s === 1){
     if (k === 'outreach') return '' +
-      '<h2 class="q">Was für ein Beitrag?</h2>' +
-      '<p class="qh">Erst die Art, dann Titel, Medium und Link.</p>' +
+      '<h2 class="q">What kind of coverage?</h2>' +
+      '<p class="qh">The kind first, then title, outlet and link.</p>' +
       '<div class="chips">' + Object.entries(OUTREACH_KINDS).map(([key, lb]) =>
         '<button class="chip' + (d.kind === key ? ' on' : '') + '" data-okind="' + key + '">' + esc(lb) + '</button>').join('') +
       '</div>' +
-      '<div class="sub"><span class="lb2">Titel oder Thema</span>' +
+      '<div class="sub"><span class="lb2">Title or topic</span>' +
       '<textarea class="big" rows="2" id="f_what" placeholder="Million Dollar Baby — film finance and IP">' + esc(d.what || '') + '</textarea></div>' +
       '<div class="sub two">' +
-        '<div><span class="lb2">Medium</span><input class="inp" id="f_where" placeholder="Art Law Podcast (Spotify)" value="' + esc(d.where || '') + '"></div>' +
-        '<div><span class="lb2">Jahr</span><input class="inp" id="f_date" inputmode="numeric" maxlength="7" placeholder="2026" value="' + esc(d.date || '') + '"></div>' +
+        '<div><span class="lb2">Outlet</span><input class="inp" id="f_where" placeholder="Art Law Podcast (Spotify)" value="' + esc(d.where || '') + '"></div>' +
+        '<div><span class="lb2">Year</span><input class="inp" id="f_date" inputmode="numeric" maxlength="7" placeholder="2026" value="' + esc(d.date || '') + '"></div>' +
       '</div>' +
       '<div class="sub"><span class="lb2">Link</span>' +
       '<input class="inp" id="f_url" placeholder="https://…" value="' + esc(d.url || '') + '"></div>';
 
     if (k === 'teaching') return '' +
-      '<h2 class="q">Was unterrichtest du?</h2>' +
-      '<p class="qh">Hochschule, Kurse und Zeitraum. Mehrere Module derselben Hochschule gehören in eine Zeile.</p>' +
-      '<div><span class="lb2">Hochschule</span>' +
+      '<h2 class="q">What are you teaching?</h2>' +
+      '<p class="qh">School, courses and period. Several modules at the same school belong on one line.</p>' +
+      '<div><span class="lb2">School</span>' +
       '<input class="inp" id="f_org" placeholder="Bern University of Applied Sciences (BFH), Business School" value="' + esc(d.org || '') + '"></div>' +
-      '<div class="sub"><span class="lb2">Kurse und Rolle</span>' +
+      '<div class="sub"><span class="lb2">Courses and role</span>' +
       '<textarea class="inp" id="f_role" rows="2" placeholder="Entrepreneurial Law (Master) · Digitalrecht (Bachelor); lecturer and module coordination">' + esc(d.role || '') + '</textarea></div>' +
       '<div class="sub two">' +
-        '<div><span class="lb2">Zeitraum</span><input class="inp" id="f_years" placeholder="2026 –" value="' + esc(d.years || '') + '"></div>' +
-        '<div><span class="lb2">Bewertung (optional)</span><input class="inp" id="f_eval" placeholder="Student evaluation 5.25 / 6" value="' + esc(d.eval || '') + '"></div>' +
+        '<div><span class="lb2">Period</span><input class="inp" id="f_years" placeholder="2026 –" value="' + esc(d.years || '') + '"></div>' +
+        '<div><span class="lb2">Evaluation (optional)</span><input class="inp" id="f_eval" placeholder="Student evaluation 5.25 / 6" value="' + esc(d.eval || '') + '"></div>' +
       '</div>';
 
     if (k === 'grants') return '' +
-      '<h2 class="q">Welche Förderung oder Auszeichnung?</h2>' +
-      '<p class="qh">Ein Satz mit Betrag oder Vergabestelle, so wie er im CV stehen soll.</p>' +
-      '<div><span class="lb2">Jahr</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(d.year || '') + '"></div>' +
-      '<div class="sub"><span class="lb2">Beschreibung</span>' +
+      '<h2 class="q">Which grant or award?</h2>' +
+      '<p class="qh">One sentence with the amount or the funder, as it should read in the CV.</p>' +
+      '<div><span class="lb2">Year</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(d.year || '') + '"></div>' +
+      '<div class="sub"><span class="lb2">Description</span>' +
       '<textarea class="big" rows="3" id="f_what" placeholder="Swisscom study — „…" (CHF 32,409)">' + esc(d.what || '') + '</textarea></div>';
 
     if (k === 'policy') return '' +
-      '<h2 class="q">Welche Policy-Arbeit?</h2>' +
-      '<p class="qh">Eingabe, Stellungnahme oder Bericht, mit deiner Rolle dabei.</p>' +
-      '<div><span class="lb2">Jahr</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(d.year || '') + '"></div>' +
-      '<div class="sub"><span class="lb2">Titel</span>' +
+      '<h2 class="q">Which piece of policy work?</h2>' +
+      '<p class="qh">A submission, statement or report, together with your role in it.</p>' +
+      '<div><span class="lb2">Year</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(d.year || '') + '"></div>' +
+      '<div class="sub"><span class="lb2">Title</span>' +
       '<textarea class="big" rows="2" id="f_what" placeholder="Value of IP in the New Economy. WTO TRIPS submission (IP/C/W/648)">' + esc(d.what || '') + '</textarea></div>' +
-      '<div class="sub"><span class="lb2">Rolle</span>' +
+      '<div class="sub"><span class="lb2">Role</span>' +
       '<input class="inp" id="f_role" placeholder="Co-author" value="' + esc(d.role || '') + '"></div>';
 
     if (k === 'highlight') return '' +
-      '<h2 class="q">Was soll auf der Startseite stehen?</h2>' +
-      '<p class="qh">Eine kurze Zeile für den Abschnitt „Beyond papers". Alles, was kein Paper und kein Talk ist, aber zeigt, was du sonst noch machst.</p>' +
-      '<div><span class="lb2">Symbol</span>' +
+      '<h2 class="q">What goes on the homepage?</h2>' +
+      '<p class="qh">One short line for the Beyond papers strip. Anything that is not a paper or a talk, but shows what else you do.</p>' +
+      '<div><span class="lb2">Icon</span>' +
       '<input class="inp" id="f_icon" style="max-width:110px;text-align:center;font-size:1.2rem" value="' + esc(d.icon || '') + '"></div>' +
       '<div class="sub"><span class="lb2">Text</span>' +
       '<textarea class="big" rows="2" id="f_text" placeholder="IP advisor at BFH">' + esc(d.text || '') + '</textarea></div>' +
-      '<div class="help" style="margin-top:10px">Kurz halten, die Pillen stehen nebeneinander in einer Reihe.</div>';
+      '<div class="help" style="margin-top:10px">Keep it short, the pills sit next to each other in one row.</div>';
 
     if (k === 'organized') return '' +
-      '<h2 class="q">Was hast du organisiert?</h2>' +
-      '<p class="qh">Konferenz, Workshop oder Seminarreihe, mit deiner Funktion.</p>' +
-      '<div><span class="lb2">Zeitraum</span><input class="inp" id="f_date" placeholder="11/2022 oder 2025 – 2026" value="' + esc(d.date || '') + '"></div>' +
-      '<div class="sub"><span class="lb2">Veranstaltung</span>' +
+      '<h2 class="q">What did you organize?</h2>' +
+      '<p class="qh">A conference, workshop or seminar series, with your function.</p>' +
+      '<div><span class="lb2">Period</span><input class="inp" id="f_date" placeholder="11/2022 or 2025 – 2026" value="' + esc(d.date || '') + '"></div>' +
+      '<div class="sub"><span class="lb2">Event</span>' +
       '<textarea class="big" rows="2" id="f_what" placeholder="ICT4S 2026 International Conference, Bern University of Applied Sciences">' + esc(d.what || '') + '</textarea></div>' +
-      '<div class="sub"><span class="lb2">Funktion</span>' +
+      '<div class="sub"><span class="lb2">Function</span>' +
       '<input class="inp" id="f_role" placeholder="Organizing Committee" value="' + esc(d.role || '') + '"></div>';
 
     return '' +
-      '<h2 class="q">Peer Review und Mitgliedschaften</h2>' +
-      '<p class="qh">Zwei Zeilen, die du direkt überschreibst. Einträge mit „ · " trennen.</p>' +
-      '<span class="lb2">Begutachtete Journals</span>' +
+      '<h2 class="q">Peer review and memberships</h2>' +
+      '<p class="qh">Two lines you overwrite directly. Separate entries with a middle dot.</p>' +
+      '<span class="lb2">Journals reviewed for</span>' +
       '<textarea class="inp" id="f_reviewing" rows="3" placeholder="Journal of Cultural Economics (2) · …">' + esc(d.reviewing || '') + '</textarea>' +
-      '<div class="sub"><span class="lb2">Mitgliedschaften</span>' +
+      '<div class="sub"><span class="lb2">Memberships</span>' +
       '<textarea class="inp" id="f_memberships" rows="3" placeholder="Association for Cultural Economics International (until 2027) · …">' + esc(d.memberships || '') + '</textarea></div>';
   }
 
-  return '<h2 class="q">Passt das so?</h2>' +
-         '<p class="qh">Danach landet es in der Datei, aus der Website und CV gebaut werden.</p>' +
+  return '<h2 class="q">Does this look right?</h2>' +
+         '<p class="qh">Next stop is the file the website and the CV are built from.</p>' +
          '<div class="prev" id="pv"></div>';
 }
 
@@ -1003,12 +1003,12 @@ function otherStep(s){
 function renderPreview(){
   const box = $('#pv'); if (!box) return;
   const d = W.draft;
-  const head = '<div class="prevlb">So sieht es aus</div>';
+  const head = '<div class="prevlb">Preview</div>';
 
   if (W.kind === 'talk'){
     box.innerHTML = head + '<div class="pt">' + esc(d.what) + (d.url ? ' <span class="tagpv" style="color:var(--blue)">↗ Link</span>' : '') + '</div>' +
       '<div class="pm">' + esc(d.date) + (d.where ? ' · ' + esc(d.where) : '') +
-      (d.note ? ' (' + esc(d.note) + ')' : '') + (d.scheduled ? ' · geplant' : '') + '</div>';
+      (d.note ? ' (' + esc(d.note) + ')' : '') + (d.scheduled ? ' · upcoming' : '') + '</div>';
     return;
   }
   if (W.kind === 'paper'){
@@ -1023,8 +1023,8 @@ function renderPreview(){
   }
   const k = W.sub;
   if (k === 'service'){
-    box.innerHTML = head + '<div class="pt">Peer Review</div><div class="pm">' + esc(d.reviewing) + '</div>' +
-      '<div class="pt" style="margin-top:10px">Mitgliedschaften</div><div class="pm">' + esc(d.memberships) + '</div>';
+    box.innerHTML = head + '<div class="pt">Peer review</div><div class="pm">' + esc(d.reviewing) + '</div>' +
+      '<div class="pt" style="margin-top:10px">Memberships</div><div class="pm">' + esc(d.memberships) + '</div>';
     return;
   }
   if (k === 'highlight'){
@@ -1101,7 +1101,7 @@ function wireStep(){
     const def = KINDS[W.sub];
     W.draft = def.single ? JSON.parse(JSON.stringify(CV[def.arr] || blankOther(W.sub))) : blankOther(W.sub);
     W.step = 1;
-    $('#kick').textContent = (def.single ? 'Bearbeiten · ' : 'Neu · ') + def.label;
+    $('#kick').textContent = (def.single ? 'Edit · ' : 'New · ') + def.label;
     paintStep();
   });
   $$('#sbody .chip[data-note]').forEach(c => c.onclick = () => {
@@ -1160,7 +1160,7 @@ const clean = o => { Object.keys(o).forEach(k => { if (o[k] === '' || o[k] == nu
 
 async function save(){
   const d = W.draft;
-  $('#next').disabled = true; $('#next').innerHTML = '<span class="spin"></span>Speichere…';
+  $('#next').disabled = true; $('#next').innerHTML = '<span class="spin"></span>Saving…';
   try {
     if (W.kind === 'talk'){
       const t = clean({ date: d.date, what: (d.what || '').trim(), where: (d.where || '').trim(),
@@ -1207,7 +1207,7 @@ async function save(){
     }
     closeWizard(); render(); savedToast();
   } catch (err){
-    toast('Nicht gespeichert: ' + esc(err.message) + ' — bitte ↻ drücken und nochmal versuchen.', true);
+    toast('Not saved: ' + esc(err.message) + ' Press ↻ and try again.', true);
   } finally {
     if (W){ $('#next').disabled = false; paintStep(); }
   }
@@ -1234,9 +1234,9 @@ async function remove(tab, i, kind){
         String(e.what || e.org || '').slice(0, 60));
     }
     render();
-    toast('Ins Archiv verschoben. Der CV wird neu gebaut.');
+    toast('Moved to the archive. The CV is being rebuilt.');
   } catch (err){
-    toast('Nicht gelöscht: ' + esc(err.message), true);
+    toast('Not deleted: ' + esc(err.message), true);
     boot();
   }
 }
