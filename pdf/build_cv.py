@@ -70,7 +70,7 @@ def publications_block(pubs, only=None):
     for key, label in PUB_GROUPS:
         if only and key not in only:
             continue
-        group = sorted([p for p in pubs if p.get("status") == key],
+        group = sorted([p for p in pubs if p.get("status") == key and not p.get("hidden")],
                        key=lambda p: (p.get("year") or 0), reverse=True)
         if not group:
             continue
