@@ -224,7 +224,10 @@ a.stat:hover::after{opacity:1}
 #noresults{display:none;color:var(--ink3);font-size:.9rem;padding:20px 0;text-align:center}
 
 /* ---------- talks: slim collapsible strip ---------- */
-#talkwrap{display:none;margin-top:22px}
+#talkwrap,#mediawrap{display:none;margin-top:14px}
+#talkwrap{margin-top:22px}
+.trow .tv a{color:var(--blue);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--blue) 35%,transparent)}
+.trow .tv a:hover{border-bottom-color:var(--blue)}
 .talkbar{width:100%;display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
   border-radius:12px;padding:13px 18px;cursor:pointer;font-family:inherit;color:var(--ink);
   text-align:left;transition:transform .2s,box-shadow .2s,border-color .2s;box-shadow:var(--shadow)}
@@ -328,7 +331,7 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
 <nav><div class="wrap navin">
   <a class="logo" href="#top">Matthias Sahli</a>
   <div class="navlinks">
-    <a href="#about">About</a><a href="#research">Research</a><a href="#data">Data &amp; Tools</a><a href="#teaching">Teaching</a><a href="#thesis">Theses</a><a class="navcv" href="https://scholar.google.com/citations?user=ui-NYv8AAAAJ" target="_blank" rel="noopener">Scholar ↗</a>
+    <a href="#about">About</a><a href="#research">Research</a><a href="#teaching">Teaching</a><a href="#thesis">Theses</a><a class="navcv" href="https://scholar.google.com/citations?user=ui-NYv8AAAAJ" target="_blank" rel="noopener">Scholar ↗</a>
     <div class="dots">
       <button class="dot r" title="Back to top" aria-label="Back to top"></button>
       <button class="dot o" title="Jump to research" aria-label="Jump to research"></button>
@@ -422,15 +425,14 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
     </button>
     <div class="talklist" id="talklist"><div class="talklist-inner" id="talklistinner"></div></div>
   </div>
-</div></section>
 
-<section id="data"><div class="wrap">
-  <div class="sechead"><span class="secdot" style="background:var(--green)"></span><h2>Data &amp; Tools</h2></div>
-  <p class="seclead">Much of my work starts with a dataset that didn't exist yet. Some of the collections behind the papers — get in touch if you'd like to work with them.</p>
-  <div class="grid3 rv">
-    <div class="mini"><div class="ic">🖼️</div><h3>Museum &amp; online collections</h3><p>Crawled availability of visual artworks across US and European online museum collections, incl. Useum and Wikimedia Commons reuse trails of digitized heritage.</p></div>
-    <div class="mini"><div class="ic">🔨</div><h3>Auctions &amp; exhibitions</h3><p>21,000+ exhibition records linked to 33,000 art auction transactions — the backbone of the legacy-artists and gender papers.</p></div>
-    <div class="mini"><div class="ic">🎬</div><h3>Film finance &amp; IP</h3><p>Three decades of U.S. Uniform Commercial Code filings tracing how films are financed with IP as collateral.</p></div>
+  <div id="mediawrap">
+    <button class="talkbar" id="mediabar" aria-expanded="false">
+      <span class="tbi">&#9656;</span>
+      <span class="tbl">In the media</span>
+      <span class="tbm" id="mediameta"></span>
+    </button>
+    <div class="talklist" id="medialist"><div class="talklist-inner" id="medialistinner"></div></div>
   </div>
 </div></section>
 
@@ -489,8 +491,9 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
         <a href="mailto:matthias.sahli@bfh.ch">Email</a>
         <a href="https://scholar.google.com/citations?user=ui-NYv8AAAAJ" target="_blank" rel="noopener">Google Scholar</a>
         <a href="https://orcid.org/0000-0002-4631-3657" target="_blank" rel="noopener">ORCID</a>
-        <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://www.researchgate.net/" target="_blank" rel="noopener">ResearchGate</a>
+        <a href="https://www.linkedin.com/in/matthias-sahli-253279220/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.researchgate.net/profile/Matthias-Sahli" target="_blank" rel="noopener">ResearchGate</a>
+        <a href="https://cepr.org/about/people/matthias-sahli" target="_blank" rel="noopener">CEPR</a>
         <a href="cv.pdf" target="_blank" rel="noopener">CV (PDF)</a>
         <a href="cv_short.pdf" target="_blank" rel="noopener">Short CV</a>
       </div>
@@ -505,7 +508,7 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
 <div class="tooltip" id="tooltip"></div>
 
 <script id="site-data" type="application/json">
-{"generated": "2026-08-07", "source": "google_scholar (mirror) + manual pipeline info", "metrics": {"publications": 13, "citations": 66, "hIndex": 4, "venues": 6, "citationsByYear": [], "sourceLabel": "Google Scholar", "yearSourceLabel": "Google Scholar"}, "publications": [{"id": "digital-reuse", "title": "Digital Reuse and Online Availability of Visual Artworks", "short": "Digital Reuse of Visual Artworks", "authors": "M. Sahli, A. Cuntz & P. J. Heald", "venue": "Information Economics and Policy", "year": 2026, "status": "published", "tags": ["ip", "art", "dig"], "citations": 10, "finding": "Exploiting the 1926 US public-domain cutoff: public domain status raises artist-level image availability on online platforms by ≈19%.", "links": [{"label": "WIPO Working Paper No. 75", "url": "https://www.wipo.int/publications/en/series/index.jsp?id=138"}, {"label": "VoxEU column", "url": "https://cepr.org/voxeu/columns"}], "manual": true}, {"id": "book-digitalization", "title": "Does the Digitalization of the Book Industry Reduce Its Environmental Impact?", "short": "Digitalization of the book industry", "authors": "M. Sahli, J. Bieser et al.", "venue": "Cleaner and Responsible Consumption", "year": 2026, "status": "published", "tags": ["sus", "dig"], "citations": 1, "finding": "Combines lifecycle assessments with economic analysis to evaluate the net greenhouse-gas effect of the shift from print to digital books.", "links": [], "manual": true}, {"id": "legacy-artists", "title": "Is There a Premium for Legacy Artists? The Death Effect in Exhibition Shows and Auction Transactions", "short": "Premium for legacy artists (death effect)", "authors": "M. Sahli & A. Cuntz", "venue": "Journal of Cultural Economics", "year": 2025, "status": "published", "tags": ["art"], "citations": 3, "finding": "Regression-discontinuity and event-study designs around artist death show how death reshapes exhibition activity and auction prices.", "links": [], "manual": true}, {"id": "ipres-sustainability", "title": "Sustainability in Context: An Evidence-based (Digital) Preservation Lifecycle Investigation", "short": "Sustainability in digital preservation (iPRES)", "authors": "M. Pennock, M. Sahli & J. Chenoweth", "venue": "iPRES 2025, Wellington", "year": 2025, "status": "published", "tags": ["sus", "dig"], "citations": 2, "finding": "Conference paper from the ReVerDi project examining evidence-based sustainability practices of collecting institutions.", "links": [{"label": "DOI", "url": "https://doi.org/10.5281/zenodo.16843717"}], "manual": true}, {"id": "million-dollar-baby", "title": "Million Dollar Baby — A Primer on Film Finance Practices in the U.S. Movie Industry", "short": "Million Dollar Baby (film finance)", "authors": "A. Cuntz, A. Muscarnera, P. C. Oguguo & M. Sahli", "venue": "Industry & Innovation", "year": 2024, "status": "published", "tags": ["ip", "art"], "citations": 13, "finding": "Thirty years of film-financing practice traced through interviews and U.S. Uniform Commercial Code filings: how movies are financed with IP as collateral.", "links": [], "manual": true}, {"id": "intermediary-liability", "title": "Intermediary Liability and Trade in Follow-on Innovation", "short": "Intermediary liability & follow-on innovation", "authors": "A. Cuntz & M. Sahli", "venue": "Journal of Cultural Economics", "year": 2023, "status": "published", "tags": ["ip", "art"], "citations": 19, "finding": "The Cariou v. Prince decision triggered a temporary decline in global auctions of Appropriation Art — court rulings ripple through art markets.", "links": [], "manual": true}, {"id": "digitization-diffusion", "title": "From Digitization to Diffusion: Evidence on the Economic Value of Open Cultural Heritage", "short": "From digitization to diffusion", "authors": "M. Sahli, J. Bieser, J. Chenoweth, J. Suckling, J. Love, E. Lin, M. Martens, M. Pennock & U. Pottgiesser", "venue": "Working paper", "year": 2026, "status": "review", "note": "R&R at Journal of Cultural Economics", "tags": ["dig", "art"], "citations": 0, "finding": "Tracks what happens after national libraries digitize their collections: 64% of images released to Wikimedia Commons are reused at least once.", "links": [], "manual": true}, {"id": "gender-auctions", "title": "Gender Gaps in Museum Exhibitions and Art Auctions: Evidence from Linked Exhibition and Auction Records", "short": "Gender gaps in exhibitions & auctions", "authors": "L. J. Noll & M. Sahli", "venue": "ACEI Working Paper Series", "year": 2026, "status": "review", "note": "Submitted to Journal of Economic Behavior & Organization", "tags": ["art"], "citations": 1, "finding": "21,000+ exhibition records linked to 33,000 auction transactions to examine how museum visibility — and gender representation — translates into market outcomes.", "links": [], "manual": true}, {"id": "elvis-ghost", "title": "Elvis' Ghost or Digital Replica? Publicity Rights and Integrated IP Strategy", "short": "Elvis' Ghost (publicity rights & AI)", "authors": "A. Cuntz, B. Lutes & M. Sahli", "venue": "WIPO Economic Working Paper No. 89", "year": 2025, "status": "review", "note": "Submitted to Strategic Management Journal", "tags": ["ip"], "citations": 0, "finding": "Upon the loss of publicity rights, celebrities become less popular and engage in less commercial activity — with direct implications for AI-generated digital replicas.", "links": [], "manual": true}, {"id": "libraries-lcsa", "title": "Evaluating the Sustainability of National Libraries: A Life Cycle Sustainability Assessment", "short": "Sustainability of national libraries", "authors": "M. Sahli et al.", "venue": "Working paper", "year": 2025, "status": "review", "note": "Submitted to npj Heritage Science", "tags": ["sus"], "citations": 0, "finding": "Life Cycle Sustainability Assessment of the British Library, the Dutch National Library and the Swiss National Library.", "links": [], "manual": true}, {"id": "open-by-design", "title": "Open by Design: An Empirical Comparison of National Library Digitization Strategies on Wikimedia Commons", "short": "Open by Design (library digitization)", "authors": "M. Sahli, E. Bertacchini & J. Bieser", "venue": "Working paper", "year": 2026, "status": "progress", "note": "In preparation", "tags": ["dig"], "citations": 0, "links": [], "manual": true}, {"id": "covid-artists", "title": "The Covid-19 Impact on Artistic Income: Evidence from Germany", "short": "Covid-19 impact on artistic income", "authors": "A. Cuntz & M. Sahli", "venue": "CEPR Press & Covid Economics 82", "year": 2022, "status": "other", "note": "Book chapter", "tags": ["art"], "citations": 17, "finding": "Musicians and performing artists were among the most vulnerable groups during the pandemic.", "links": [], "manual": true}, {"id": "dissertation", "title": "Empirical Essays on the Economics of Creative Industries", "short": "PhD dissertation", "authors": "M. Sahli", "venue": "University of Neuchâtel", "year": 2023, "status": "other", "note": "PhD dissertation", "tags": ["art", "ip"], "citations": 0, "links": [], "manual": true}]}
+{"generated": "2026-08-07", "source": "google_scholar (mirror) + manual pipeline info", "metrics": {"publications": 13, "citations": 66, "hIndex": 4, "venues": 6, "citationsByYear": [], "sourceLabel": "Google Scholar", "yearSourceLabel": "Google Scholar"}, "publications": [{"id": "digital-reuse", "title": "Digital Reuse and Online Availability of Visual Artworks", "short": "Digital Reuse of Visual Artworks", "authors": "M. Sahli, A. Cuntz & P. J. Heald", "venue": "Information Economics and Policy", "year": 2026, "status": "published", "tags": ["ip", "art", "dig"], "citations": 10, "finding": "Exploiting the 1926 US public-domain cutoff: public domain status raises artist-level image availability on online platforms by ≈19%.", "links": [{"label": "DOI", "url": "https://doi.org/10.1016/j.infoecopol.2026.101172"}, {"label": "Working paper (SSRN)", "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4544004"}, {"label": "WIPO Working Paper No. 75", "url": "https://ideas.repec.org/p/wip/wpaper/75.html"}, {"label": "VoxEU column", "url": "https://cepr.org/voxeu/columns/effect-copyright-digitisation-and-availability-visual-artworks"}], "manual": true}, {"id": "book-digitalization", "title": "Does the Digitalization of the Book Industry Reduce Its Environmental Impact?", "short": "Digitalization of the book industry", "authors": "M. Sahli, J. Bieser et al.", "venue": "Cleaner and Responsible Consumption", "year": 2026, "status": "published", "tags": ["sus", "dig"], "citations": 1, "finding": "Combines lifecycle assessments with economic analysis to evaluate the net greenhouse-gas effect of the shift from print to digital books.", "links": [{"label": "DOI", "url": "https://doi.org/10.1016/j.clrc.2026.100440"}], "manual": true}, {"id": "legacy-artists", "title": "Is There a Premium for Legacy Artists? The Death Effect in Exhibition Shows and Auction Transactions", "short": "Premium for legacy artists (death effect)", "authors": "M. Sahli & A. Cuntz", "venue": "Journal of Cultural Economics", "year": 2025, "status": "published", "tags": ["art"], "citations": 3, "finding": "Regression-discontinuity and event-study designs around artist death show how death reshapes exhibition activity and auction prices.", "links": [{"label": "DOI", "url": "https://doi.org/10.1007/s10824-025-09550-4"}], "manual": true}, {"id": "ipres-sustainability", "title": "Sustainability in Context: An Evidence-based (Digital) Preservation Lifecycle Investigation", "short": "Sustainability in digital preservation (iPRES)", "authors": "M. Pennock, M. Sahli & J. Chenoweth", "venue": "iPRES 2025, Wellington", "year": 2025, "status": "published", "tags": ["sus", "dig"], "citations": 2, "finding": "Conference paper from the ReVerDi project examining evidence-based sustainability practices of collecting institutions.", "links": [{"label": "DOI", "url": "https://doi.org/10.5281/zenodo.16843717"}], "manual": true}, {"id": "million-dollar-baby", "title": "Million Dollar Baby — A Primer on Film Finance Practices in the U.S. Movie Industry", "short": "Million Dollar Baby (film finance)", "authors": "A. Cuntz, A. Muscarnera, P. C. Oguguo & M. Sahli", "venue": "Industry & Innovation", "year": 2024, "status": "published", "tags": ["ip", "art"], "citations": 13, "finding": "Thirty years of film-financing practice traced through interviews and U.S. Uniform Commercial Code filings: how movies are financed with IP as collateral.", "links": [{"label": "DOI", "url": "https://doi.org/10.1080/13662716.2024.2328004"}], "manual": true}, {"id": "intermediary-liability", "title": "Intermediary Liability and Trade in Follow-on Innovation", "short": "Intermediary liability & follow-on innovation", "authors": "A. Cuntz & M. Sahli", "venue": "Journal of Cultural Economics", "year": 2023, "status": "published", "tags": ["ip", "art"], "citations": 19, "finding": "The Cariou v. Prince decision triggered a temporary decline in global auctions of Appropriation Art — court rulings ripple through art markets.", "links": [{"label": "DOI", "url": "https://doi.org/10.1007/s10824-023-09470-1"}], "manual": true}, {"id": "digitization-diffusion", "title": "From Digitization to Diffusion: Evidence on the Economic Value of Open Cultural Heritage", "short": "From digitization to diffusion", "authors": "M. Sahli, J. Bieser, J. Chenoweth, J. Suckling, J. Love, E. Lin, M. Martens, M. Pennock & U. Pottgiesser", "venue": "Working paper", "year": 2026, "status": "review", "note": "R&R at Journal of Cultural Economics", "tags": ["dig", "art"], "citations": 0, "finding": "Tracks what happens after national libraries digitize their collections: 64% of images released to Wikimedia Commons are reused at least once.", "links": [], "manual": true}, {"id": "gender-auctions", "title": "Gender Gaps in Museum Exhibitions and Art Auctions: Evidence from Linked Exhibition and Auction Records", "short": "Gender gaps in exhibitions & auctions", "authors": "L. J. Noll & M. Sahli", "venue": "ACEI Working Paper Series", "year": 2026, "status": "review", "note": "Submitted to Journal of Economic Behavior & Organization", "tags": ["art"], "citations": 1, "finding": "21,000+ exhibition records linked to 33,000 auction transactions to examine how museum visibility — and gender representation — translates into market outcomes.", "links": [], "manual": true}, {"id": "elvis-ghost", "title": "Elvis' Ghost or Digital Replica? Publicity Rights and Integrated IP Strategy", "short": "Elvis' Ghost (publicity rights & AI)", "authors": "A. Cuntz, B. Lutes & M. Sahli", "venue": "WIPO Economic Working Paper No. 89", "year": 2025, "status": "review", "note": "Submitted to Strategic Management Journal", "tags": ["ip"], "citations": 0, "finding": "Upon the loss of publicity rights, celebrities become less popular and engage in less commercial activity — with direct implications for AI-generated digital replicas.", "links": [{"label": "WIPO Working Paper No. 89", "url": "https://ideas.repec.org/p/wip/wpaper/89.html"}], "manual": true}, {"id": "libraries-lcsa", "title": "Evaluating the Sustainability of National Libraries: A Life Cycle Sustainability Assessment", "short": "Sustainability of national libraries", "authors": "M. Sahli et al.", "venue": "Working paper", "year": 2025, "status": "review", "note": "Submitted to npj Heritage Science", "tags": ["sus"], "citations": 0, "finding": "Life Cycle Sustainability Assessment of the British Library, the Dutch National Library and the Swiss National Library.", "links": [], "manual": true}, {"id": "open-by-design", "title": "Open by Design: An Empirical Comparison of National Library Digitization Strategies on Wikimedia Commons", "short": "Open by Design (library digitization)", "authors": "M. Sahli, E. Bertacchini & J. Bieser", "venue": "Working paper", "year": 2026, "status": "progress", "note": "In preparation", "tags": ["dig"], "citations": 0, "links": [], "manual": true}, {"id": "covid-artists", "title": "The Covid-19 Impact on Artistic Income: Evidence from Germany", "short": "Covid-19 impact on artistic income", "authors": "A. Cuntz & M. Sahli", "venue": "CEPR Press & Covid Economics 82", "year": 2022, "status": "other", "note": "Book chapter", "tags": ["art"], "citations": 17, "finding": "Musicians and performing artists were among the most vulnerable groups during the pandemic.", "links": [{"label": "WIPO Working Paper No. 65", "url": "https://ideas.repec.org/p/wip/wpaper/65.html"}], "manual": true}, {"id": "dissertation", "title": "Empirical Essays on the Economics of Creative Industries", "short": "PhD dissertation", "authors": "M. Sahli", "venue": "University of Neuchâtel", "year": 2023, "status": "other", "note": "PhD dissertation", "tags": ["art", "ip"], "citations": 0, "links": [], "manual": true}]}
 </script>
 
 <script>
@@ -572,7 +575,7 @@ const ROUTES = [
   {k:['thesis','supervis','student','topic'], r:'thesis topics coming up…', a:()=>go('#thesis')},
   {k:['teach','course','lecture'], r:'loading teaching…', a:()=>go('#teaching')},
   {k:['cv','resume','vitae','lebenslauf'], r:'opening cv.pdf…', a:()=>window.open('cv.pdf','_blank')},
-  {k:['data','dataset','code','crawl','tool','scrap'], r:'mounting datasets…', a:()=>go('#data')},
+  {k:['data','dataset','code','crawl','tool','scrap'], r:'mounting datasets…', a:()=>go('#research')},
   {k:['about','who','bio','background'], r:'about me…', a:()=>go('#about')},
   {k:['dark','light','theme'], r:'toggling theme…', a:()=>{dark=!dark;applyTheme();}},
   {k:['bike','velo','courier'], r:'🚲 ex-bike messenger @ velokurier bern. best office in town.', a:null},
@@ -978,7 +981,7 @@ $$('.rv').forEach(el=>io.observe(el));
 function paintTalks(talks){
   if(!Array.isArray(talks) || !talks.length) return;
   const upcoming = talks.filter(t=>t.scheduled), past = talks.filter(t=>!t.scheduled);
-  const row = t=>`<div class="trow"><div class="td">${t.date||''}</div><div class="tv">${t.what||''}${t.where?` <span>· ${t.where}</span>`:''}${t.note?` <span>(${t.note})</span>`:''}</div></div>`;
+  const row = t=>`<div class="trow"><div class="td">${t.date||''}</div><div class="tv">${t.url?`<a href="${t.url}" target="_blank" rel="noopener">${t.what||''}</a>`:(t.what||'')}${t.where?` <span>· ${t.where}</span>`:''}${t.note?` <span>(${t.note})</span>`:''}</div></div>`;
   let html = '';
   if(upcoming.length) html += `<div class="tgrp">Upcoming</div>` + upcoming.map(row).join('');
   if(past.length)     html += `<div class="tgrp">Past</div>`     + past.map(row).join('');
@@ -993,7 +996,11 @@ function paintTalks(talks){
   $('#talkmeta').innerHTML = `<b>${talks.length}</b> talks` + (next ? ` · next: ${shortName(next)}, ${next.date}` : '');
   $('#talkwrap').style.display = 'block';
 
-  const bar = $('#talkbar'), list = $('#talklist');
+  wireStrip('#talkbar', '#talklist');
+}
+
+function wireStrip(barSel, listSel){
+  const bar = $(barSel), list = $(listSel);
   bar.onclick = ()=>{
     const open = bar.classList.toggle('open');
     bar.setAttribute('aria-expanded', open);
@@ -1001,9 +1008,31 @@ function paintTalks(talks){
   };
   addEventListener('resize', ()=>{ if(bar.classList.contains('open')) list.style.maxHeight = list.scrollHeight + 'px'; });
 }
+
+/* ---- media coverage, outreach and columns: same file, same mechanism ---- */
+const MEDIA_KIND = {podcast:'Podcasts', column:'Columns', blog:'Blog coverage',
+                    video:'Recorded talks', report:'Reports & notes', press:'Press'};
+function paintMedia(items){
+  if(!Array.isArray(items) || !items.length) return;
+  const order = Object.keys(MEDIA_KIND);
+  const row = m=>`<div class="trow"><div class="td">${m.date||''}</div><div class="tv">${
+      m.url ? `<a href="${m.url}" target="_blank" rel="noopener">${m.what||''}</a>` : (m.what||'')
+    }${m.where?` <span>· ${m.where}</span>`:''}${m.note?` <span>(${m.note})</span>`:''}</div></div>`;
+  let html = '';
+  order.forEach(k=>{
+    const g = items.filter(m=>m.kind===k);
+    if(g.length) html += `<div class="tgrp">${MEDIA_KIND[k]}</div>` + g.map(row).join('');
+  });
+  const rest = items.filter(m=>!MEDIA_KIND[m.kind]);
+  if(rest.length) html += `<div class="tgrp">Other</div>` + rest.map(row).join('');
+  $('#medialistinner').innerHTML = html;
+  $('#mediameta').innerHTML = `<b>${items.length}</b> mentions & columns`;
+  $('#mediawrap').style.display = 'block';
+  wireStrip('#mediabar', '#medialist');
+}
 fetch('pdf/cv.json', {cache:'no-store'})
   .then(r => r.ok ? r.json() : null)
-  .then(d => { if(d) paintTalks(d.talks); })
+  .then(d => { if(d){ paintTalks(d.talks); paintMedia(d.outreach); } })
   .catch(()=>{});
 
 /* ---- first paint, then pull the freshest data the workflow has written ---- */

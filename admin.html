@@ -29,15 +29,15 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(
 h1,h2,h3{font-weight:800;letter-spacing:-.025em;line-height:1.15}
 button,input,select,textarea{font-family:inherit;color:inherit}
 ::selection{background:var(--red);color:#fff}
-.wrap{max-width:840px;margin:0 auto;padding:0 22px}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
 .hide{display:none !important}
 
 /* ============ top bar ============ */
 .top{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 84%,transparent);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.topin{display:flex;align-items:center;gap:14px;height:60px}
+.topin{display:flex;align-items:center;gap:10px;height:60px}
 .mark{display:flex;align-items:center;gap:9px;font-weight:800;font-size:1rem;letter-spacing:-.02em}
-.led{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 var(--green);animation:pulse 2.4s infinite}
+.led{width:9px;height:9px;border-radius:50%;background:var(--green);animation:pulse 2.4s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--green) 55%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
 .spacer{flex:1}
 .iconbtn{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font-size:.78rem;
@@ -77,7 +77,6 @@ textarea.inp{resize:vertical;min-height:76px;line-height:1.5}
 .btn.wide{width:100%}
 .btn.ghost{border-color:transparent;color:var(--ink2)}
 .btn.ghost:hover{color:var(--ink)}
-.btn.danger{border-color:var(--red);color:var(--red)}
 .err{font-size:.83rem;color:var(--red);margin-top:12px;line-height:1.45}
 .help{font-size:.78rem;color:var(--ink3);margin-top:16px;line-height:1.55}
 .help a{color:var(--ink2)}
@@ -85,23 +84,34 @@ textarea.inp{resize:vertical;min-height:76px;line-height:1.5}
 /* ============ dashboard ============ */
 main{padding:34px 0 90px}
 .hello{font-size:1.7rem;margin-bottom:5px}
-.hellosub{color:var(--ink2);font-size:.92rem;margin-bottom:26px}
-.adds{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:38px}
-@media(max-width:620px){.adds{grid-template-columns:1fr}}
+.hellosub{color:var(--ink2);font-size:.92rem;margin-bottom:24px}
+.adds{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:26px}
+@media(max-width:760px){.adds{grid-template-columns:1fr}}
 .add{position:relative;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:18px;
-  padding:22px 24px 20px;cursor:pointer;overflow:hidden;box-shadow:var(--shadow);
+  padding:20px 22px 18px;cursor:pointer;overflow:hidden;box-shadow:var(--shadow);
   transition:transform .25s cubic-bezier(.2,.9,.3,1),box-shadow .25s,border-color .25s}
 .add::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--ac);
   transform:scaleY(.28);transform-origin:top;transition:transform .3s cubic-bezier(.2,.9,.3,1)}
 .add:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--ac) 45%,var(--line))}
 .add:hover::before{transform:scaleY(1)}
-.add .ic{font-size:1.5rem;line-height:1}
-.add h3{font-size:1.08rem;margin:11px 0 4px}
-.add p{font-size:.83rem;color:var(--ink2)}
-.add .go{position:absolute;right:22px;bottom:19px;font-size:1.1rem;color:var(--ink3);transition:transform .25s,color .25s}
+.add .ic{font-size:1.4rem;line-height:1}
+.add h3{font-size:1.02rem;margin:10px 0 4px}
+.add p{font-size:.81rem;color:var(--ink2)}
+.add .go{position:absolute;right:20px;bottom:17px;font-size:1.05rem;color:var(--ink3);transition:transform .25s,color .25s}
 .add:hover .go{transform:translateX(4px);color:var(--ac)}
 
-.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+/* ============ to-do panel ============ */
+.todos{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ochre);border-radius:14px;
+  padding:16px 20px 14px;margin-bottom:26px;box-shadow:var(--shadow)}
+.todos h4{font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ochre);margin-bottom:9px}
+.todo{display:flex;align-items:center;gap:11px;padding:5px 0;font-size:.86rem;color:var(--ink2)}
+.todo b{color:var(--ink);font-weight:700}
+.todo button{margin-left:auto;border:1px solid var(--line);background:var(--paper);border-radius:999px;
+  padding:2px 12px;font-size:.74rem;font-weight:600;cursor:pointer;color:var(--ink2);transition:all .18s;flex-shrink:0}
+.todo button:hover{border-color:var(--ink);color:var(--ink)}
+.todos .allgood{font-size:.86rem;color:var(--ink2)}
+
+.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
 .tab{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 16px;font-size:.83rem;
   font-weight:600;cursor:pointer;color:var(--ink2);transition:all .2s}
 .tab:hover{border-color:var(--ink3);color:var(--ink)}
@@ -110,13 +120,16 @@ main{padding:34px 0 90px}
 .search{flex:1;min-width:150px;background:var(--card);border:1.5px solid var(--line);border-radius:999px;
   padding:7px 16px;font-size:.83rem;outline:none;transition:border-color .2s}
 .search:focus{border-color:var(--ink)}
+.fchip{display:none;align-items:center;gap:8px;background:var(--ochre);color:#fff;border:none;border-radius:999px;
+  padding:5px 14px;font-size:.78rem;font-weight:600;cursor:pointer;margin-bottom:12px}
+.fchip.on{display:inline-flex}
 
 .list{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
 .grp{display:flex;align-items:center;gap:11px;padding:15px 20px 7px;font-size:.66rem;font-weight:700;
   letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
 .grp::after{content:"";flex:1;height:1px;background:var(--line)}
 .row{display:flex;align-items:flex-start;gap:14px;padding:12px 20px;border-top:1px solid var(--line);
-  cursor:pointer;transition:background .18s;position:relative}
+  cursor:pointer;transition:background .18s}
 .grp + .row{border-top:none}
 .row:hover{background:var(--paper2)}
 .row .when{width:66px;flex-shrink:0;font-size:.78rem;font-weight:600;color:var(--ink3);padding-top:2px;white-space:nowrap}
@@ -134,6 +147,7 @@ main{padding:34px 0 90px}
 .mini.del:hover{border-color:var(--red);color:var(--red)}
 .mini.armed{background:var(--red);border-color:var(--red);color:#fff;width:auto;padding:0 10px;font-size:.7rem;font-weight:700}
 .empty{padding:38px 20px;text-align:center;color:var(--ink3);font-size:.88rem}
+.foothint{font-size:.78rem;color:var(--ink3);margin-top:14px;line-height:1.5}
 
 /* ============ wizard ============ */
 .sheet{position:fixed;inset:0;z-index:60;background:color-mix(in srgb,var(--paper) 62%,transparent);
@@ -158,13 +172,13 @@ main{padding:34px 0 90px}
 .qh{font-size:.87rem;color:var(--ink2);margin-bottom:20px;max-width:56ch}
 .big{width:100%;background:transparent;border:none;border-bottom:2px solid var(--line);outline:none;
   font-size:1.15rem;font-weight:600;letter-spacing:-.01em;padding:6px 2px 10px;line-height:1.4;resize:none;
-  transition:border-color .25s}
+  transition:border-color .25s;overflow:hidden}
 .big:focus{border-color:var(--ac,var(--ink))}
 .big::placeholder{color:var(--ink3);font-weight:400}
 @media(max-width:560px){.big{font-size:1rem}}
 .opts{display:grid;gap:10px}
 .opt{position:relative;text-align:left;background:var(--paper);border:1.5px solid var(--line);border-radius:14px;
-  padding:14px 18px 14px 20px;cursor:pointer;overflow:hidden;transition:all .22s cubic-bezier(.2,.9,.3,1)}
+  padding:13px 18px 13px 20px;cursor:pointer;overflow:hidden;transition:all .22s cubic-bezier(.2,.9,.3,1)}
 .opt::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--oc,var(--ink3));opacity:.35;transition:opacity .22s}
 .opt:hover{transform:translateX(3px);border-color:var(--ink3)}
 .opt.on{border-color:var(--oc,var(--ink));background:color-mix(in srgb,var(--oc,var(--ink)) 7%,var(--paper))}
@@ -176,7 +190,7 @@ main{padding:34px 0 90px}
   font-weight:500;cursor:pointer;transition:all .2s}
 .chip:hover{border-color:var(--ink3);transform:translateY(-1px)}
 .chip.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-.chip .cd{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:0}
+.chip .cd{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px}
 .sub{margin-top:20px;animation:fadein .35s ease}
 @keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .lb2{font-size:.7rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;display:block}
@@ -190,15 +204,14 @@ main{padding:34px 0 90px}
 .prev .pm{font-size:.83rem;color:var(--ink2);margin-top:3px}
 .prev .pf{font-size:.85rem;color:var(--ink2);margin-top:7px;border-left:2px solid var(--ac,var(--ink3));padding-left:11px}
 .tagpv{display:inline-block;font-size:.63rem;font-weight:600;border:1px solid currentColor;border-radius:999px;padding:0 8px;margin:6px 5px 0 0}
-.foot{display:flex;align-items:center;gap:10px;padding:14px 26px;border-top:1px solid var(--line);flex-shrink:0;
-  background:var(--card);border-radius:0}
+.foot{display:flex;align-items:center;gap:10px;padding:14px 26px;border-top:1px solid var(--line);flex-shrink:0}
 .foot .spacer{flex:1}
 .foot .note{font-size:.76rem;color:var(--ink3)}
 
 /* ============ toast ============ */
 .toast{position:fixed;left:50%;top:18px;transform:translate(-50%,-90px);z-index:80;background:var(--ink);
   color:var(--paper);border-radius:14px;padding:13px 20px;font-size:.86rem;font-weight:500;box-shadow:var(--shadow-lg);
-  opacity:0;transition:all .4s cubic-bezier(.2,.9,.3,1);max-width:min(520px,92vw);line-height:1.45}
+  opacity:0;transition:all .4s cubic-bezier(.2,.9,.3,1);max-width:min(560px,92vw);line-height:1.45}
 .toast.on{transform:translate(-50%,0);opacity:1}
 @media(max-width:560px){.toast{width:calc(100vw - 28px)}}
 .toast a{color:inherit;font-weight:700}
@@ -216,7 +229,7 @@ main{padding:34px 0 90px}
     <div class="gatetop"><span>SAHLI·TRON 2000 — CONTROL ROOM<span class="cur"></span></span></div>
     <div class="gatebody">
       <h1>Kontrollraum</h1>
-      <p>Talks und Papers ergänzen, ohne Code anzufassen. Website und CV aktualisieren sich danach von selbst.</p>
+      <p>Talks, Papers und alles Weitere ergänzen, ohne Code anzufassen. Website und CV aktualisieren sich danach von selbst.</p>
       <label class="field">
         <span class="lb">GitHub-Token</span>
         <input id="tok" class="inp" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
@@ -229,7 +242,7 @@ main{padding:34px 0 90px}
       <div id="loginerr" class="err hide"></div>
       <div class="help">
         Der Token wird nicht auf der Website hinterlegt, sondern nur bei GitHub geprüft.
-        Verloren gegangen? Auf GitHub widerrufen und einen neuen erstellen — die Seite hier bleibt unverändert.
+        Verloren gegangen? Auf GitHub widerrufen und einen neuen erstellen.
         <br><br>
         <a href="#" id="cfgtoggle">Repository ändern</a>
         <span id="cfgbox" class="hide">
@@ -256,25 +269,31 @@ main{padding:34px 0 90px}
 
     <div class="adds">
       <button class="add" data-new="talk" style="--ac:var(--blue)">
-        <div class="ic">🎤</div>
-        <h3>Talk hinzufügen</h3>
-        <p>Konferenz, Vortrag, Panel — drei kurze Fragen.</p>
-        <div class="go">→</div>
+        <div class="ic">🎤</div><h3>Talk</h3>
+        <p>Konferenz, Vortrag, Panel.</p><div class="go">→</div>
       </button>
       <button class="add" data-new="paper" style="--ac:var(--red)">
-        <div class="ic">📄</div>
-        <h3>Paper hinzufügen</h3>
-        <p>Neues Working Paper, Submission oder Publikation.</p>
-        <div class="go">→</div>
+        <div class="ic">📄</div><h3>Paper</h3>
+        <p>Working Paper, Submission, Publikation.</p><div class="go">→</div>
+      </button>
+      <button class="add" data-new="other" style="--ac:var(--ochre)">
+        <div class="ic">✳️</div><h3>Weiteres</h3>
+        <p>Medienecho, Lehre, Förderung, Service.</p><div class="go">→</div>
       </button>
     </div>
+
+    <div class="todos hide" id="todos"><h4>Fällig</h4><div id="todolist"></div></div>
 
     <div class="tabs">
       <button class="tab on" data-tab="talk">Talks<span class="n" id="ntalk"></span></button>
       <button class="tab" data-tab="paper">Papers<span class="n" id="npaper"></span></button>
+      <button class="tab" data-tab="other">Weiteres<span class="n" id="nother"></span></button>
       <input id="q" class="search" placeholder="Suchen…">
     </div>
+    <button class="fchip" id="fchip"></button>
     <div class="list" id="list"></div>
+    <p class="foothint">Jede Änderung ist ein Commit auf GitHub, mit Zeitstempel und Vorher-Nachher.
+      Gelöschtes wandert ins Archiv der Datei statt verloren zu gehen.</p>
   </main>
 </div>
 
@@ -309,8 +328,8 @@ const FILE_PUBS = 'data/publications.json';
 
 let TOKEN = sessionStorage.getItem('kr_tok') || localStorage.getItem('kr_tok') || '';
 let REPO  = localStorage.getItem('kr_repo') || DEFAULT_REPO;
-let CV = null, PUBS = null;              // parsed file contents
-let TAB = 'talk', QUERY = '';
+let CV = null, PUBS = null;
+let TAB = 'talk', QUERY = '', FILTER = null, FILTER_LABEL = '';
 
 if (localStorage.getItem('kr_theme') === 'dark') document.documentElement.classList.add('dark');
 
@@ -327,6 +346,25 @@ const STATUS = {
   other    : ['Anderes', 'var(--ink3)']
 };
 const MONTHS = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+const MONTHNAMES = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+
+/* the six shapes behind the "Weiteres" card, each writing into its own array */
+const KINDS = {
+  outreach : {icon:'📣', label:'Medienecho & Outreach', arr:'outreach',
+              hint:'Podcast, Kolumne, Blogbeitrag, Videoaufzeichnung, Bericht.'},
+  teaching : {icon:'🎓', label:'Lehre', arr:'teaching',
+              hint:'Neues Modul, neuer Kurs, neue Hochschule.'},
+  grants   : {icon:'🏆', label:'Förderung & Preis', arr:'grants',
+              hint:'Drittmittel, Auszeichnung, Reisestipendium.'},
+  policy   : {icon:'🏛️', label:'Policy-Arbeit', arr:'policy',
+              hint:'Eingabe, Stellungnahme, Beratungsmandat.'},
+  organized: {icon:'📅', label:'Organisierte Konferenz', arr:'organized',
+              hint:'Konferenz, Workshop oder Seminar, das du mitorganisiert hast.'},
+  service  : {icon:'🔍', label:'Peer Review & Mitgliedschaften', arr:'service', single:true,
+              hint:'Zwei Zeilen, die du direkt überschreibst.'}
+};
+const OUTREACH_KINDS = {podcast:'Podcast', column:'Kolumne', blog:'Blog', video:'Videoaufzeichnung',
+                        report:'Bericht / Note', press:'Presse'};
 
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -374,11 +412,7 @@ async function writeFile(p, data, message){
   const cur = await gh('contents/' + p + '?nocache=' + Date.now());   // fresh sha, right before writing
   return gh('contents/' + p, {
     method: 'PUT',
-    body: JSON.stringify({
-      message: message,
-      content: b64enc(JSON.stringify(data, null, 2) + '\n'),
-      sha: cur.sha
-    })
+    body: JSON.stringify({ message: message, content: b64enc(JSON.stringify(data, null, 2) + '\n'), sha: cur.sha })
   });
 }
 
@@ -390,8 +424,10 @@ function toast(msg, bad){
   t.classList.toggle('bad', !!bad);
   t.classList.add('on');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('on'), bad ? 8000 : 6500);
+  toastTimer = setTimeout(() => t.classList.remove('on'), bad ? 9000 : 6500);
 }
+const savedToast = () => toast('Gespeichert. Die Website zeigt es sofort, der CV wird in rund zwei Minuten neu gebaut. ' +
+  '<a href="https://github.com/' + REPO + '/actions" target="_blank" rel="noopener">Fortschritt ansehen</a>');
 
 /* ================================================================== login */
 $('#cfgtoggle').onclick = e => {
@@ -401,7 +437,6 @@ $('#cfgtoggle').onclick = e => {
   $('#repoinp').focus();
 };
 $('#repoinp').oninput = e => { REPO = e.target.value.trim() || DEFAULT_REPO; };
-
 $('#tok').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
 $('#dologin').onclick = login;
 
@@ -413,7 +448,7 @@ async function login(){
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Prüfe…';
   $('#loginerr').classList.add('hide');
   try {
-    await gh('');                                        // does the token see the repo?
+    await gh('');
     if ($('#remember').checked){ localStorage.setItem('kr_tok', TOKEN); sessionStorage.removeItem('kr_tok'); }
     else { sessionStorage.setItem('kr_tok', TOKEN); localStorage.removeItem('kr_tok'); }
     localStorage.setItem('kr_repo', REPO);
@@ -449,44 +484,134 @@ $('#theme').onclick = () => {
   localStorage.setItem('kr_theme', d ? 'dark' : 'light');
 };
 
-/* ================================================================== list */
+/* ================================================================== helpers */
 const monthKey = d => { const m = /^(\d{2})\/(\d{4})$/.exec(d || ''); return m ? (+m[2]) * 12 + (+m[1]) : 0; };
 const nowKey   = () => { const n = new Date(); return n.getFullYear() * 12 + (n.getMonth() + 1); };
+const thisYear = () => new Date().getFullYear();
 
+/* every "Weiteres" entry, flattened, so one list can show all six shapes */
+function otherItems(){
+  const out = [];
+  Object.entries(KINDS).forEach(([k, def]) => {
+    if (def.single){ out.push({ kind: k, i: -1, it: CV[def.arr] || {} }); return; }
+    (CV[def.arr] || []).forEach((it, i) => out.push({ kind: k, i: i, it: it }));
+  });
+  return out;
+}
+function otherText(o){
+  const it = o.it;
+  if (o.kind === 'service') return [it.reviewing, it.memberships].join(' ');
+  return [it.what, it.where, it.org, it.role, it.url].filter(Boolean).join(' ');
+}
+function otherTitle(o){
+  const it = o.it;
+  if (o.kind === 'service') return 'Peer Review & Mitgliedschaften';
+  if (o.kind === 'teaching') return it.org || '';
+  return it.what || '';
+}
+function otherSub(o){
+  const it = o.it;
+  if (o.kind === 'service') return (it.reviewing || '').slice(0, 70) + '…';
+  if (o.kind === 'teaching') return it.role || '';
+  if (o.kind === 'outreach') return [OUTREACH_KINDS[it.kind] || '', it.where].filter(Boolean).join(' · ');
+  return it.role || '';
+}
+const otherWhen = o => o.it.date || o.it.year || o.it.years || '';
+
+/* ================================================================== to-dos */
+function computeTodos(){
+  const t = [], talks = CV.talks || [], pubs = PUBS.publications || [], out = CV.outreach || [];
+
+  const stale = talks.filter(x => x.scheduled && monthKey(x.date) < nowKey());
+  if (stale.length) t.push({ n: stale.length, txt: 'geplante Talks liegen in der Vergangenheit', one: 'geplanter Talk liegt in der Vergangenheit',
+    tab: 'talk', f: x => x.scheduled && monthKey(x.date) < nowKey(), lb: 'überfällige Talks' });
+
+  const noLink = pubs.filter(p => !(p.links || []).length);
+  if (noLink.length) t.push({ n: noLink.length, txt: 'Papers ohne Link zu Working Paper oder DOI', one: 'Paper ohne Link zu Working Paper oder DOI',
+    tab: 'paper', f: p => !(p.links || []).length, lb: 'Papers ohne Link' });
+
+  const longReview = pubs.filter(p => p.status === 'review' && p.year && p.year <= thisYear() - 1);
+  if (longReview.length) t.push({ n: longReview.length, txt: 'Papers seit über einem Jahr im Review-Status', one: 'Paper seit über einem Jahr im Review-Status',
+    tab: 'paper', f: p => p.status === 'review' && p.year && p.year <= thisYear() - 1, lb: 'lange im Review' });
+
+  const noUrl = out.filter(m => !m.url);
+  if (noUrl.length) t.push({ n: noUrl.length, txt: 'Medieneinträge ohne Link', one: 'Medieneintrag ohne Link',
+    tab: 'other', f: o => o.kind === 'outreach' && !o.it.url, lb: 'Medien ohne Link' });
+
+  const noDate = out.filter(m => !m.date);
+  if (noDate.length) t.push({ n: noDate.length, txt: 'Medieneinträge ohne Jahr', one: 'Medieneintrag ohne Jahr',
+    tab: 'other', f: o => o.kind === 'outreach' && !o.it.date, lb: 'Medien ohne Jahr' });
+
+  const rec = talks.filter(x => /recording|aufzeichnung/i.test(x.note || '') && !x.url);
+  if (rec.length) t.push({ n: rec.length, txt: 'Talks mit Aufzeichnung, aber ohne Link', one: 'Talk mit Aufzeichnung, aber ohne Link',
+    tab: 'talk', f: x => /recording|aufzeichnung/i.test(x.note || '') && !x.url, lb: 'Aufzeichnungen ohne Link' });
+
+  return t;
+}
+
+function paintTodos(){
+  const t = computeTodos(), box = $('#todos');
+  if (!t.length){ box.classList.add('hide'); return; }
+  box.classList.remove('hide');
+  $('#todolist').innerHTML = t.map((x, i) =>
+    '<div class="todo"><b>' + x.n + '</b> ' + esc(x.n === 1 && x.one ? x.one : x.txt) +
+    '<button data-todo="' + i + '">zeigen</button></div>').join('');
+  $$('#todolist button').forEach(b => b.onclick = () => {
+    const x = t[+b.dataset.todo];
+    TAB = x.tab; FILTER = x.f; FILTER_LABEL = x.lb; QUERY = ''; $('#q').value = '';
+    $$('.tab').forEach(y => y.classList.toggle('on', y.dataset.tab === TAB));
+    render();
+    $('#list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
+$('#fchip').onclick = () => { FILTER = null; FILTER_LABEL = ''; render(); };
+
+/* ================================================================== list */
 $$('.tab').forEach(t => t.onclick = () => {
-  TAB = t.dataset.tab;
+  TAB = t.dataset.tab; FILTER = null; FILTER_LABEL = '';
   $$('.tab').forEach(x => x.classList.toggle('on', x === t));
   render();
 });
-$('#q').oninput = e => { QUERY = e.target.value.toLowerCase(); render(); };
+$('#q').oninput = e => { QUERY = e.target.value.toLowerCase(); FILTER = null; FILTER_LABEL = ''; render(); };
 $$('.add').forEach(b => b.onclick = () => openWizard(b.dataset.new, null));
 
 function render(){
   if (!CV || !PUBS) return;
-  const talks = CV.talks || [], pubs = PUBS.publications || [];
+  const talks = CV.talks || [], pubs = PUBS.publications || [], others = otherItems();
   $('#ntalk').textContent  = ' ' + talks.length;
   $('#npaper').textContent = ' ' + pubs.length;
+  $('#nother').textContent = ' ' + others.length;
   const upcoming = talks.filter(t => t.scheduled).length;
   $('#sub').innerHTML = talks.length + ' Talks (' + upcoming + ' geplant) · ' + pubs.length +
-    ' Papers · zuletzt aktualisiert ' + esc(PUBS.generated || '–');
+    ' Papers · ' + others.length + ' weitere Einträge · Stand ' + esc(PUBS.generated || '–');
 
-  const L = $('#list');
-  L.innerHTML = TAB === 'talk' ? talkList(talks) : paperList(pubs);
+  const chip = $('#fchip');
+  chip.classList.toggle('on', !!FILTER);
+  chip.textContent = FILTER ? 'Gefiltert: ' + FILTER_LABEL + '  ×' : '';
+
+  $('#list').innerHTML = TAB === 'talk' ? talkList(talks) : TAB === 'paper' ? paperList(pubs) : otherList(others);
+  paintTodos();
   wireRows();
 }
 
+const acts = (noDel) => '<div class="acts"><button class="mini ed" title="Bearbeiten">✎</button>' +
+  (noDel ? '' : '<button class="mini del" title="Löschen">🗑</button>') + '</div>';
+
 function talkList(talks){
   const idx = talks.map((t, i) => ({ t, i }))
+    .filter(o => !FILTER || FILTER(o.t))
     .filter(o => !QUERY || ((o.t.what || '') + ' ' + (o.t.where || '') + ' ' + (o.t.date || '')).toLowerCase().includes(QUERY))
     .sort((a, b) => monthKey(b.t.date) - monthKey(a.t.date));
   if (!idx.length) return '<div class="empty">Nichts gefunden.</div>';
   const up = idx.filter(o => o.t.scheduled), past = idx.filter(o => !o.t.scheduled);
-  let h = '';
   const row = o => '<div class="row" data-i="' + o.i + '">' +
       '<div class="when">' + esc(o.t.date) + '</div>' +
-      '<div class="body"><div class="ttl">' + esc(o.t.what) + '</div>' +
+      '<div class="body"><div class="ttl">' + esc(o.t.what) +
+        (o.t.url ? '<span class="pill" style="color:var(--blue)">Link</span>' : '') + '</div>' +
       '<div class="sub">' + esc(o.t.where || '') + (o.t.note ? ' · ' + esc(o.t.note) : '') + '</div></div>' +
       acts() + '</div>';
+  let h = '';
   if (up.length)   h += '<div class="grp">Geplant</div>'  + up.map(row).join('');
   if (past.length) h += '<div class="grp">Gehalten</div>' + past.map(row).join('');
   return h;
@@ -495,6 +620,7 @@ function talkList(talks){
 function paperList(pubs){
   const order = { published: 0, review: 1, progress: 2, other: 3 };
   const idx = pubs.map((p, i) => ({ p, i }))
+    .filter(o => !FILTER || FILTER(o.p))
     .filter(o => !QUERY || ((o.p.title || '') + ' ' + (o.p.authors || '') + ' ' + (o.p.venue || '')).toLowerCase().includes(QUERY))
     .sort((a, b) => (order[a.p.status] ?? 9) - (order[b.p.status] ?? 9) || (b.p.year || 0) - (a.p.year || 0));
   if (!idx.length) return '<div class="empty">Nichts gefunden.</div>';
@@ -513,17 +639,36 @@ function paperList(pubs){
   return h;
 }
 
-const acts = () => '<div class="acts">' +
-  '<button class="mini ed" title="Bearbeiten">✎</button>' +
-  '<button class="mini del" title="Löschen">🗑</button></div>';
+function otherList(items){
+  const idx = items
+    .filter(o => !FILTER || FILTER(o))
+    .filter(o => !QUERY || otherText(o).toLowerCase().includes(QUERY));
+  if (!idx.length) return '<div class="empty">Nichts gefunden.</div>';
+  let h = '';
+  Object.keys(KINDS).forEach(k => {
+    const g = idx.filter(o => o.kind === k);
+    if (!g.length) return;
+    h += '<div class="grp">' + KINDS[k].icon + ' ' + esc(KINDS[k].label) + '</div>';
+    g.forEach(o => {
+      h += '<div class="row" data-kind="' + k + '" data-i="' + o.i + '">' +
+        '<div class="when">' + esc(otherWhen(o)) + '</div>' +
+        '<div class="body"><div class="ttl">' + esc(otherTitle(o)) +
+          (o.kind === 'outreach' && !o.it.url ? '<span class="pill" style="color:var(--ochre)">kein Link</span>' : '') + '</div>' +
+        '<div class="sub">' + esc(otherSub(o)) + '</div></div>' +
+        acts(KINDS[k].single) + '</div>';
+    });
+  });
+  return h;
+}
 
 function wireRows(){
   $$('#list .row').forEach(r => {
-    const i = +r.dataset.i;
-    const open = e => { if (e.target.closest('.acts')) return; openWizard(TAB, i); };
-    r.onclick = open;
-    r.querySelector('.ed').onclick = () => openWizard(TAB, i);
+    const i = +r.dataset.i, k = r.dataset.kind;
+    const open = () => TAB === 'other' ? openWizard('other', i, k) : openWizard(TAB, i);
+    r.onclick = e => { if (!e.target.closest('.acts')) open(); };
+    r.querySelector('.ed').onclick = open;
     const d = r.querySelector('.del');
+    if (!d) return;
     d.onclick = () => {
       if (!d.classList.contains('armed')){
         $$('#list .mini.del').forEach(x => { x.classList.remove('armed'); x.textContent = '🗑'; });
@@ -531,33 +676,49 @@ function wireRows(){
         setTimeout(() => { d.classList.remove('armed'); d.textContent = '🗑'; }, 4000);
         return;
       }
-      remove(TAB, i);
+      remove(TAB, i, k);
     };
   });
 }
 
 /* ================================================================== wizard */
-let W = null;   // {kind, editIndex, draft, step}
+let W = null;   // {kind, sub, editIndex, draft, step}
 
-function blankTalk(){
+const blankTalk = () => {
   const n = new Date();
-  return { date: MONTHS[n.getMonth()] + '/' + n.getFullYear(), what: '', where: '', note: '', scheduled: false };
-}
-function blankPaper(){
-  return { id: '', title: '', short: '', authors: 'M. Sahli', venue: '', year: new Date().getFullYear(),
-           status: '', note: '', tags: [], citations: 0, finding: '', links: [], manual: true };
-}
+  return { date: MONTHS[n.getMonth()] + '/' + n.getFullYear(), what: '', where: '', note: '', url: '', scheduled: false };
+};
+const blankPaper = () => ({ id: '', title: '', short: '', authors: 'M. Sahli', venue: '', year: thisYear(),
+                            status: '', note: '', tags: [], citations: 0, finding: '', links: [], manual: true });
+const blankOther = k => ({
+  outreach : { date: '', kind: 'podcast', what: '', where: '', url: '' },
+  teaching : { years: thisYear() + ' –', org: '', role: '', eval: '' },
+  grants   : { year: String(thisYear()), what: '' },
+  policy   : { year: String(thisYear()), what: '', role: 'Co-author' },
+  organized: { date: String(thisYear()), what: '', role: '' },
+  service  : { reviewing: '', memberships: '' }
+}[k]);
 
-function openWizard(kind, i){
-  const src = kind === 'talk' ? (CV.talks || []) : (PUBS.publications || []);
-  const draft = i === null ? (kind === 'talk' ? blankTalk() : blankPaper())
-                           : JSON.parse(JSON.stringify(src[i]));
-  if (kind === 'paper' && !Array.isArray(draft.tags))  draft.tags  = [];
-  if (kind === 'paper' && !Array.isArray(draft.links)) draft.links = [];
-  W = { kind: kind, editIndex: i, draft: draft, step: 0 };
+function openWizard(kind, i, sub){
+  let draft;
+  if (kind === 'talk')  draft = i === null ? blankTalk()  : JSON.parse(JSON.stringify(CV.talks[i]));
+  if (kind === 'paper') draft = i === null ? blankPaper() : JSON.parse(JSON.stringify(PUBS.publications[i]));
+  if (kind === 'other'){
+    if (sub && KINDS[sub].single) draft = JSON.parse(JSON.stringify(CV[KINDS[sub].arr] || blankOther(sub)));
+    else if (sub && i >= 0)       draft = JSON.parse(JSON.stringify(CV[KINDS[sub].arr][i]));
+    else                          draft = {};
+  }
+  if (kind === 'paper'){
+    if (!Array.isArray(draft.tags))  draft.tags = [];
+    if (!Array.isArray(draft.links)) draft.links = [];
+  }
+  W = { kind: kind, sub: sub || null, editIndex: (i === null || i < 0) ? null : i, draft: draft, step: 0 };
+  if (kind === 'other' && sub) W.step = 1;                     // editing skips the type question
+  const ac = kind === 'talk' ? 'var(--blue)' : kind === 'paper' ? 'var(--red)' : 'var(--ochre)';
   $('#sheet').classList.remove('hide');
-  $('#sheet').style.setProperty('--ac', kind === 'talk' ? 'var(--blue)' : 'var(--red)');
-  $('#kick').textContent = (i === null ? 'Neu · ' : 'Bearbeiten · ') + (kind === 'talk' ? 'Talk' : 'Paper');
+  $('#sheet').style.setProperty('--ac', ac);
+  const name = kind === 'talk' ? 'Talk' : kind === 'paper' ? 'Paper' : (sub ? KINDS[sub].label : 'Weiteres');
+  $('#kick').textContent = (W.editIndex === null && !(sub && KINDS[sub].single) ? 'Neu · ' : 'Bearbeiten · ') + name;
   paintStep();
 }
 function closeWizard(){ $('#sheet').classList.add('hide'); W = null; }
@@ -571,49 +732,60 @@ document.addEventListener('keydown', e => {
 $('#back').onclick = () => go(-1);
 $('#next').onclick = () => go(1);
 
-const STEPS = { talk: 3, paper: 4 };
+const steps = () => W.kind === 'paper' ? 4 : 3;
 
 function go(d){
   if (d > 0 && !valid()) return;
-  const last = STEPS[W.kind] - 1;
+  const last = steps() - 1;
   if (d > 0 && W.step === last) return save();
-  W.step = Math.max(0, Math.min(last, W.step + d));
+  const min = (W.kind === 'other' && W.editIndex !== null) ? 1 : 0;
+  W.step = Math.max(min, Math.min(last, W.step + d));
   paintStep();
 }
 
+function grow(t){ t.style.height = 'auto'; t.style.height = (t.scrollHeight + 2) + 'px'; }
+function checkValid(){ $('#next').disabled = !valid(); }
+
+function valid(){
+  const d = W.draft;
+  if (W.kind === 'talk'){
+    if (W.step === 0) return !!(d.what || '').trim();
+    if (W.step === 1) return /^\d{2}\/\d{4}$/.test(d.date);
+    return true;
+  }
+  if (W.kind === 'paper'){
+    if (W.step === 0) return !!(d.title || '').trim();
+    if (W.step === 1) return !!d.status;
+    if (W.step === 2) return /^\d{4}$/.test(String(d.year));
+    return true;
+  }
+  if (W.step === 0) return !!W.sub;
+  if (W.step === 1){
+    if (W.sub === 'service')  return !!(d.reviewing || '').trim();
+    if (W.sub === 'teaching') return !!(d.org || '').trim();
+    return !!(d.what || '').trim();
+  }
+  return true;
+}
+
 function paintStep(){
-  const total = STEPS[W.kind], s = W.step;
+  const total = steps(), s = W.step;
   $('#prog').style.width = ((s + 1) / total * 100) + '%';
   $('#stepno').textContent = 'Schritt ' + (s + 1) + ' von ' + total;
-  $('#back').style.visibility = s === 0 ? 'hidden' : 'visible';
+  const min = (W.kind === 'other' && W.editIndex !== null) ? 1 : 0;
+  $('#back').style.visibility = s === min ? 'hidden' : 'visible';
   $('#next').textContent = s === total - 1 ? (W.editIndex === null ? 'Speichern' : 'Änderung speichern') : 'Weiter →';
   $('#fnote').textContent = '';
-  $('#sbody').innerHTML = (W.kind === 'talk' ? talkStep : paperStep)(s);
+  $('#sbody').innerHTML = (W.kind === 'talk' ? talkStep : W.kind === 'paper' ? paperStep : otherStep)(s);
   wireStep();
-  $$('#sbody .big').forEach(t => { grow(t); t.addEventListener('input', () => grow(t)); });
   const first = $('#sbody .big, #sbody .inp');
   if (first) setTimeout(() => {
     first.focus();
-    if (first.setSelectionRange && first.type !== 'number' && first.tagName !== 'SELECT'){
+    if (first.setSelectionRange && first.tagName !== 'SELECT'){
       try { first.setSelectionRange(first.value.length, first.value.length); } catch(e){}
     }
   }, 60);
   checkValid();
-}
-
-function grow(t){ t.style.height='auto'; t.style.height=(t.scrollHeight+2)+'px'; }
-function checkValid(){ $('#next').disabled = !valid(); }
-function valid(){
-  const d = W.draft;
-  if (W.kind === 'talk'){
-    if (W.step === 0) return !!d.what.trim();
-    if (W.step === 1) return /^\d{2}\/\d{4}$/.test(d.date);
-    return true;
-  }
-  if (W.step === 0) return !!d.title.trim();
-  if (W.step === 1) return !!d.status;
-  if (W.step === 2) return !!String(d.year).match(/^\d{4}$/);
-  return true;
 }
 
 /* ---------------------------------------------------------- talk steps */
@@ -621,23 +793,22 @@ function talkStep(s){
   const d = W.draft;
   if (s === 0) return '' +
     '<h2 class="q">Wo hast du gesprochen?</h2>' +
-    '<p class="qh">Name der Konferenz, des Seminars oder der Veranstaltung — so, wie er im CV stehen soll.</p>' +
+    '<p class="qh">Name der Konferenz, des Seminars oder der Veranstaltung, so wie er im CV stehen soll.</p>' +
     '<textarea class="big" rows="2" id="f_what" placeholder="EURAM 2026 &mdash; European Academy of Management">' + esc(d.what) + '</textarea>';
 
   if (s === 1){
-    const m = /^(\d{2})\/(\d{4})$/.exec(d.date) || ['', MONTHS[new Date().getMonth()], String(new Date().getFullYear())];
-    const names = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+    const m = /^(\d{2})\/(\d{4})$/.exec(d.date) || ['', MONTHS[new Date().getMonth()], String(thisYear())];
     return '' +
       '<h2 class="q">Wann und wo?</h2>' +
-      '<p class="qh">Monat und Jahr genügen. Ob der Talk als geplant oder gehalten erscheint, ergibt sich daraus — du kannst es unten aber überschreiben.</p>' +
+      '<p class="qh">Monat und Jahr genügen. Ob der Talk als geplant oder gehalten erscheint, ergibt sich daraus, du kannst es unten aber überschreiben.</p>' +
       '<div class="two">' +
         '<div><span class="lb2">Monat</span><select class="inp" id="f_month">' +
-          MONTHS.map((mm, k) => '<option value="' + mm + '"' + (mm === m[1] ? ' selected' : '') + '>' + names[k] + '</option>').join('') +
+          MONTHS.map((mm, k) => '<option value="' + mm + '"' + (mm === m[1] ? ' selected' : '') + '>' + MONTHNAMES[k] + '</option>').join('') +
         '</select></div>' +
         '<div><span class="lb2">Jahr</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(m[2]) + '"></div>' +
       '</div>' +
       '<div class="sub"><span class="lb2">Ort</span>' +
-      '<input class="inp" id="f_where" placeholder="z. B. Bern, Switzerland" value="' + esc(d.where || '') + '"></div>' +
+      '<input class="inp" id="f_where" placeholder="Bern, Switzerland" value="' + esc(d.where || '') + '"></div>' +
       '<div class="sub"><span class="lb2">Status</span><div class="chips">' +
         '<button class="chip' + (d.scheduled ? ' on' : '') + '" data-sched="1">Geplant</button>' +
         '<button class="chip' + (d.scheduled ? '' : ' on') + '" data-sched="0">Bereits gehalten</button>' +
@@ -645,31 +816,13 @@ function talkStep(s){
   }
 
   return '' +
-    '<h2 class="q">Noch ein Zusatz?</h2>' +
-    '<p class="qh">Optional — etwa „invited", „keynote" oder „with A. Cuntz". Erscheint in Klammern hinter dem Eintrag.</p>' +
+    '<h2 class="q">Zusatz und Aufzeichnung</h2>' +
+    '<p class="qh">Beides optional. Der Zusatz erscheint in Klammern, etwa „invited", „keynote" oder „3 papers".</p>' +
+    '<span class="lb2">Zusatz</span>' +
     '<input class="inp" id="f_note" placeholder="invited" value="' + esc(d.note || '') + '">' +
+    '<div class="sub"><span class="lb2">Link zur Aufzeichnung oder Folien</span>' +
+    '<input class="inp" id="f_url" placeholder="https://…" value="' + esc(d.url || '') + '"></div>' +
     '<div class="prev" id="pv" style="margin-top:22px"></div>';
-}
-
-/* live preview, redrawn on every keystroke of the final step */
-function renderPreview(){
-  const box = $('#pv'); if (!box) return;
-  const d = W.draft;
-  if (W.kind === 'talk'){
-    box.innerHTML = '<div class="prevlb">So sieht es aus</div>' +
-      '<div class="pt">' + esc(d.what) + '</div>' +
-      '<div class="pm">' + esc(d.date) + (d.where ? ' · ' + esc(d.where) : '') +
-        (d.note ? ' (' + esc(d.note) + ')' : '') + (d.scheduled ? ' · geplant' : '') + '</div>';
-    return;
-  }
-  const col = (STATUS[d.status] || [, 'var(--ink3)'])[1];
-  box.innerHTML = '<div class="prevlb">So sieht es aus</div>' +
-    '<div class="pt">' + esc(d.title) +
-      (d.note ? '<span class="pill" style="color:' + col + '">' + esc(d.note) + '</span>' : '') + '</div>' +
-    '<div class="pm">' + esc(d.authors) + (d.venue ? ' · ' + esc(d.venue) : '') + (d.year ? ' · ' + esc(d.year) : '') + '</div>' +
-    (d.finding ? '<div class="pf">' + esc(d.finding) + '</div>' : '') +
-    (d.links || []).filter(l => l.label).map(l => '<span class="tagpv" style="color:var(--ink3)">↗ ' + esc(l.label) + '</span>').join('') +
-    d.tags.map(t => TAGS[t] ? '<span class="tagpv" style="color:' + TAGS[t][1] + '">' + esc(TAGS[t][0]) + '</span>' : '').join('');
 }
 
 /* ---------------------------------------------------------- paper steps */
@@ -688,58 +841,53 @@ function paperStep(s){
     '<textarea class="big" rows="3" id="f_title" placeholder="Open by Design: An Empirical Comparison …">' + esc(d.title) + '</textarea>';
 
   if (s === 1){
-    const opt = (k, t, sub) => '<button class="opt' + (d.status === k ? ' on' : '') + '" data-st="' + k + '" style="--oc:' +
-      (STATUS[k][1]) + '"><b>' + t + '</b><span>' + sub + '</span></button>';
+    const opt = (k, t, sub) => '<button class="opt' + (d.status === k ? ' on' : '') + '" data-st="' + k +
+      '" style="--oc:' + STATUS[k][1] + '"><b>' + t + '</b><span>' + sub + '</span></button>';
     let h = '<h2 class="q">Wo steht es gerade?</h2>' +
       '<p class="qh">Das bestimmt, unter welcher Überschrift es auf der Website und im CV erscheint.</p>' +
       '<div class="opts">' +
-      opt('published', 'Veröffentlicht',   'Peer-reviewed in einem Journal erschienen oder angenommen.') +
-      opt('review',    'Eingereicht',      'Submitted, under review oder R&R bei einem Journal.') +
-      opt('progress',  'In Arbeit',        'Working Paper, in Vorbereitung, noch nicht eingereicht.') +
-      opt('other',     'Anderes',          'Buchkapitel, Dissertation, Policy-Bericht, Kolumne.') +
+      opt('published', 'Veröffentlicht', 'Peer-reviewed in einem Journal erschienen oder angenommen.') +
+      opt('review',    'Eingereicht',    'Submitted, under review oder R&amp;R bei einem Journal.') +
+      opt('progress',  'In Arbeit',      'Working Paper, in Vorbereitung, noch nicht eingereicht.') +
+      opt('other',     'Anderes',        'Buchkapitel, Dissertation, Policy-Bericht, Kolumne.') +
       '</div>';
-
     if (d.status === 'published'){
       h += '<div class="sub"><span class="lb2">Journal</span>' +
            '<input class="inp" id="f_venue" placeholder="Journal of Cultural Economics" value="' + esc(d.venue || '') + '"></div>';
     } else if (d.status){
       const presets = NOTE_PRESETS[d.status] || [];
-      h += '<div class="sub"><span class="lb2">' +
-           (d.status === 'review' ? 'Bei welchem Journal?' : 'Wie genau?') + '</span><div class="chips">' +
-           presets.map(p => '<button class="chip' + ((d.note || '').startsWith(p.trim()) ? ' on' : '') +
-             '" data-note="' + esc(p) + '">' + esc(p.trim()) + '</button>').join('') +
-           '</div>' +
-           '<input class="inp" id="f_note" style="margin-top:11px" placeholder="' +
-             (d.status === 'review' ? 'Submitted to Journal of Economic Behavior & Organization' : 'In preparation') +
+      h += '<div class="sub"><span class="lb2">' + (d.status === 'review' ? 'Bei welchem Journal?' : 'Wie genau?') + '</span>' +
+           '<div class="chips">' + presets.map(p => '<button class="chip' +
+             ((d.note || '').startsWith(p.trim()) ? ' on' : '') + '" data-note="' + esc(p) + '">' + esc(p.trim()) + '</button>').join('') +
+           '</div><input class="inp" id="f_note" style="margin-top:11px" placeholder="' +
+             (d.status === 'review' ? 'Submitted to Journal of Economic Behavior &amp; Organization' : 'In preparation') +
              '" value="' + esc(d.note || '') + '">' +
            '<div class="help" style="margin-top:7px">Erscheint als farbige Markierung hinter dem Titel.</div></div>';
     }
     return h;
   }
 
-  if (s === 2){
-    return '' +
-      '<h2 class="q">Wer, wann, wo?</h2>' +
-      '<p class="qh">Autorenreihenfolge wie in der Publikation. Der Kurztitel wird nur in den Grafiken verwendet.</p>' +
-      '<div><span class="lb2">Autor:innen</span>' +
-      '<input class="inp" id="f_authors" placeholder="M. Sahli, A. Cuntz &amp; P. J. Heald" value="' + esc(d.authors || '') + '"></div>' +
-      '<div class="sub two">' +
-        '<div><span class="lb2">Jahr</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(d.year || '') + '"></div>' +
-        '<div><span class="lb2">' + (d.status === 'published' ? 'Journal' : 'Reihe / Venue') + '</span>' +
-        '<input class="inp" id="f_venue" placeholder="' + (d.status === 'published' ? 'Journal of Cultural Economics' : 'Working paper') + '" value="' + esc(d.venue || '') + '"></div>' +
-      '</div>' +
-      '<div class="sub"><span class="lb2">Kurztitel (optional)</span>' +
-      '<input class="inp" id="f_short" placeholder="' + esc(autoShort(d.title)) + '" value="' + esc(d.short || '') + '"></div>' +
-      '<div class="sub"><span class="lb2">Themen</span><div class="chips">' +
-        Object.entries(TAGS).map(([k, v]) => '<button class="chip' + (d.tags.includes(k) ? ' on' : '') +
-          '" data-tag="' + k + '"><span class="cd" style="background:' + v[1] + '"></span>' + esc(v[0]) + '</button>').join('') +
-      '</div></div>';
-  }
+  if (s === 2) return '' +
+    '<h2 class="q">Wer, wann, wo?</h2>' +
+    '<p class="qh">Autorenreihenfolge wie in der Publikation. Der Kurztitel wird nur in den Grafiken verwendet.</p>' +
+    '<div><span class="lb2">Autor:innen</span>' +
+    '<input class="inp" id="f_authors" placeholder="M. Sahli, A. Cuntz &amp; P. J. Heald" value="' + esc(d.authors || '') + '"></div>' +
+    '<div class="sub two">' +
+      '<div><span class="lb2">Jahr</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(d.year || '') + '"></div>' +
+      '<div><span class="lb2">' + (d.status === 'published' ? 'Journal' : 'Reihe / Venue') + '</span>' +
+      '<input class="inp" id="f_venue" placeholder="' + (d.status === 'published' ? 'Journal of Cultural Economics' : 'Working paper') + '" value="' + esc(d.venue || '') + '"></div>' +
+    '</div>' +
+    '<div class="sub"><span class="lb2">Kurztitel (optional)</span>' +
+    '<input class="inp" id="f_short" placeholder="' + esc(autoShort(d.title)) + '" value="' + esc(d.short || '') + '"></div>' +
+    '<div class="sub"><span class="lb2">Themen</span><div class="chips">' +
+      Object.entries(TAGS).map(([k, v]) => '<button class="chip' + (d.tags.includes(k) ? ' on' : '') +
+        '" data-tag="' + k + '"><span class="cd" style="background:' + v[1] + '"></span>' + esc(v[0]) + '</button>').join('') +
+    '</div></div>';
 
   const links = (d.links || []).concat([{ label: '', url: '' }]);
   return '' +
     '<h2 class="q">Kernbefund und Links</h2>' +
-    '<p class="qh">Beides optional. Der Kernbefund erscheint auf der Website, wenn man den Eintrag aufklappt.</p>' +
+    '<p class="qh">Beides optional, aber der Link ist wertvoll: er ist die einzige Stelle, an der die Working-Paper-Version festgehalten wird.</p>' +
     '<span class="lb2">Kernbefund</span>' +
     '<textarea class="inp" id="f_finding" rows="3" placeholder="Ein bis zwei Sätze, was rauskommt.">' + esc(d.finding || '') + '</textarea>' +
     '<div class="sub"><span class="lb2">Links</span><div id="links">' +
@@ -756,23 +904,150 @@ function autoShort(t){
   return t.length > 46 ? t.slice(0, 44).trim() + '…' : t;
 }
 
+/* ---------------------------------------------------------- other steps */
+function otherStep(s){
+  const d = W.draft, k = W.sub;
+
+  if (s === 0) return '' +
+    '<h2 class="q">Worum geht es?</h2>' +
+    '<p class="qh">Alles, was weder Talk noch Paper ist, und im CV trotzdem nicht fehlen darf.</p>' +
+    '<div class="opts">' + Object.entries(KINDS).map(([key, v]) =>
+      '<button class="opt' + (k === key ? ' on' : '') + '" data-sub="' + key + '" style="--oc:var(--ochre)">' +
+      '<b>' + v.icon + '  ' + esc(v.label) + '</b><span>' + esc(v.hint) + '</span></button>').join('') +
+    '</div>';
+
+  if (s === 1){
+    if (k === 'outreach') return '' +
+      '<h2 class="q">Was für ein Beitrag?</h2>' +
+      '<p class="qh">Erst die Art, dann Titel, Medium und Link.</p>' +
+      '<div class="chips">' + Object.entries(OUTREACH_KINDS).map(([key, lb]) =>
+        '<button class="chip' + (d.kind === key ? ' on' : '') + '" data-okind="' + key + '">' + esc(lb) + '</button>').join('') +
+      '</div>' +
+      '<div class="sub"><span class="lb2">Titel oder Thema</span>' +
+      '<textarea class="big" rows="2" id="f_what" placeholder="Million Dollar Baby — film finance and IP">' + esc(d.what || '') + '</textarea></div>' +
+      '<div class="sub two">' +
+        '<div><span class="lb2">Medium</span><input class="inp" id="f_where" placeholder="Art Law Podcast (Spotify)" value="' + esc(d.where || '') + '"></div>' +
+        '<div><span class="lb2">Jahr</span><input class="inp" id="f_date" inputmode="numeric" maxlength="7" placeholder="2026" value="' + esc(d.date || '') + '"></div>' +
+      '</div>' +
+      '<div class="sub"><span class="lb2">Link</span>' +
+      '<input class="inp" id="f_url" placeholder="https://…" value="' + esc(d.url || '') + '"></div>';
+
+    if (k === 'teaching') return '' +
+      '<h2 class="q">Was unterrichtest du?</h2>' +
+      '<p class="qh">Hochschule, Kurse und Zeitraum. Mehrere Module derselben Hochschule gehören in eine Zeile.</p>' +
+      '<div><span class="lb2">Hochschule</span>' +
+      '<input class="inp" id="f_org" placeholder="Bern University of Applied Sciences (BFH), Business School" value="' + esc(d.org || '') + '"></div>' +
+      '<div class="sub"><span class="lb2">Kurse und Rolle</span>' +
+      '<textarea class="inp" id="f_role" rows="2" placeholder="Entrepreneurial Law (Master) · Digitalrecht (Bachelor); lecturer and module coordination">' + esc(d.role || '') + '</textarea></div>' +
+      '<div class="sub two">' +
+        '<div><span class="lb2">Zeitraum</span><input class="inp" id="f_years" placeholder="2026 –" value="' + esc(d.years || '') + '"></div>' +
+        '<div><span class="lb2">Bewertung (optional)</span><input class="inp" id="f_eval" placeholder="Student evaluation 5.25 / 6" value="' + esc(d.eval || '') + '"></div>' +
+      '</div>';
+
+    if (k === 'grants') return '' +
+      '<h2 class="q">Welche Förderung oder Auszeichnung?</h2>' +
+      '<p class="qh">Ein Satz mit Betrag oder Vergabestelle, so wie er im CV stehen soll.</p>' +
+      '<div><span class="lb2">Jahr</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(d.year || '') + '"></div>' +
+      '<div class="sub"><span class="lb2">Beschreibung</span>' +
+      '<textarea class="big" rows="3" id="f_what" placeholder="Swisscom study — „…" (CHF 32,409)">' + esc(d.what || '') + '</textarea></div>';
+
+    if (k === 'policy') return '' +
+      '<h2 class="q">Welche Policy-Arbeit?</h2>' +
+      '<p class="qh">Eingabe, Stellungnahme oder Bericht, mit deiner Rolle dabei.</p>' +
+      '<div><span class="lb2">Jahr</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(d.year || '') + '"></div>' +
+      '<div class="sub"><span class="lb2">Titel</span>' +
+      '<textarea class="big" rows="2" id="f_what" placeholder="Value of IP in the New Economy. WTO TRIPS submission (IP/C/W/648)">' + esc(d.what || '') + '</textarea></div>' +
+      '<div class="sub"><span class="lb2">Rolle</span>' +
+      '<input class="inp" id="f_role" placeholder="Co-author" value="' + esc(d.role || '') + '"></div>';
+
+    if (k === 'organized') return '' +
+      '<h2 class="q">Was hast du organisiert?</h2>' +
+      '<p class="qh">Konferenz, Workshop oder Seminarreihe, mit deiner Funktion.</p>' +
+      '<div><span class="lb2">Zeitraum</span><input class="inp" id="f_date" placeholder="11/2022 oder 2025 – 2026" value="' + esc(d.date || '') + '"></div>' +
+      '<div class="sub"><span class="lb2">Veranstaltung</span>' +
+      '<textarea class="big" rows="2" id="f_what" placeholder="ICT4S 2026 International Conference, Bern University of Applied Sciences">' + esc(d.what || '') + '</textarea></div>' +
+      '<div class="sub"><span class="lb2">Funktion</span>' +
+      '<input class="inp" id="f_role" placeholder="Organizing Committee" value="' + esc(d.role || '') + '"></div>';
+
+    return '' +
+      '<h2 class="q">Peer Review und Mitgliedschaften</h2>' +
+      '<p class="qh">Zwei Zeilen, die du direkt überschreibst. Einträge mit „ · " trennen.</p>' +
+      '<span class="lb2">Begutachtete Journals</span>' +
+      '<textarea class="inp" id="f_reviewing" rows="3" placeholder="Journal of Cultural Economics (2) · …">' + esc(d.reviewing || '') + '</textarea>' +
+      '<div class="sub"><span class="lb2">Mitgliedschaften</span>' +
+      '<textarea class="inp" id="f_memberships" rows="3" placeholder="Association for Cultural Economics International (until 2027) · …">' + esc(d.memberships || '') + '</textarea></div>';
+  }
+
+  return '<h2 class="q">Passt das so?</h2>' +
+         '<p class="qh">Danach landet es in der Datei, aus der Website und CV gebaut werden.</p>' +
+         '<div class="prev" id="pv"></div>';
+}
+
+/* ---------------------------------------------------------- live preview */
+function renderPreview(){
+  const box = $('#pv'); if (!box) return;
+  const d = W.draft;
+  const head = '<div class="prevlb">So sieht es aus</div>';
+
+  if (W.kind === 'talk'){
+    box.innerHTML = head + '<div class="pt">' + esc(d.what) + (d.url ? ' <span class="tagpv" style="color:var(--blue)">↗ Link</span>' : '') + '</div>' +
+      '<div class="pm">' + esc(d.date) + (d.where ? ' · ' + esc(d.where) : '') +
+      (d.note ? ' (' + esc(d.note) + ')' : '') + (d.scheduled ? ' · geplant' : '') + '</div>';
+    return;
+  }
+  if (W.kind === 'paper'){
+    const col = (STATUS[d.status] || [, 'var(--ink3)'])[1];
+    box.innerHTML = head +
+      '<div class="pt">' + esc(d.title) + (d.note ? '<span class="pill" style="color:' + col + '">' + esc(d.note) + '</span>' : '') + '</div>' +
+      '<div class="pm">' + esc(d.authors) + (d.venue ? ' · ' + esc(d.venue) : '') + (d.year ? ' · ' + esc(d.year) : '') + '</div>' +
+      (d.finding ? '<div class="pf">' + esc(d.finding) + '</div>' : '') +
+      (d.links || []).filter(l => l.label).map(l => '<span class="tagpv" style="color:var(--ink3)">↗ ' + esc(l.label) + '</span>').join('') +
+      d.tags.map(t => TAGS[t] ? '<span class="tagpv" style="color:' + TAGS[t][1] + '">' + esc(TAGS[t][0]) + '</span>' : '').join('');
+    return;
+  }
+  const k = W.sub;
+  if (k === 'service'){
+    box.innerHTML = head + '<div class="pt">Peer Review</div><div class="pm">' + esc(d.reviewing) + '</div>' +
+      '<div class="pt" style="margin-top:10px">Mitgliedschaften</div><div class="pm">' + esc(d.memberships) + '</div>';
+    return;
+  }
+  if (k === 'teaching'){
+    box.innerHTML = head + '<div class="pt">' + esc(d.org) + '</div><div class="pm">' + esc(d.years) + ' · ' + esc(d.role) +
+      (d.eval ? '<br>★ ' + esc(d.eval) : '') + '</div>';
+    return;
+  }
+  const when = d.date || d.year || '';
+  const extra = k === 'outreach' ? [OUTREACH_KINDS[d.kind] || '', d.where].filter(Boolean).join(' · ') : (d.role || '');
+  box.innerHTML = head +
+    '<div class="pt">' + esc(d.what) + (k === 'outreach' && d.url ? ' <span class="tagpv" style="color:var(--blue)">↗ Link</span>' : '') + '</div>' +
+    '<div class="pm">' + esc([when, extra].filter(Boolean).join(' · ')) + '</div>';
+}
+
 /* ---------------------------------------------------------- step wiring */
 function wireStep(){
   const d = W.draft;
   const bind = (sel, fn) => { const el = $(sel); if (el) el.oninput = e => { fn(e.target.value); checkValid(); renderPreview(); }; };
 
-  bind('#f_what',    v => d.what = v);
-  bind('#f_title',   v => d.title = v);
-  bind('#f_where',   v => d.where = v);
+  bind('#f_what', v => d.what = v);
+  bind('#f_title', v => d.title = v);
+  bind('#f_where', v => d.where = v);
   bind('#f_authors', v => d.authors = v);
-  bind('#f_venue',   v => d.venue = v);
-  bind('#f_short',   v => d.short = v);
+  bind('#f_venue', v => d.venue = v);
+  bind('#f_short', v => d.short = v);
   bind('#f_finding', v => d.finding = v);
-  bind('#f_note',    v => {
+  bind('#f_url', v => d.url = v);
+  bind('#f_org', v => d.org = v);
+  bind('#f_role', v => d.role = v);
+  bind('#f_years', v => d.years = v);
+  bind('#f_eval', v => d.eval = v);
+  bind('#f_date', v => d.date = v);
+  bind('#f_reviewing', v => d.reviewing = v);
+  bind('#f_memberships', v => d.memberships = v);
+  bind('#f_note', v => {
     d.note = v;
     $$('#sbody .chip[data-note]').forEach(c => c.classList.toggle('on', v.trim() && v.startsWith(c.dataset.note.trim())));
   });
-  bind('#f_year', v => { d.year = /^\d{4}$/.test(v) ? +v : v; });
+  bind('#f_year', v => { d.year = /^\d{4}$/.test(v) ? (W.kind === 'paper' ? +v : v) : v; });
 
   const mo = $('#f_month'), yr = $('#f_year');
   if (mo && W.kind === 'talk'){
@@ -797,10 +1072,23 @@ function wireStep(){
     if (d.status === 'progress' && !d.venue) d.venue = 'Working paper';
     paintStep();
   });
+  $$('#sbody .opt[data-sub]').forEach(o => o.onclick = () => {
+    W.sub = o.dataset.sub;
+    const def = KINDS[W.sub];
+    W.draft = def.single ? JSON.parse(JSON.stringify(CV[def.arr] || blankOther(W.sub))) : blankOther(W.sub);
+    W.step = 1;
+    $('#kick').textContent = (def.single ? 'Bearbeiten · ' : 'Neu · ') + def.label;
+    paintStep();
+  });
   $$('#sbody .chip[data-note]').forEach(c => c.onclick = () => {
     const p = c.dataset.note;
     d.note = p.endsWith(' ') ? p + (d.note || '').replace(/^(Submitted to|R&R at|Under review at)\s*/i, '') : p;
     paintStep();
+  });
+  $$('#sbody .chip[data-okind]').forEach(c => c.onclick = () => {
+    d.kind = c.dataset.okind;
+    $$('#sbody .chip[data-okind]').forEach(x => x.classList.toggle('on', x === c));
+    renderPreview();
   });
   $$('#sbody .chip[data-tag]').forEach(c => c.onclick = () => {
     const k = c.dataset.tag, i = d.tags.indexOf(k);
@@ -821,6 +1109,8 @@ function wireStep(){
     $$('#links input').forEach(i => i.oninput = collect);
     $$('#links .lk-del').forEach(b => b.onclick = () => { b.closest('.linkrow').remove(); collect(); });
   }
+
+  $$('#sbody .big').forEach(t => { grow(t); t.addEventListener('input', () => grow(t)); });
   renderPreview();
 }
 
@@ -842,22 +1132,22 @@ function recomputeMetrics(){
   PUBS.metrics.venues = new Set(pubs.filter(p => p.status === 'published' && p.venue).map(p => p.venue)).size;
   PUBS.generated = new Date().toISOString().slice(0, 10);
 }
+const clean = o => { Object.keys(o).forEach(k => { if (o[k] === '' || o[k] == null) delete o[k]; }); return o; };
 
 async function save(){
-  const d = W.draft, isTalk = W.kind === 'talk';
+  const d = W.draft;
   $('#next').disabled = true; $('#next').innerHTML = '<span class="spin"></span>Speichere…';
   try {
-    let msg;
-    if (isTalk){
-      const t = { date: d.date, what: d.what.trim(), where: (d.where || '').trim() };
-      if ((d.note || '').trim()) t.note = d.note.trim();
+    if (W.kind === 'talk'){
+      const t = clean({ date: d.date, what: (d.what || '').trim(), where: (d.where || '').trim(),
+                        note: (d.note || '').trim(), url: (d.url || '').trim() });
       if (d.scheduled) t.scheduled = true;
       CV.talks = CV.talks || [];
-      if (W.editIndex === null) CV.talks.unshift(t); else CV.talks[W.editIndex] = t;
+      if (W.editIndex === null) CV.talks.push(t); else CV.talks[W.editIndex] = t;
       CV.talks.sort((a, b) => monthKey(b.date) - monthKey(a.date));
-      msg = (W.editIndex === null ? 'talk: add ' : 'talk: update ') + t.what.slice(0, 60);
-      await writeFile(FILE_CV, CV, msg);
-    } else {
+      await writeFile(FILE_CV, CV, (W.editIndex === null ? 'talk: add ' : 'talk: update ') + t.what.slice(0, 60));
+
+    } else if (W.kind === 'paper'){
       const p = {};
       p.id      = d.id || uniqueId(slug(d.title), W.editIndex);
       p.title   = d.title.trim();
@@ -875,12 +1165,23 @@ async function save(){
       PUBS.publications = PUBS.publications || [];
       if (W.editIndex === null) PUBS.publications.push(p); else PUBS.publications[W.editIndex] = p;
       recomputeMetrics();
-      msg = (W.editIndex === null ? 'paper: add ' : 'paper: update ') + p.title.slice(0, 60);
-      await writeFile(FILE_PUBS, PUBS, msg);
+      await writeFile(FILE_PUBS, PUBS, (W.editIndex === null ? 'paper: add ' : 'paper: update ') + p.title.slice(0, 60));
+
+    } else {
+      const def = KINDS[W.sub], arr = def.arr;
+      let label;
+      if (def.single){
+        CV[arr] = { reviewing: (d.reviewing || '').trim(), memberships: (d.memberships || '').trim() };
+        label = 'service: update';
+      } else {
+        const e = clean(JSON.parse(JSON.stringify(d)));
+        CV[arr] = CV[arr] || [];
+        if (W.editIndex === null) CV[arr].unshift(e); else CV[arr][W.editIndex] = e;
+        label = W.sub + (W.editIndex === null ? ': add ' : ': update ') + String(e.what || e.org || '').slice(0, 60);
+      }
+      await writeFile(FILE_CV, CV, label);
     }
-    closeWizard(); render();
-    toast('Gespeichert. Die Website zeigt es sofort, der CV wird in rund zwei Minuten neu gebaut. ' +
-          '<a href="https://github.com/' + REPO + '/actions" target="_blank" rel="noopener">Fortschritt ansehen</a>');
+    closeWizard(); render(); savedToast();
   } catch (err){
     toast('Nicht gespeichert: ' + esc(err.message) + ' — bitte ↻ drücken und nochmal versuchen.', true);
   } finally {
@@ -888,20 +1189,28 @@ async function save(){
   }
 }
 
-async function remove(kind, i){
+/* deleting moves the entry into the file's archive instead of discarding it */
+async function remove(tab, i, kind){
+  const stamp = new Date().toISOString().slice(0, 10);
   try {
-    if (kind === 'talk'){
-      const t = CV.talks[i];
-      CV.talks.splice(i, 1);
-      await writeFile(FILE_CV, CV, 'talk: remove ' + (t.what || '').slice(0, 60));
-    } else {
+    if (tab === 'paper'){
       const p = PUBS.publications[i];
+      PUBS.archive = PUBS.archive || [];
+      PUBS.archive.unshift({ removed: stamp, type: 'publication', entry: p });
       PUBS.publications.splice(i, 1);
       recomputeMetrics();
-      await writeFile(FILE_PUBS, PUBS, 'paper: remove ' + (p.title || '').slice(0, 60));
+      await writeFile(FILE_PUBS, PUBS, 'paper: archive ' + (p.title || '').slice(0, 60));
+    } else {
+      const arr = tab === 'talk' ? 'talks' : KINDS[kind].arr;
+      const e = CV[arr][i];
+      CV.archive = CV.archive || [];
+      CV.archive.unshift({ removed: stamp, type: tab === 'talk' ? 'talk' : kind, entry: e });
+      CV[arr].splice(i, 1);
+      await writeFile(FILE_CV, CV, (tab === 'talk' ? 'talk' : kind) + ': archive ' +
+        String(e.what || e.org || '').slice(0, 60));
     }
     render();
-    toast('Gelöscht. Der CV wird neu gebaut.');
+    toast('Ins Archiv verschoben. Der CV wird neu gebaut.');
   } catch (err){
     toast('Nicht gelöscht: ' + esc(err.message), true);
     boot();
