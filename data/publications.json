@@ -2,7 +2,7 @@
   "generated": "2026-08-08",
   "source": "google_scholar (mirror) + manual pipeline info",
   "metrics": {
-    "publications": 16,
+    "publications": 15,
     "citations": 66,
     "hIndex": 4,
     "venues": 5,
@@ -362,7 +362,8 @@
       "citations": 0,
       "links": [],
       "manual": false,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:hqOjcs7Dif8C"
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:hqOjcs7Dif8C",
+      "hidden": true
     },
     {
       "id": "pommerehne-prize-presidents-prize-and-yo",
