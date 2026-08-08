@@ -105,11 +105,6 @@
   "teaching": [
     {
       "years": "2026 –",
-      "org": "test uni",
-      "role": "test course"
-    },
-    {
-      "years": "2026 –",
       "org": "HES-SO — Haute École de Gestion Genève",
       "role": "Economics of Innovation (guest lectures)"
     },
@@ -404,6 +399,15 @@
     }
   ],
   "archive": [
+    {
+      "removed": "2026-08-08",
+      "type": "teaching",
+      "entry": {
+        "years": "2026 –",
+        "org": "test uni",
+        "role": "test course"
+      }
+    },
     {
       "removed": "2026-08-08",
       "type": "outreach",
