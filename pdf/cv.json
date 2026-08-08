@@ -363,6 +363,13 @@
   "summaryShort": "Postdoctoral researcher at the Bern University of Applied Sciences (BFH) Business School, previously at the World Intellectual Property Organization (WIPO) of the United Nations; PhD in Economics, University of Neuchâtel (2023). I work on the economics of intellectual property, innovation, digitization and the creative industries, building new datasets and running rigorous econometric analyses to inform policy.",
   "outreach": [
     {
+      "date": "2025",
+      "kind": "column",
+      "what": "Elvis’ ghost, Jordan’s Airness, and the new economics of publicity rights",
+      "where": "VoxEU Column",
+      "url": "https://cepr.org/voxeu/columns/elvis-ghost-jordans-airness-and-new-economics-publicity-rights"
+    },
+    {
       "date": "09/2023",
       "kind": "column",
       "what": "The effect of copyright on the digitisation and availability of visual artworks",
