@@ -443,12 +443,7 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
 <section id="teaching"><div class="wrap">
   <div class="sechead"><span class="secdot" style="background:var(--blue)"></span><h2>Teaching</h2></div>
   <p class="seclead">IP strategy for people who build things — non-legalistic, value- and strategy-focused.</p>
-  <div class="teach rv">
-    <div class="course"><div class="inst">EPFL · College of Management</div><h3>MGT-404 Management of Intellectual Property</h3><p>Master level, 2025.</p></div>
-    <div class="course"><div class="inst">BFH · Business School</div><h3>Digitalrecht · Entrepreneurial Law · Data Literacy</h3><p>Bachelor &amp; Master modules, module coordination, since 2025.</p></div>
-    <div class="course"><div class="inst">HES-SO · Haute École de Gestion Genève</div><h3>Economics of Innovation</h3><p>Guest lectures, since 2026.</p></div>
-    <div class="course"><div class="inst">BFH</div><h3>Thesis supervision</h3><p>Practice projects, bachelor's &amp; master's theses, applied R&amp;D projects.</p></div>
-  </div>
+  <div class="teach rv" id="teachgrid"></div>
 
   <div id="thesis" class="thesisbox rv">
     <div class="tbar"></div>
@@ -1022,6 +1017,19 @@ function wireStrip(barSel, listSel){
   addEventListener('resize', ()=>{ if(bar.classList.contains('open')) list.style.maxHeight = list.scrollHeight + 'px'; });
 }
 
+/* ---- teaching, straight from pdf/cv.json: add a course in the control room
+       and it appears here and in the CV, no second place to maintain ---- */
+function paintTeaching(items){
+  if(!Array.isArray(items) || !items.length) return;
+  document.getElementById('teachgrid').innerHTML = items.map(c=>{
+    const bits = String(c.role||'').split(';');
+    const head = bits[0].trim();
+    const tail = bits.slice(1).join(';').trim();
+    const sub  = [tail, c.years].filter(Boolean).join(' · ');
+    return `<div class="course"><div class="inst">${c.org||''}</div><h3>${head}</h3><p>${sub}</p></div>`;
+  }).join('');
+}
+
 /* ---- the "beyond papers" pills, curated in pdf/cv.json ---- */
 function paintHighlights(items){
   if(!Array.isArray(items) || !items.length) return;
@@ -1065,7 +1073,8 @@ function paintMedia(items){
 }
 fetch('pdf/cv.json', {cache:'no-store'})
   .then(r => r.ok ? r.json() : null)
-  .then(d => { if(d){ paintTalks(d.talks); CV_OUTREACH = d.outreach || []; paintMediaAll(); paintHighlights(d.highlights); } })
+  .then(d => { if(d){ paintTalks(d.talks); CV_OUTREACH = d.outreach || []; paintMediaAll();
+                      paintHighlights(d.highlights); paintTeaching(d.teaching); } })
   .catch(()=>{});
 
 /* ---- first paint, then pull the freshest data the workflow has written ---- */
