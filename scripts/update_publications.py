@@ -162,7 +162,11 @@ def main():
                 cid = a.get("citation_id")
                 surl = ("https://scholar.google.com/citations?view_op=view_citation"
                         f"&hl=en&user={SCHOLAR_AUTHOR_ID}&citation_for_view={cid}") if cid else None
-                hit = match(title, pubs)
+                # the Scholar link is the entry's identity. Only if that is
+                # missing do we fall back to comparing titles, so renaming an
+                # entry in the control room can never orphan it.
+                hit = next((p for p in pubs if surl and p.get("scholarUrl") == surl), None) \
+                      or match(title, pubs)
                 if hit:
                     seen.add(hit["id"])
                     if isinstance(cby.get("value"), int):
@@ -211,11 +215,25 @@ def main():
                 data["metrics"]["citationsByYear"] = [{"year": g["year"], "citations": g.get("citations", 0)} for g in graph]
                 data["metrics"]["yearSourceLabel"] = "Google Scholar"
             data["metrics"]["sourceLabel"] = "Google Scholar"
-            # mirror: auto-added entries that you deleted on Scholar disappear here too
+            # mirror: auto-added entries you removed on Scholar go away here too,
+            # with two exceptions. Anything you edited in the control room has a
+            # decision of yours in it and becomes a manual entry instead of
+            # vanishing. And whatever does go is archived, never deleted.
             if arts:
+                today = datetime.date.today().isoformat()
                 for p in [p for p in pubs if p.get("manual") is False and p["id"] not in seen]:
-                    pubs.remove(p)
-                    log.append(f"removed (no longer on your Scholar profile): {p['title']}")
+                    touched = (p.get("statusLocked") or p.get("hidden") or p.get("status") == "media"
+                               or p.get("tags") or p.get("finding") or p.get("links"))
+                    if touched:
+                        p["manual"] = True
+                        log.append("KEPT (gone from your Scholar profile, but you had edited it here "
+                                   f"— it is a manual entry now): {p['title']}")
+                    else:
+                        data.setdefault("archive", []).insert(0, {
+                            "removed": today, "type": "publication",
+                            "reason": "no longer on the Google Scholar profile", "entry": p})
+                        pubs.remove(p)
+                        log.append(f"archived (no longer on your Scholar profile): {p['title']}")
             log.append(f"google scholar via serpapi: ok ({len(arts)} articles)")
         except Exception as e:
             log.append(f"serpapi FAILED (kept API fallback data): {e}")
