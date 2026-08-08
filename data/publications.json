@@ -1,12 +1,37 @@
 {
-  "generated": "2026-08-07",
+  "generated": "2026-08-08",
   "source": "google_scholar (mirror) + manual pipeline info",
   "metrics": {
-    "publications": 13,
+    "publications": 20,
     "citations": 66,
     "hIndex": 4,
-    "venues": 6,
-    "citationsByYear": [],
+    "venues": 5,
+    "citationsByYear": [
+      {
+        "year": 2021,
+        "citations": 1
+      },
+      {
+        "year": 2022,
+        "citations": 2
+      },
+      {
+        "year": 2023,
+        "citations": 9
+      },
+      {
+        "year": 2024,
+        "citations": 18
+      },
+      {
+        "year": 2025,
+        "citations": 10
+      },
+      {
+        "year": 2026,
+        "citations": 22
+      }
+    ],
     "sourceLabel": "Google Scholar",
     "yearSourceLabel": "Google Scholar"
   },
@@ -44,7 +69,8 @@
           "url": "https://cepr.org/voxeu/columns/effect-copyright-digitisation-and-availability-visual-artworks"
         }
       ],
-      "manual": true
+      "manual": true,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:_kc_bZDykSQC"
     },
     {
       "id": "book-digitalization",
@@ -66,7 +92,8 @@
           "url": "https://doi.org/10.1016/j.clrc.2026.100440"
         }
       ],
-      "manual": true
+      "manual": true,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:r0BpntZqJG4C"
     },
     {
       "id": "legacy-artists",
@@ -87,7 +114,8 @@
           "url": "https://doi.org/10.1007/s10824-025-09550-4"
         }
       ],
-      "manual": true
+      "manual": true,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:ZeXyd9-uunAC"
     },
     {
       "id": "ipres-sustainability",
@@ -109,7 +137,8 @@
           "url": "https://doi.org/10.5281/zenodo.16843717"
         }
       ],
-      "manual": true
+      "manual": true,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:-f6ydRqryjwC"
     },
     {
       "id": "million-dollar-baby",
@@ -131,7 +160,8 @@
           "url": "https://doi.org/10.1080/13662716.2024.2328004"
         }
       ],
-      "manual": true
+      "manual": true,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:aqlVkmm33-oC"
     },
     {
       "id": "intermediary-liability",
@@ -153,7 +183,8 @@
           "url": "https://doi.org/10.1007/s10824-023-09470-1"
         }
       ],
-      "manual": true
+      "manual": true,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:UeHWp8X0CEIC"
     },
     {
       "id": "digitization-diffusion",
@@ -188,7 +219,8 @@
       "citations": 1,
       "finding": "21,000+ exhibition records linked to 33,000 auction transactions to examine how museum visibility — and gender representation — translates into market outcomes.",
       "links": [],
-      "manual": true
+      "manual": true,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:4JMBOYKVnBMC"
     },
     {
       "id": "elvis-ghost",
@@ -210,7 +242,8 @@
           "url": "https://ideas.repec.org/p/wip/wpaper/89.html"
         }
       ],
-      "manual": true
+      "manual": true,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:IWHjjKOFINEC"
     },
     {
       "id": "libraries-lcsa",
@@ -261,11 +294,16 @@
       "finding": "Musicians and performing artists were among the most vulnerable groups during the pandemic.",
       "links": [
         {
+          "label": "DOI",
+          "url": "https://doi.org/10.2139/ssrn.4422313"
+        },
+        {
           "label": "WIPO Working Paper No. 65",
           "url": "https://ideas.repec.org/p/wip/wpaper/65.html"
         }
       ],
-      "manual": true
+      "manual": true,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:d1gkVwhDpl0C"
     },
     {
       "id": "dissertation",
@@ -282,7 +320,99 @@
       ],
       "citations": 0,
       "links": [],
-      "manual": true
+      "manual": true,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:qxL8FJ1GzNcC"
+    },
+    {
+      "id": "elvis-ghost-jordans-airness-and-the-new",
+      "title": "Elvis’ ghost, Jordan’s Airness, and the new economics of publicity rights",
+      "authors": "B Lutes, A Cuntz, M Sahli",
+      "venue": "https://cepr.org/voxeu/columns/elvis-ghost-jordans-airness-and-new-economics …, 2025",
+      "year": 2025,
+      "status": "other",
+      "tags": [],
+      "citations": 0,
+      "links": [],
+      "manual": false,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:e5wmG9Sq2KIC"
+    },
+    {
+      "id": "voxeu-column-how-the-us-film-industry-mi",
+      "title": "VoxEU column: How the US film industry mitigates financial risk",
+      "authors": "A Cuntz, A Muscarnera, PC Oguguo, M Sahli",
+      "venue": "https://cepr.org/voxeu/columns/how-us-film-industry-mitigates-financial-risk, 2023",
+      "year": 2023,
+      "status": "other",
+      "tags": [],
+      "citations": 0,
+      "links": [],
+      "manual": false,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:8k81kl-MbHgC"
+    },
+    {
+      "id": "risky-trade-appropriation-art-copyright",
+      "title": "Risky Trade? Appropriation Art, Copyright and Secondary Market Effects",
+      "authors": "A Cuntz, M Sahli",
+      "venue": "https://culturaleconomics.org/risky-trade-appropriation-art-copyright-and …, 2023",
+      "year": 2023,
+      "status": "other",
+      "tags": [],
+      "citations": 0,
+      "links": [],
+      "manual": false,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:hqOjcs7Dif8C"
+    },
+    {
+      "id": "pommerehne-prize-presidents-prize-and-yo",
+      "title": "Pommerehne Prize, President’s Prize and Young Researchers Workshop Best Paper Award",
+      "authors": "F Etro, D Noonan",
+      "venue": "Journal of Cultural Economics 45 (3), 513-514, 2021",
+      "year": 2021,
+      "status": "other",
+      "tags": [],
+      "citations": 0,
+      "links": [],
+      "manual": false,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:2osOgNQ5qMEC"
+    },
+    {
+      "id": "voxeu-column-appropriation-artists-follo",
+      "title": "VoxEU column: Appropriation artists: Follow-on innovation versus intermediary liability and trade",
+      "authors": "A Cuntz, M Sahli",
+      "venue": "https://cepr.org/voxeu/columns/appropriation-artists-follow-innovation …, 2021",
+      "year": 2021,
+      "status": "other",
+      "tags": [],
+      "citations": 0,
+      "links": [],
+      "manual": false,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:Y0pCki6q_DkC"
+    },
+    {
+      "id": "cleaner-and-responsible-consumption",
+      "title": "Cleaner and Responsible Consumption",
+      "authors": "S Halli, C Kaya",
+      "venue": "—",
+      "year": null,
+      "status": "other",
+      "tags": [],
+      "citations": 0,
+      "links": [],
+      "manual": false,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:bEWYMUwI8FkC"
+    },
+    {
+      "id": "in-this-section",
+      "title": "In this section",
+      "authors": "A Cuntz, A Muscarnera, PC Oguguo, M Sahli",
+      "venue": "—",
+      "year": null,
+      "status": "other",
+      "tags": [],
+      "citations": 0,
+      "links": [],
+      "manual": false,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:iH-uZ7U-co4C"
     }
   ]
 }
