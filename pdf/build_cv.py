@@ -111,8 +111,36 @@ def talks_block(talks):
         note = f' <span>({e(t["note"])})</span>' if t.get("note") else ""
         if t.get("scheduled"):
             note += ' <span class="sched">scheduled</span>'
+        what = e(t["what"])
+        if t.get("url"):
+            what = f'<a href="{e(t["url"])}">{what}</a>'
         out.append(f'<div class="tw">{e(t["date"])}</div>'
-                   f'<div class="tt">{e(t["what"])} <span>&middot; {e(t.get("where",""))}</span>{note}</div>')
+                   f'<div class="tt">{what} <span>&middot; {e(t.get("where",""))}</span>{note}</div>')
+    out.append("</div>")
+    return "".join(out)
+
+OUTREACH_GROUPS = [("podcast", "Podcasts"), ("column", "Columns"), ("blog", "Blog coverage"),
+                   ("video", "Recorded talks"), ("report", "Reports &amp; notes"), ("press", "Press")]
+
+def outreach_block(items):
+    if not items:
+        return ""
+    known = {k for k, _ in OUTREACH_GROUPS}
+    out = ['<div class="talks">']
+    groups = OUTREACH_GROUPS + [(None, "Other")]
+    for key, label in groups:
+        g = [m for m in items if (m.get("kind") == key if key else m.get("kind") not in known)]
+        if not g:
+            continue
+        out.append(f'<div class="ogrp">{label}</div>')
+        for m in g:
+            what = e(m.get("what", ""))
+            if m.get("url"):
+                what = f'<a href="{e(m["url"])}">{what}</a>'
+            where = f' <span>&middot; {e(m["where"])}</span>' if m.get("where") else ""
+            note = f' <span>({e(m["note"])})</span>' if m.get("note") else ""
+            out.append(f'<div class="tw">{e(m.get("date",""))}</div>'
+                       f'<div class="tt">{what}{where}{note}</div>')
     out.append("</div>")
     return "".join(out)
 
@@ -145,6 +173,9 @@ def build(cv, pubdata, short=False):
 
     if not short:
         body.append(sec("Selected talks", talks_block(cv["talks"])))
+        if cv.get("outreach"):
+            body.append(sec("Outreach, media coverage &amp; other output",
+                            outreach_block(cv["outreach"])))
         body.append(sec("Organized conferences &amp; seminars",
                         rows(cv["organized"], "date",
                              lambda it: f'{e(it["what"])}<br><span>{e(it.get("role",""))}</span>')))

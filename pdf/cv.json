@@ -180,7 +180,9 @@
     {
       "date": "02/2024",
       "what": "Cultural Economics Online Seminars — symposium on causal inference in cultural economics",
-      "where": "online"
+      "where": "online",
+      "note": "video recording on YouTube",
+      "url": "https://www.youtube.com/watch?v=j0k69t7_PkI"
     },
     {
       "date": "10/2023",
@@ -213,6 +215,12 @@
       "where": "Cambridge, UK"
     },
     {
+      "date": "09/2022",
+      "what": "Tenth European Workshop on Applied Cultural Economics",
+      "where": "Turin, Italy",
+      "note": "participant"
+    },
+    {
       "date": "07/2022",
       "what": "Urban Creativity Conference, University of Lisbon",
       "where": "Lisbon, Portugal"
@@ -225,6 +233,13 @@
     {
       "date": "04/2022",
       "what": "Cultural Economics Online Seminar",
+      "where": "online",
+      "note": "video recording on YouTube",
+      "url": "https://www.youtube.com/watch?v=tN4SHYPikjo"
+    },
+    {
+      "date": "04/2022",
+      "what": "WIPO internal online seminar",
       "where": "online"
     },
     {
@@ -345,5 +360,50 @@
       }
     ]
   },
-  "summaryShort": "Postdoctoral researcher at the Bern University of Applied Sciences (BFH) Business School, previously at the World Intellectual Property Organization (WIPO) of the United Nations; PhD in Economics, University of Neuchâtel (2023). I work on the economics of intellectual property, innovation, digitization and the creative industries, building new datasets and running rigorous econometric analyses to inform policy."
+  "summaryShort": "Postdoctoral researcher at the Bern University of Applied Sciences (BFH) Business School, previously at the World Intellectual Property Organization (WIPO) of the United Nations; PhD in Economics, University of Neuchâtel (2023). I work on the economics of intellectual property, innovation, digitization and the creative industries, building new datasets and running rigorous econometric analyses to inform policy.",
+  "outreach": [
+    {
+      "date": "09/2023",
+      "kind": "column",
+      "what": "The effect of copyright on the digitisation and availability of visual artworks",
+      "where": "VoxEU / CEPR",
+      "url": "https://cepr.org/voxeu/columns/effect-copyright-digitisation-and-availability-visual-artworks"
+    },
+    {
+      "date": "",
+      "kind": "podcast",
+      "what": "Million Dollar Baby — film finance and IP",
+      "where": "Art Law Podcast (Spotify)",
+      "url": "https://open.spotify.com/show/5a9Uwy3HY5XOTNaluDHL6g"
+    },
+    {
+      "date": "10/2023",
+      "kind": "blog",
+      "what": "Life after Death: The Effects of an Artist's Death on Exhibitions and Auctions",
+      "where": "EconomistTalkArt (ACEI)",
+      "url": "https://culturaleconomics.org/life-after-death-the-effects-of-artists-death-on-exhibitions-and-auctions/"
+    },
+    {
+      "date": "04/2023",
+      "kind": "blog",
+      "what": "Risky Trade? Appropriation Art, Copyright and Secondary Market Effects",
+      "where": "EconomistTalkArt (ACEI)",
+      "url": "https://culturaleconomics.org/risky-trade-appropriation-art-copyright-and-secondary-market-effects/"
+    },
+    {
+      "date": "2021",
+      "kind": "report",
+      "what": "COVID-19 impact on artistic income — WIPO Economic Research Working Paper No. 65",
+      "where": "WIPO",
+      "url": "https://ideas.repec.org/p/wip/wpaper/65.html"
+    },
+    {
+      "date": "2020",
+      "kind": "report",
+      "what": "WIPO Creative Economy Note 2020/21",
+      "where": "WIPO",
+      "url": "https://www.wipo.int/edocs/infogdocs/creative_industries/en/"
+    }
+  ],
+  "archive": []
 }
