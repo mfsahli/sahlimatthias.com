@@ -2,7 +2,7 @@
   "generated": "2026-08-08",
   "source": "google_scholar (mirror) + manual pipeline info",
   "metrics": {
-    "publications": 15,
+    "publications": 14,
     "citations": 66,
     "hIndex": 4,
     "venues": 5,
@@ -326,14 +326,16 @@
     {
       "id": "elvis-ghost-jordans-airness-and-the-new",
       "title": "Elvis’ ghost, Jordan’s Airness, and the new economics of publicity rights",
+      "short": "Elvis’ ghost, Jordan’s Airness, and the new…",
       "authors": "B Lutes, A Cuntz, M Sahli",
       "venue": "https://cepr.org/voxeu/columns/elvis-ghost-jordans-airness-and-new-economics …, 2025",
       "year": 2025,
-      "status": "other",
+      "status": "media",
       "tags": [],
       "citations": 0,
       "links": [],
       "manual": false,
+      "statusLocked": true,
       "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:e5wmG9Sq2KIC"
     },
     {
