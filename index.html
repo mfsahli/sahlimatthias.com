@@ -689,7 +689,7 @@ function hideTip(){ tip.classList.remove('on'); }
 function paintData(){
   const M = DATA.metrics || {}, SRC = M.sourceLabel || 'Google Scholar';
   // entries hidden in the control room never reach the page
-  const PUBS_VISIBLE = DATA.publications.filter(p=>!p.hidden);
+  const PUBS_VISIBLE = DATA.publications.filter(p=>!p.hidden && isPaper(p));
 
   // publication alert on the post-it
   const newest = PUBS_VISIBLE.filter(p=>p.status==='published' && p.year).sort((a,b)=>b.year-a.year)[0];
@@ -741,6 +741,8 @@ function paintData(){
 /* ---- filters ---- */
 const TAGS = {ip:['IP & Copyright','var(--red)'], art:['Art Markets & Creative Industries','var(--blue)'], dig:['Digitization & Heritage','var(--ochre)'], sus:['Sustainability','var(--purple)']};
 /* four buckets. "note" carries the exact stage, e.g. "R&R at Journal of Cultural Economics" */
+const PAPER_ST = ['published','review','progress','other'];
+const isPaper = p => PAPER_ST.includes(p.status);
 const STATUSES = {all:'All', published:'Peer-reviewed', review:'Under review', progress:'Work in progress', other:'Other'};
 const STATUS_ORDER = {published:0, review:1, progress:2, other:3};
 const STATUS_COLOR = {review:'var(--ochre)', progress:'var(--purple)', other:'var(--ink3)'};
@@ -769,7 +771,7 @@ const GROUP_CAP = 4;                    // peer-reviewed is never capped
 let openGroups = new Set();
 function renderPubs(){
   const list = DATA.publications.filter(p=>{
-    if(p.hidden) return false;
+    if(p.hidden || !isPaper(p)) return false;
     if(fStatus!=='all' && p.status!==fStatus) return false;
     if(fTags.size && ![...fTags].some(t=>(p.tags||[]).includes(t))) return false;
     if(q && !(p.title+' '+p.authors+' '+p.venue).toLowerCase().includes(q)) return false;
@@ -1031,6 +1033,18 @@ function paintHighlights(items){
 /* ---- media coverage, outreach and columns: same file, same mechanism ---- */
 const MEDIA_KIND = {podcast:'Podcasts', column:'Columns', blog:'Blog coverage',
                     video:'Recorded talks', report:'Reports & notes', press:'Press'};
+let CV_OUTREACH = null;
+/* the strip merges two sources: things you entered by hand in pdf/cv.json, and
+   Scholar entries you routed to "media" in the control room. Nothing is copied,
+   each item still lives in exactly one file. */
+function paintMediaAll(){
+  const fromScholar = (DATA.publications||[])
+    .filter(p => p.status === 'media' && !p.hidden)
+    .map(p => ({ date: p.year ? String(p.year) : '', kind: p.mediaKind || 'report',
+                 what: p.title, where: p.venue && p.venue !== '\u2014' ? p.venue : '',
+                 url: (p.links && p.links[0] && p.links[0].url) || p.scholarUrl || '' }));
+  paintMedia([...(CV_OUTREACH || []), ...fromScholar]);
+}
 function paintMedia(items){
   if(!Array.isArray(items) || !items.length) return;
   const order = Object.keys(MEDIA_KIND);
@@ -1051,7 +1065,7 @@ function paintMedia(items){
 }
 fetch('pdf/cv.json', {cache:'no-store'})
   .then(r => r.ok ? r.json() : null)
-  .then(d => { if(d){ paintTalks(d.talks); paintMedia(d.outreach); paintHighlights(d.highlights); } })
+  .then(d => { if(d){ paintTalks(d.talks); CV_OUTREACH = d.outreach || []; paintMediaAll(); paintHighlights(d.highlights); } })
   .catch(()=>{});
 
 /* ---- first paint, then pull the freshest data the workflow has written ---- */
@@ -1059,7 +1073,7 @@ paintData();
 fetch('data/publications.json', {cache:'no-store'})
   .then(r => r.ok ? r.json() : null)
   .then(d => {
-    if(d && Array.isArray(d.publications) && d.publications.length){ DATA = d; paintData(); }
+    if(d && Array.isArray(d.publications) && d.publications.length){ DATA = d; paintData(); paintMediaAll(); }
   })
   .catch(()=>{ /* offline or opened as a local file — the baked-in copy stays */ });
 

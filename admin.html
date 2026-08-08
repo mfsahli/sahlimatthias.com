@@ -341,11 +341,14 @@ const TAGS = {
   dig: ['Digitization & Heritage', 'var(--ochre)'],
   sus: ['Sustainability', 'var(--purple)']
 };
+const PAPER_ST = ['published', 'review', 'progress', 'other'];
+const isPaper = p => PAPER_ST.includes(p.status);
 const STATUS = {
   published: ['Peer-reviewed', 'var(--green)'],
   review   : ['Under review',  'var(--ochre)'],
   progress : ['Work in progress', 'var(--purple)'],
-  other    : ['Other', 'var(--ink3)']
+  other    : ['Other', 'var(--ink3)'],
+  media    : ['Media & outreach', 'var(--blue)']
 };
 const MONTHS = ['01','02','03','04','05','06','07','08','09','10','11','12'];
 const MONTHNAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -497,11 +500,19 @@ const thisYear = () => new Date().getFullYear();
 function otherItems(){
   const out = [];
   Object.entries(KINDS).forEach(([k, def]) => {
-    if (def.single){ out.push({ kind: k, i: -1, it: CV[def.arr] || {} }); return; }
-    (CV[def.arr] || []).forEach((it, i) => out.push({ kind: k, i: i, it: it }));
+    if (def.single){ out.push({ kind: k, src: 'cv', i: -1, it: CV[def.arr] || {} }); return; }
+    (CV[def.arr] || []).forEach((it, i) => out.push({ kind: k, src: 'cv', i: i, it: it }));
+    if (k === 'outreach')
+      (PUBS.publications || []).forEach((p, i) => {
+        if (p.status === 'media') out.push({ kind: k, src: 'pubs', i: i, it: pubToMedia(p) });
+      });
   });
   return out;
 }
+/* a Scholar entry seen through the outreach form, and back again */
+const pubToMedia = p => ({ date: p.year ? String(p.year) : '', kind: p.mediaKind || 'report',
+  what: p.title || '', where: p.venue === '—' ? '' : (p.venue || ''),
+  url: (p.links && p.links[0] && p.links[0].url) || '' });
 function otherText(o){
   const it = o.it;
   if (o.kind === 'service') return [it.reviewing, it.memberships].join(' ');
@@ -533,9 +544,9 @@ function computeTodos(){
   if (stale.length) t.push({ n: stale.length, txt: 'upcoming talks are already in the past', one: 'upcoming talk is already in the past',
     tab: 'talk', f: x => x.scheduled && monthKey(x.date) < nowKey(), lb: 'overdue talks' });
 
-  const noLink = pubs.filter(p => !p.hidden && !(p.links || []).length);
+  const noLink = pubs.filter(p => !p.hidden && isPaper(p) && !(p.links || []).length);
   if (noLink.length) t.push({ n: noLink.length, txt: 'papers without a working paper or DOI link', one: 'paper without a working paper or DOI link',
-    tab: 'paper', f: p => !p.hidden && !(p.links || []).length, lb: 'papers without a link' });
+    tab: 'paper', f: p => !p.hidden && isPaper(p) && !(p.links || []).length, lb: 'papers without a link' });
 
   const longReview = pubs.filter(p => !p.hidden && p.status === 'review' && p.year && p.year <= thisYear() - 1);
   if (longReview.length) t.push({ n: longReview.length, txt: 'papers have been under review for over a year', one: 'paper has been under review for over a year',
@@ -548,6 +559,11 @@ function computeTodos(){
   const noDate = out.filter(m => !m.date);
   if (noDate.length) t.push({ n: noDate.length, txt: 'media entries without a year', one: 'media entry without a year',
     tab: 'other', f: o => o.kind === 'outreach' && !o.it.date, lb: 'media without a year' });
+
+  const fresh = pubs.filter(p => p.manual === false && !p.statusLocked);
+  if (fresh.length) t.push({ n: fresh.length, txt: 'new entries from Google Scholar, not checked yet',
+    one: 'new entry from Google Scholar, not checked yet',
+    tab: 'paper', f: p => p.manual === false && !p.statusLocked, lb: 'new from Scholar' });
 
   const rec = talks.filter(x => /recording|aufzeichnung/i.test(x.note || '') && !x.url);
   if (rec.length) t.push({ n: rec.length, txt: 'talks have a recording but no link', one: 'talk has a recording but no link',
@@ -586,7 +602,8 @@ $$('.add').forEach(b => b.onclick = () => openWizard(b.dataset.new, null));
 function render(){
   if (!CV || !PUBS) return;
   const talks = CV.talks || [], pubs = PUBS.publications || [], others = otherItems();
-  const shown = pubs.filter(p => !p.hidden).length, hidden = pubs.length - shown;
+  const papers = pubs.filter(isPaper);
+  const shown = papers.filter(p => !p.hidden).length, hidden = papers.length - shown;
   $('#ntalk').textContent  = ' ' + talks.length;
   $('#npaper').textContent = ' ' + shown + (hidden ? ' +' + hidden : '');
   $('#nother').textContent = ' ' + others.length;
@@ -631,8 +648,9 @@ function talkList(talks){
 }
 
 function paperList(pubs){
-  const order = { published: 0, review: 1, progress: 2, other: 3 };
+  const order = { published: 0, review: 1, progress: 2, other: 3, media: 4 };
   const idx = pubs.map((p, i) => ({ p, i }))
+    .filter(o => isPaper(o.p) || (FILTER && FILTER(o.p)))
     .filter(o => !FILTER || FILTER(o.p))
     .filter(o => !QUERY || ((o.p.title || '') + ' ' + (o.p.authors || '') + ' ' + (o.p.venue || '')).toLowerCase().includes(QUERY))
     .sort((a, b) => (order[a.p.status] ?? 9) - (order[b.p.status] ?? 9) || (b.p.year || 0) - (a.p.year || 0));
@@ -644,9 +662,11 @@ function paperList(pubs){
     const note = o.p.note ? '<span class="pill" style="color:' + col + '">' + esc(o.p.note) + '</span>' : '';
     const auto = o.p.manual === false ? '<span class="pill" style="color:var(--ink3)">automatic</span>' : '';
     const hid  = o.p.hidden ? '<span class="pill" style="color:var(--red)">hidden</span>' : '';
+    const med  = o.p.status === 'media' ? '<span class="pill" style="color:var(--blue)">in the media</span>' : '';
+    const pin  = o.p.statusLocked ? '<span class="pill" style="color:var(--green)">your call</span>' : '';
     h += '<div class="row' + (o.p.hidden ? ' dim' : '') + '" data-i="' + o.i + '">' +
       '<div class="when">' + esc(o.p.year || '') + '</div>' +
-      '<div class="body"><div class="ttl">' + esc(o.p.title) + note + auto + hid + '</div>' +
+      '<div class="body"><div class="ttl">' + esc(o.p.title) + note + auto + pin + med + hid + '</div>' +
       '<div class="sub">' + esc(o.p.authors || '') + (o.p.venue ? ' · ' + esc(o.p.venue) : '') + '</div></div>' +
       acts(false, !!o.p.hidden) + '</div>';
   });
@@ -664,9 +684,10 @@ function otherList(items){
     if (!g.length) return;
     h += '<div class="grp">' + KINDS[k].icon + ' ' + esc(KINDS[k].label) + '</div>';
     g.forEach(o => {
-      h += '<div class="row" data-kind="' + k + '" data-i="' + o.i + '">' +
+      h += '<div class="row" data-kind="' + k + '" data-src="' + o.src + '" data-i="' + o.i + '">' +
         '<div class="when">' + esc(otherWhen(o)) + '</div>' +
         '<div class="body"><div class="ttl">' + esc(otherTitle(o)) +
+          (o.src === 'pubs' ? '<span class="pill" style="color:var(--ink3)">from Scholar</span>' : '') +
           (o.kind === 'outreach' && !o.it.url ? '<span class="pill" style="color:var(--ochre)">no link</span>' : '') + '</div>' +
         '<div class="sub">' + esc(otherSub(o)) + '</div></div>' +
         acts(KINDS[k].single) + '</div>';
@@ -677,8 +698,8 @@ function otherList(items){
 
 function wireRows(){
   $$('#list .row').forEach(r => {
-    const i = +r.dataset.i, k = r.dataset.kind;
-    const open = () => TAB === 'other' ? openWizard('other', i, k) : openWizard(TAB, i);
+    const i = +r.dataset.i, k = r.dataset.kind, src = r.dataset.src;
+    const open = () => TAB === 'other' ? openWizard('other', i, k, src) : openWizard(TAB, i);
     r.onclick = e => { if (!e.target.closest('.acts')) open(); };
     r.querySelector('.ed').onclick = open;
     const eye = r.querySelector('.eye');
@@ -692,7 +713,7 @@ function wireRows(){
         setTimeout(() => { d.classList.remove('armed'); d.textContent = '🗑'; }, 4000);
         return;
       }
-      remove(TAB, i, k);
+      remove(TAB, i, k, src);
     };
   });
 }
@@ -716,12 +737,13 @@ const blankOther = k => ({
   service  : { reviewing: '', memberships: '' }
 }[k]);
 
-function openWizard(kind, i, sub){
+function openWizard(kind, i, sub, src){
   let draft;
   if (kind === 'talk')  draft = i === null ? blankTalk()  : JSON.parse(JSON.stringify(CV.talks[i]));
   if (kind === 'paper') draft = i === null ? blankPaper() : JSON.parse(JSON.stringify(PUBS.publications[i]));
   if (kind === 'other'){
     if (sub && KINDS[sub].single) draft = JSON.parse(JSON.stringify(CV[KINDS[sub].arr] || blankOther(sub)));
+    else if (sub && src === 'pubs' && i >= 0) draft = pubToMedia(PUBS.publications[i]);
     else if (sub && i >= 0)       draft = JSON.parse(JSON.stringify(CV[KINDS[sub].arr][i]));
     else                          draft = {};
   }
@@ -729,7 +751,8 @@ function openWizard(kind, i, sub){
     if (!Array.isArray(draft.tags))  draft.tags = [];
     if (!Array.isArray(draft.links)) draft.links = [];
   }
-  W = { kind: kind, sub: sub || null, editIndex: (i === null || i < 0) ? null : i, draft: draft, step: 0 };
+  W = { kind: kind, sub: sub || null, src: src || 'cv',
+        editIndex: (i === null || i < 0) ? null : i, draft: draft, step: 0 };
   if (kind === 'other' && sub) W.step = 1;                     // editing skips the type question
   const ac = kind === 'talk' ? 'var(--blue)' : kind === 'paper' ? 'var(--red)' : 'var(--ochre)';
   $('#sheet').classList.remove('hide');
@@ -773,7 +796,7 @@ function valid(){
   if (W.kind === 'paper'){
     if (W.step === 0) return !!(d.title || '').trim();
     if (W.step === 1) return !!d.status;
-    if (W.step === 2) return /^\d{4}$/.test(String(d.year));
+    if (W.step === 2) return d.status === 'media' ? true : /^\d{4}$/.test(String(d.year));
     return true;
   }
   if (W.step === 0) return !!W.sub;
@@ -867,8 +890,21 @@ function paperStep(s){
       opt('published', 'Published', 'Peer-reviewed, out in a journal or accepted.') +
       opt('review',    'Submitted',      'Submitted, under review or R&amp;R at a journal.') +
       opt('progress',  'In progress',    'Working paper, in preparation, not submitted yet.') +
-      opt('other',     'Other',          'Book chapter, dissertation, policy report, column.') +
+      opt('other',     'Other',          'Book chapter, dissertation, academic output.') +
+      opt('media',     'Media & outreach','A column, blog post, report or note. Leaves the publication list ' +
+                                          'and shows up under In the media instead.') +
       '</div>';
+    if (d.status === 'media'){
+      h += '<div class="sub"><span class="lb2">What kind</span><div class="chips">' +
+           Object.entries(OUTREACH_KINDS).map(([k, lb]) => '<button class="chip' +
+             ((d.mediaKind || 'report') === k ? ' on' : '') + '" data-okind="' + k + '">' + esc(lb) + '</button>').join('') +
+           '</div><div class="help" style="margin-top:9px">The entry stays in the Scholar mirror, so its citation ' +
+           'count keeps updating and it will not be imported a second time. It simply appears in a different place.</div></div>';
+    }
+    if (d.manual === false)
+      h += '<div class="help" style="margin-top:14px">This entry came in from Google Scholar. ' +
+           'Scholar sorts its own entries automatically, but as soon as you pick here, your choice sticks ' +
+           'and the weekly run stops changing it.</div>';
     if (d.status === 'published'){
       h += '<div class="sub"><span class="lb2">Journal</span>' +
            '<input class="inp" id="f_venue" placeholder="Journal of Cultural Economics" value="' + esc(d.venue || '') + '"></div>';
@@ -884,6 +920,14 @@ function paperStep(s){
     }
     return h;
   }
+
+  if (s === 2 && d.status === 'media') return '' +
+    '<h2 class="q">Where did it appear?</h2>' +
+    '<p class="qh">The outlet and the year. Authors and topics are not needed for a column or a blog post.</p>' +
+    '<div class="two">' +
+      '<div><span class="lb2">Outlet</span><input class="inp" id="f_venue" placeholder="VoxEU / CEPR" value="' + esc(d.venue === '—' ? '' : (d.venue || '')) + '"></div>' +
+      '<div><span class="lb2">Year</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(d.year || '') + '"></div>' +
+    '</div>';
 
   if (s === 2) return '' +
     '<h2 class="q">Who, when, where?</h2>' +
@@ -902,6 +946,14 @@ function paperStep(s){
         '" data-tag="' + k + '"><span class="cd" style="background:' + v[1] + '"></span>' + esc(v[0]) + '</button>').join('') +
     '</div></div>';
 
+  if (d.status === 'media'){
+    const l0 = (d.links && d.links[0]) || { label: '', url: '' };
+    return '' +
+      '<h2 class="q">Link</h2>' +
+      '<p class="qh">Where can it be read or listened to? If you leave it empty, the Scholar link is used.</p>' +
+      '<input class="inp" id="f_link0" placeholder="https://…" value="' + esc(l0.url) + '">' +
+      '<div class="prev" id="pv" style="margin-top:22px"></div>';
+  }
   const links = (d.links || []).concat([{ label: '', url: '' }]);
   return '' +
     '<h2 class="q">Key finding and links</h2>' +
@@ -1111,6 +1163,7 @@ function wireStep(){
     W.sub = o.dataset.sub;
     const def = KINDS[W.sub];
     W.draft = def.single ? JSON.parse(JSON.stringify(CV[def.arr] || blankOther(W.sub))) : blankOther(W.sub);
+    W.src = 'cv';
     W.step = 1;
     $('#kick').textContent = (def.single ? 'Edit · ' : 'New · ') + def.label;
     paintStep();
@@ -1161,7 +1214,7 @@ function uniqueId(base, skip){
   return base + '-' + n;
 }
 function recomputeMetrics(){
-  const pubs = (PUBS.publications || []).filter(p => !p.hidden);
+  const pubs = (PUBS.publications || []).filter(p => !p.hidden && isPaper(p));
   PUBS.metrics = PUBS.metrics || {};
   PUBS.metrics.publications = pubs.length;
   PUBS.metrics.venues = new Set(pubs.filter(p => p.status === 'published' && p.venue).map(p => p.venue)).size;
@@ -1197,11 +1250,27 @@ async function save(){
       if ((d.finding || '').trim()) p.finding = d.finding.trim();
       p.links  = d.links || [];
       p.manual = d.manual === false ? false : true;
+      // Scholar re-sorts its own entries on every run. The moment you touch one
+      // here, your classification wins and the weekly run leaves it alone.
+      if (p.manual === false) p.statusLocked = true;
+      if (d.scholarUrl) p.scholarUrl = d.scholarUrl;
       if (d.hidden) p.hidden = true;
       PUBS.publications = PUBS.publications || [];
       if (W.editIndex === null) PUBS.publications.push(p); else PUBS.publications[W.editIndex] = p;
       recomputeMetrics();
       await writeFile(FILE_PUBS, PUBS, (W.editIndex === null ? 'paper: add ' : 'paper: update ') + p.title.slice(0, 60));
+
+    } else if (W.src === 'pubs'){
+      const p = PUBS.publications[W.editIndex];
+      p.title = (d.what || '').trim();
+      p.venue = (d.where || '').trim() || '—';
+      p.year  = /^\d{4}$/.test(String(d.date)) ? +d.date : p.year;
+      p.mediaKind = d.kind || 'report';
+      p.status = 'media';
+      p.statusLocked = true;
+      p.links = (d.url || '').trim() ? [{ label: 'Link', url: d.url.trim() }] : [];
+      recomputeMetrics();
+      await writeFile(FILE_PUBS, PUBS, 'media: update ' + p.title.slice(0, 60));
 
     } else {
       const def = KINDS[W.sub], arr = def.arr;
@@ -1244,9 +1313,19 @@ async function toggleHidden(i){
 }
 
 /* deleting moves the entry into the file's archive instead of discarding it */
-async function remove(tab, i, kind){
+async function remove(tab, i, kind, src){
   const stamp = new Date().toISOString().slice(0, 10);
   try {
+    if (tab === 'other' && src === 'pubs'){
+      // it came from Scholar: do not throw it away, send it back to the paper list
+      const p = PUBS.publications[i];
+      p.status = 'other'; p.statusLocked = true; delete p.mediaKind;
+      recomputeMetrics();
+      await writeFile(FILE_PUBS, PUBS, 'media: back to the publication list — ' + (p.title || '').slice(0, 60));
+      render();
+      toast('Sent back to the publication list, under Other. Hide it there if you do not want it anywhere.');
+      return;
+    }
     if (tab === 'paper'){
       const p = PUBS.publications[i];
       PUBS.archive = PUBS.archive || [];
