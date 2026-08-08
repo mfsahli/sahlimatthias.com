@@ -1,9 +1,9 @@
 name: Rebuild CV
 
-# Runs whenever a talk or a paper is added, edited or removed — either through
-# the control room (admin.html) or by hand. Rebuilds both PDFs so they always
-# match the website. Pushes made by the weekly workflow use GITHUB_TOKEN and
-# therefore do not trigger this run, so the two cannot loop.
+# Runs whenever a talk, a paper or anything else is added, edited or removed,
+# either through the control room (admin.html) or by hand. Rebuilds both PDFs
+# so they always match the website. Pushes made by the weekly workflow use
+# GITHUB_TOKEN and therefore do not trigger this run, so the two cannot loop.
 
 on:
   push:
@@ -11,6 +11,7 @@ on:
     paths:
       - "pdf/cv.json"
       - "pdf/cv_template.html"
+      - "pdf/build_cv.py"
       - "data/publications.json"
   workflow_dispatch: {}
 
@@ -18,8 +19,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: rebuild-cv
-  cancel-in-progress: true
+  group: site-write        # never runs at the same time as the weekly update
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -32,14 +33,32 @@ jobs:
           pip install playwright
           python -m playwright install --with-deps chromium
 
-      - name: Rebuild cv.pdf and cv_short.pdf
-        run: python3 pdf/build_cv.py --local
-
-      - name: Commit and push if anything changed
+      - name: Rebuild the PDFs, commit and push
         run: |
-          git config user.name "cv-bot"
+          git config user.name  "cv-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add cv.pdf cv_short.pdf
-          git diff --cached --quiet && echo "No changes." && exit 0
-          git commit -m "chore: rebuild CV"
-          git push
+
+          # If a new commit lands while we are rendering, the push is rejected.
+          # Then we take their version, rebuild on top of it and try again.
+          for attempt in 1 2 3; do
+            python3 pdf/build_cv.py --local
+
+            git add cv.pdf cv_short.pdf
+            if git diff --cached --quiet; then
+              echo "PDFs already up to date."
+              exit 0
+            fi
+            git commit -m "chore: rebuild CV"
+
+            if git push; then
+              echo "Pushed on attempt $attempt."
+              exit 0
+            fi
+
+            echo "Push rejected - somebody else was faster. Rebasing and rebuilding."
+            git reset --hard HEAD~1
+            git pull --rebase --quiet
+          done
+
+          echo "Still could not push after three attempts."
+          exit 1
