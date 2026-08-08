@@ -360,6 +360,8 @@ const KINDS = {
               hint:'Eingabe, Stellungnahme, Beratungsmandat.'},
   organized: {icon:'📅', label:'Organisierte Konferenz', arr:'organized',
               hint:'Konferenz, Workshop oder Seminar, das du mitorganisiert hast.'},
+  highlight: {icon:'✨', label:'Startseiten-Highlight', arr:'highlights',
+              hint:'Die kurzen Pillen im Abschnitt „Beyond papers" auf der Startseite.'},
   service  : {icon:'🔍', label:'Peer Review & Mitgliedschaften', arr:'service', single:true,
               hint:'Zwei Zeilen, die du direkt überschreibst.'}
 };
@@ -501,22 +503,25 @@ function otherItems(){
 function otherText(o){
   const it = o.it;
   if (o.kind === 'service') return [it.reviewing, it.memberships].join(' ');
+  if (o.kind === 'highlight') return it.text || '';
   return [it.what, it.where, it.org, it.role, it.url].filter(Boolean).join(' ');
 }
 function otherTitle(o){
   const it = o.it;
   if (o.kind === 'service') return 'Peer Review & Mitgliedschaften';
+  if (o.kind === 'highlight') return it.text || '';
   if (o.kind === 'teaching') return it.org || '';
   return it.what || '';
 }
 function otherSub(o){
   const it = o.it;
   if (o.kind === 'service') return (it.reviewing || '').slice(0, 70) + '…';
+  if (o.kind === 'highlight') return 'Startseite · Beyond papers';
   if (o.kind === 'teaching') return it.role || '';
   if (o.kind === 'outreach') return [OUTREACH_KINDS[it.kind] || '', it.where].filter(Boolean).join(' · ');
   return it.role || '';
 }
-const otherWhen = o => o.it.date || o.it.year || o.it.years || '';
+const otherWhen = o => o.kind === 'highlight' ? (o.it.icon || '') : (o.it.date || o.it.year || o.it.years || '');
 
 /* ================================================================== to-dos */
 function computeTodos(){
@@ -696,6 +701,7 @@ const blankOther = k => ({
   grants   : { year: String(thisYear()), what: '' },
   policy   : { year: String(thisYear()), what: '', role: 'Co-author' },
   organized: { date: String(thisYear()), what: '', role: '' },
+  highlight: { icon: '✨', text: '' },
   service  : { reviewing: '', memberships: '' }
 }[k]);
 
@@ -761,8 +767,9 @@ function valid(){
   }
   if (W.step === 0) return !!W.sub;
   if (W.step === 1){
-    if (W.sub === 'service')  return !!(d.reviewing || '').trim();
-    if (W.sub === 'teaching') return !!(d.org || '').trim();
+    if (W.sub === 'service')   return !!(d.reviewing || '').trim();
+    if (W.sub === 'highlight') return !!(d.text || '').trim();
+    if (W.sub === 'teaching')  return !!(d.org || '').trim();
     return !!(d.what || '').trim();
   }
   return true;
@@ -960,6 +967,15 @@ function otherStep(s){
       '<div class="sub"><span class="lb2">Rolle</span>' +
       '<input class="inp" id="f_role" placeholder="Co-author" value="' + esc(d.role || '') + '"></div>';
 
+    if (k === 'highlight') return '' +
+      '<h2 class="q">Was soll auf der Startseite stehen?</h2>' +
+      '<p class="qh">Eine kurze Zeile für den Abschnitt „Beyond papers". Alles, was kein Paper und kein Talk ist, aber zeigt, was du sonst noch machst.</p>' +
+      '<div><span class="lb2">Symbol</span>' +
+      '<input class="inp" id="f_icon" style="max-width:110px;text-align:center;font-size:1.2rem" value="' + esc(d.icon || '') + '"></div>' +
+      '<div class="sub"><span class="lb2">Text</span>' +
+      '<textarea class="big" rows="2" id="f_text" placeholder="IP advisor at BFH">' + esc(d.text || '') + '</textarea></div>' +
+      '<div class="help" style="margin-top:10px">Kurz halten, die Pillen stehen nebeneinander in einer Reihe.</div>';
+
     if (k === 'organized') return '' +
       '<h2 class="q">Was hast du organisiert?</h2>' +
       '<p class="qh">Konferenz, Workshop oder Seminarreihe, mit deiner Funktion.</p>' +
@@ -1011,6 +1027,12 @@ function renderPreview(){
       '<div class="pt" style="margin-top:10px">Mitgliedschaften</div><div class="pm">' + esc(d.memberships) + '</div>';
     return;
   }
+  if (k === 'highlight'){
+    box.innerHTML = head + '<div class="pt" style="display:inline-block;border:1.5px solid var(--line);' +
+      'border-radius:999px;padding:5px 15px;font-size:.86rem;font-weight:600">' +
+      esc((d.icon ? d.icon + ' ' : '') + (d.text || '')) + '</div>';
+    return;
+  }
   if (k === 'teaching'){
     box.innerHTML = head + '<div class="pt">' + esc(d.org) + '</div><div class="pm">' + esc(d.years) + ' · ' + esc(d.role) +
       (d.eval ? '<br>★ ' + esc(d.eval) : '') + '</div>';
@@ -1041,6 +1063,8 @@ function wireStep(){
   bind('#f_years', v => d.years = v);
   bind('#f_eval', v => d.eval = v);
   bind('#f_date', v => d.date = v);
+  bind('#f_icon', v => d.icon = v);
+  bind('#f_text', v => d.text = v);
   bind('#f_reviewing', v => d.reviewing = v);
   bind('#f_memberships', v => d.memberships = v);
   bind('#f_note', v => {

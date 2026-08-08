@@ -221,6 +221,10 @@ a.stat:hover::after{opacity:1}
 .grouphead:first-child{margin-top:0}
 .grouphead::after{content:"";flex:1;height:1px;background:var(--line)}
 .grouphead .gc{font-weight:500;letter-spacing:.02em;text-transform:none;color:var(--ink3)}
+.morebtn{display:block;margin:10px auto 2px;background:transparent;border:1.5px solid var(--line);border-radius:999px;
+  padding:7px 20px;font-family:inherit;font-size:.8rem;font-weight:600;color:var(--ink2);cursor:pointer;
+  transition:border-color .2s,color .2s,transform .2s}
+.morebtn:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-1px)}
 #noresults{display:none;color:var(--ink3);font-size:.9rem;padding:20px 0;text-align:center}
 
 /* ---------- talks: slim collapsible strip ---------- */
@@ -470,16 +474,9 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
   </div>
 </div></section>
 
-<section id="beyond"><div class="wrap">
+<section id="beyond" style="display:none"><div class="wrap">
   <div class="sechead"><span class="secdot" style="background:var(--purple)"></span><h2>Beyond papers</h2></div>
-  <div class="beyond rv">
-    <span class="bpill">🏛️ Policy: two WTO TRIPS submissions on IP &amp; innovation</span>
-    <span class="bpill">🏆 Best Paper Award, ACEI Young Researchers Workshop 2021</span>
-    <span class="bpill">🔍 Peer reviewer — J. of Cultural Economics, Economics of Governance</span>
-    <span class="bpill">🌱 ReVerDi project (SNSF / Belmont Forum)</span>
-    <span class="bpill">🗓️ Organizing committee, ICT4S 2026 Bern</span>
-    <span class="bpill">🎓 IP advisor at BFH</span>
-  </div>
+  <div class="beyond rv" id="beyondpills"></div>
 </div></section>
 
 <footer><div class="wrap">
@@ -766,6 +763,8 @@ function pubCard(p){
     <span class="hint">click to expand</span>
   </div>`;
 }
+const GROUP_CAP = 4;                    // peer-reviewed is never capped
+let openGroups = new Set();
 function renderPubs(){
   const list = DATA.publications.filter(p=>{
     if(fStatus!=='all' && p.status!==fStatus) return false;
@@ -776,18 +775,27 @@ function renderPubs(){
 
   // group headers whenever more than one bucket is on screen
   const buckets = [...new Set(list.map(p=>p.status))];
+  const capping = fStatus==='all' && !q;      // a deliberate filter always shows everything
   let html = '', last = null;
-  list.forEach(p=>{
-    if(buckets.length>1 && p.status!==last){
-      const n = list.filter(x=>x.status===p.status).length;
-      html += `<div class="grouphead">${STATUSES[p.status]||'Other'} <span class="gc">(${n})</span></div>`;
-      last = p.status;
-    }
-    html += pubCard(p);
+  buckets.forEach(st=>{
+    const group = list.filter(p=>p.status===st);
+    if(buckets.length>1)
+      html += `<div class="grouphead">${STATUSES[st]||'Other'} <span class="gc">(${group.length})</span></div>`;
+    const cap = (capping && st!=='published' && !openGroups.has(st)) ? GROUP_CAP : group.length;
+    group.slice(0,cap).forEach(p=>{ html += pubCard(p); });
+    if(group.length>cap)
+      html += `<button class="morebtn" data-g="${st}">Show all ${group.length} &darr;</button>`;
+    else if(capping && st!=='published' && openGroups.has(st) && group.length>GROUP_CAP)
+      html += `<button class="morebtn" data-g="${st}">Show fewer &uarr;</button>`;
   });
   $('#publist').innerHTML = html;
   $('#noresults').style.display = list.length?'none':'block';
   $$('.pub').forEach(el=>el.onclick=()=>el.classList.toggle('open'));
+  $$('.morebtn').forEach(b=>b.onclick=()=>{
+    const g=b.dataset.g;
+    openGroups.has(g) ? openGroups.delete(g) : openGroups.add(g);
+    renderPubs();
+  });
 }
 
 /* ---- thesis topic explorer ----------------------------------------------
@@ -1009,6 +1017,14 @@ function wireStrip(barSel, listSel){
   addEventListener('resize', ()=>{ if(bar.classList.contains('open')) list.style.maxHeight = list.scrollHeight + 'px'; });
 }
 
+/* ---- the "beyond papers" pills, curated in pdf/cv.json ---- */
+function paintHighlights(items){
+  if(!Array.isArray(items) || !items.length) return;
+  document.getElementById('beyondpills').innerHTML =
+    items.map(h=>`<span class="bpill">${h.icon?h.icon+' ':''}${h.text||''}</span>`).join('');
+  document.getElementById('beyond').style.display = '';
+}
+
 /* ---- media coverage, outreach and columns: same file, same mechanism ---- */
 const MEDIA_KIND = {podcast:'Podcasts', column:'Columns', blog:'Blog coverage',
                     video:'Recorded talks', report:'Reports & notes', press:'Press'};
@@ -1032,7 +1048,7 @@ function paintMedia(items){
 }
 fetch('pdf/cv.json', {cache:'no-store'})
   .then(r => r.ok ? r.json() : null)
-  .then(d => { if(d){ paintTalks(d.talks); paintMedia(d.outreach); } })
+  .then(d => { if(d){ paintTalks(d.talks); paintMedia(d.outreach); paintHighlights(d.highlights); } })
   .catch(()=>{});
 
 /* ---- first paint, then pull the freshest data the workflow has written ---- */
