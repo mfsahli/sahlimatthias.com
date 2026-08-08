@@ -122,6 +122,22 @@ def talks_block(talks):
 OUTREACH_GROUPS = [("podcast", "Podcasts"), ("column", "Columns"), ("blog", "Blog coverage"),
                    ("video", "Recorded talks"), ("report", "Reports &amp; notes"), ("press", "Press")]
 
+def merged_outreach(cv, pubs):
+    """Hand-written outreach from cv.json plus every Scholar entry the control
+    room routed to "media". Items are never copied between files."""
+    items = list(cv.get("outreach") or [])
+    for p in pubs:
+        if p.get("status") != "media" or p.get("hidden"):
+            continue
+        url = ""
+        if p.get("links"):
+            url = p["links"][0].get("url", "")
+        items.append({"date": str(p.get("year") or ""), "kind": p.get("mediaKind") or "report",
+                      "what": p.get("title", ""),
+                      "where": p.get("venue") if p.get("venue") not in (None, "—") else "",
+                      "url": url or p.get("scholarUrl", "")})
+    return items
+
 def outreach_block(items):
     if not items:
         return ""
@@ -173,9 +189,9 @@ def build(cv, pubdata, short=False):
 
     if not short:
         body.append(sec("Selected talks", talks_block(cv["talks"])))
-        if cv.get("outreach"):
-            body.append(sec("Outreach, media coverage &amp; other output",
-                            outreach_block(cv["outreach"])))
+        media = merged_outreach(cv, pubdata.get("publications", []))
+        if media:
+            body.append(sec("Outreach, media coverage &amp; other output", outreach_block(media)))
         body.append(sec("Organized conferences &amp; seminars",
                         rows(cv["organized"], "date",
                              lambda it: f'{e(it["what"])}<br><span>{e(it.get("role",""))}</span>')))
