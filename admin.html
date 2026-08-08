@@ -111,14 +111,18 @@ main{padding:34px 0 90px}
 .todo button:hover{border-color:var(--ink);color:var(--ink)}
 .todos .allgood{font-size:.86rem;color:var(--ink2)}
 
-.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.tabs{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
+@media(max-width:700px){.tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  margin:0 -22px 10px;padding:0 22px 4px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto}}
 .tab{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 16px;font-size:.83rem;
   font-weight:600;cursor:pointer;color:var(--ink2);transition:all .2s}
 .tab:hover{border-color:var(--ink3);color:var(--ink)}
 .tab.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 .tab .n{opacity:.55;font-weight:500;margin-left:3px}
-.search{flex:1;min-width:150px;background:var(--card);border:1.5px solid var(--line);border-radius:999px;
-  padding:7px 16px;font-size:.83rem;outline:none;transition:border-color .2s}
+.search{width:100%;margin-bottom:14px;background:var(--card);border:1.5px solid var(--line);border-radius:999px;
+  padding:8px 18px;font-size:.83rem;outline:none;transition:border-color .2s}
 .search:focus{border-color:var(--ink)}
 .fchip{display:none;align-items:center;gap:8px;background:var(--ochre);color:#fff;border:none;border-radius:999px;
   padding:5px 14px;font-size:.78rem;font-weight:600;cursor:pointer;margin-bottom:12px}
@@ -286,12 +290,8 @@ main{padding:34px 0 90px}
 
     <div class="todos hide" id="todos"><h4>Needs attention</h4><div id="todolist"></div></div>
 
-    <div class="tabs">
-      <button class="tab on" data-tab="talk">Talks<span class="n" id="ntalk"></span></button>
-      <button class="tab" data-tab="paper">Papers<span class="n" id="npaper"></span></button>
-      <button class="tab" data-tab="other">Else<span class="n" id="nother"></span></button>
-      <input id="q" class="search" placeholder="Search…">
-    </div>
+    <div class="tabs" id="tabs"></div>
+    <input id="q" class="search" placeholder="Search…">
     <button class="fchip" id="fchip"></button>
     <div class="list" id="list"></div>
     <p class="foothint">Every change is a commit on GitHub, with a timestamp and a before-and-after.
@@ -332,6 +332,17 @@ let TOKEN = sessionStorage.getItem('kr_tok') || localStorage.getItem('kr_tok') |
 let REPO  = localStorage.getItem('kr_repo') || DEFAULT_REPO;
 let CV = null, PUBS = null;
 let TAB = 'talk', QUERY = '', FILTER = null, FILTER_LABEL = '';
+/* every shelf gets its own tab; the leftovers share "More" */
+const TABS = [
+  { k: 'talk',      label: 'Talks' },
+  { k: 'paper',     label: 'Papers' },
+  { k: 'outreach',  label: 'Media' },
+  { k: 'teaching',  label: 'Teaching' },
+  { k: 'grants',    label: 'Funding' },
+  { k: 'highlight', label: 'Highlights' },
+  { k: 'other',     label: 'More' }
+];
+const REST_KINDS = ['policy', 'organized', 'service'];
 
 if (localStorage.getItem('kr_theme') === 'dark') document.documentElement.classList.add('dark');
 
@@ -554,11 +565,11 @@ function computeTodos(){
 
   const noUrl = out.filter(m => !m.url);
   if (noUrl.length) t.push({ n: noUrl.length, txt: 'media entries without a link', one: 'media entry without a link',
-    tab: 'other', f: o => o.kind === 'outreach' && !o.it.url, lb: 'media without a link' });
+    tab: 'outreach', f: o => !o.it.url, lb: 'media without a link' });
 
   const noDate = out.filter(m => !m.date);
   if (noDate.length) t.push({ n: noDate.length, txt: 'media entries without a year', one: 'media entry without a year',
-    tab: 'other', f: o => o.kind === 'outreach' && !o.it.date, lb: 'media without a year' });
+    tab: 'outreach', f: o => !o.it.date, lb: 'media without a year' });
 
   const fresh = pubs.filter(p => p.manual === false && !p.statusLocked);
   if (fresh.length) t.push({ n: fresh.length, txt: 'new entries from Google Scholar, not checked yet',
@@ -582,7 +593,6 @@ function paintTodos(){
   $$('#todolist button').forEach(b => b.onclick = () => {
     const x = t[+b.dataset.todo];
     TAB = x.tab; FILTER = x.f; FILTER_LABEL = x.lb; QUERY = ''; $('#q').value = '';
-    $$('.tab').forEach(y => y.classList.toggle('on', y.dataset.tab === TAB));
     render();
     $('#list').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
@@ -591,11 +601,6 @@ function paintTodos(){
 $('#fchip').onclick = () => { FILTER = null; FILTER_LABEL = ''; render(); };
 
 /* ================================================================== list */
-$$('.tab').forEach(t => t.onclick = () => {
-  TAB = t.dataset.tab; FILTER = null; FILTER_LABEL = '';
-  $$('.tab').forEach(x => x.classList.toggle('on', x === t));
-  render();
-});
 $('#q').oninput = e => { QUERY = e.target.value.toLowerCase(); FILTER = null; FILTER_LABEL = ''; render(); };
 $$('.add').forEach(b => b.onclick = () => openWizard(b.dataset.new, null));
 
@@ -604,9 +609,16 @@ function render(){
   const talks = CV.talks || [], pubs = PUBS.publications || [], others = otherItems();
   const papers = pubs.filter(isPaper);
   const shown = papers.filter(p => !p.hidden).length, hidden = papers.length - shown;
-  $('#ntalk').textContent  = ' ' + talks.length;
-  $('#npaper').textContent = ' ' + shown + (hidden ? ' +' + hidden : '');
-  $('#nother').textContent = ' ' + others.length;
+  const countFor = k => k === 'talk'  ? String(talks.length)
+                      : k === 'paper' ? shown + (hidden ? ' +' + hidden : '')
+                      : k === 'other' ? String(others.filter(o => REST_KINDS.includes(o.kind)).length)
+                      :                 String(others.filter(o => o.kind === k).length);
+  $('#tabs').innerHTML = TABS.map(t => '<button class="tab' + (t.k === TAB ? ' on' : '') +
+    '" data-tab="' + t.k + '">' + t.label + '<span class="n"> ' + countFor(t.k) + '</span></button>').join('');
+  $$('#tabs .tab').forEach(b => b.onclick = () => {
+    TAB = b.dataset.tab; FILTER = null; FILTER_LABEL = '';
+    render();
+  });
   const upcoming = talks.filter(t => t.scheduled).length;
   $('#sub').innerHTML = talks.length + ' talks (' + upcoming + ' upcoming) · ' + pubs.length +
     ' papers' + (hidden ? ' (' + hidden + ' hidden)' : '') + ' · ' + others.length + ' other entries · data from ' + esc(PUBS.generated || '–');
@@ -615,7 +627,11 @@ function render(){
   chip.classList.toggle('on', !!FILTER);
   chip.textContent = FILTER ? 'Filtered: ' + FILTER_LABEL + '  ×' : '';
 
-  $('#list').innerHTML = TAB === 'talk' ? talkList(talks) : TAB === 'paper' ? paperList(pubs) : otherList(others);
+  const forTab = TAB === 'other' ? others.filter(o => REST_KINDS.includes(o.kind))
+                                 : others.filter(o => o.kind === TAB);
+  $('#list').innerHTML = TAB === 'talk'  ? talkList(talks)
+                       : TAB === 'paper' ? paperList(pubs)
+                       :                   otherList(forTab);
   paintTodos();
   wireRows();
 }
@@ -699,7 +715,7 @@ function otherList(items){
 function wireRows(){
   $$('#list .row').forEach(r => {
     const i = +r.dataset.i, k = r.dataset.kind, src = r.dataset.src;
-    const open = () => TAB === 'other' ? openWizard('other', i, k, src) : openWizard(TAB, i);
+    const open = () => (TAB === 'talk' || TAB === 'paper') ? openWizard(TAB, i) : openWizard('other', i, k, src);
     r.onclick = e => { if (!e.target.closest('.acts')) open(); };
     r.querySelector('.ed').onclick = open;
     const eye = r.querySelector('.eye');
@@ -713,7 +729,7 @@ function wireRows(){
         setTimeout(() => { d.classList.remove('armed'); d.textContent = '🗑'; }, 4000);
         return;
       }
-      remove(TAB, i, k, src);
+      remove((TAB === 'talk' || TAB === 'paper') ? TAB : 'other', i, k, src);
     };
   });
 }
