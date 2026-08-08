@@ -405,5 +405,31 @@
       "url": "https://www.wipo.int/edocs/infogdocs/creative_industries/en/"
     }
   ],
-  "archive": []
+  "archive": [],
+  "highlights": [
+    {
+      "icon": "🏛️",
+      "text": "Policy: two WTO TRIPS submissions on IP & innovation"
+    },
+    {
+      "icon": "🏆",
+      "text": "Best Paper Award, ACEI Young Researchers Workshop 2021"
+    },
+    {
+      "icon": "🔍",
+      "text": "Peer reviewer — J. of Cultural Economics, Economics of Governance"
+    },
+    {
+      "icon": "🌱",
+      "text": "ReVerDi project (SNSF / Belmont Forum)"
+    },
+    {
+      "icon": "🗓️",
+      "text": "Organizing committee, ICT4S 2026 Bern"
+    },
+    {
+      "icon": "🎓",
+      "text": "IP advisor at BFH"
+    }
+  ]
 }
