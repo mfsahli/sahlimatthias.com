@@ -384,13 +384,6 @@
       "url": "https://culturaleconomics.org/life-after-death-the-effects-of-artists-death-on-exhibitions-and-auctions/"
     },
     {
-      "date": "04/2023",
-      "kind": "blog",
-      "what": "Risky Trade? Appropriation Art, Copyright and Secondary Market Effects",
-      "where": "EconomistTalkArt (ACEI)",
-      "url": "https://culturaleconomics.org/risky-trade-appropriation-art-copyright-and-secondary-market-effects/"
-    },
-    {
       "date": "2021",
       "kind": "report",
       "what": "COVID-19 impact on artistic income — WIPO Economic Research Working Paper No. 65",
@@ -406,6 +399,17 @@
     }
   ],
   "archive": [
+    {
+      "removed": "2026-08-08",
+      "type": "outreach",
+      "entry": {
+        "date": "04/2023",
+        "kind": "blog",
+        "what": "Risky Trade? Appropriation Art, Copyright and Secondary Market Effects",
+        "where": "EconomistTalkArt (ACEI)",
+        "url": "https://culturaleconomics.org/risky-trade-appropriation-art-copyright-and-secondary-market-effects/"
+      }
+    },
     {
       "removed": "2026-08-08",
       "type": "outreach",
