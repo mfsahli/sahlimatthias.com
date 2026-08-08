@@ -168,8 +168,10 @@ def main():
                     if isinstance(cby.get("value"), int):
                         hit["citations"] = cby["value"]           # Scholar count wins (merged versions)
                     # auto-added entries are re-sorted on every run, so columns,
-                    # award notices etc. cannot get stuck in the wrong bucket
-                    if hit.get("manual") is False:
+                    # award notices etc. cannot get stuck in the wrong bucket.
+                    # Once you correct the bucket in the control room the entry
+                    # carries statusLocked and is left alone from then on.
+                    if hit.get("manual") is False and not hit.get("statusLocked"):
                         newst = classify(hit.get("venue"), hit.get("year"), hit.get("title"))
                         if newst != hit.get("status"):
                             log.append(f"re-sorted '{hit['id']}': {hit.get('status')} -> {newst}")
@@ -233,11 +235,15 @@ def main():
     # ---------------- recompute derived metrics
     # entries you hid in the control room stay in the file (so Scholar keeps
     # updating their citation count) but count for nothing that is displayed
-    visible = [p for p in pubs if not p.get("hidden")]
+    PAPER_ST = ("published", "review", "progress", "other")
+    visible = [p for p in pubs if not p.get("hidden") and p.get("status") in PAPER_ST]
     data["metrics"]["publications"] = len(visible)
     data["metrics"]["venues"] = len({p["venue"] for p in visible if p.get("status") == "published"})
-    if len(visible) != len(pubs):
-        log.append(f"{len(pubs) - len(visible)} entr(y/ies) hidden in the control room, not counted")
+    routed = [p for p in pubs if p.get("status") == "media"]
+    if routed:
+        log.append(f"{len(routed)} Scholar entr(y/ies) routed to media/outreach, not counted as papers")
+    if any(p.get("hidden") for p in pubs):
+        log.append(f"{sum(1 for p in pubs if p.get('hidden'))} entr(y/ies) hidden in the control room, not counted")
     data["generated"] = datetime.date.today().isoformat()
 
     # ---------------- write data file
