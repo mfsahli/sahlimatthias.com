@@ -363,6 +363,12 @@
   "summaryShort": "Postdoctoral researcher at the Bern University of Applied Sciences (BFH) Business School, previously at the World Intellectual Property Organization (WIPO) of the United Nations; PhD in Economics, University of Neuchâtel (2023). I work on the economics of intellectual property, innovation, digitization and the creative industries, building new datasets and running rigorous econometric analyses to inform policy.",
   "outreach": [
     {
+      "date": "2026",
+      "kind": "press",
+      "what": "Digitalisierung und Umwelt - Warum das Zusammenspiel von digitaler und physischer Infrastruktur entscheidend ist",
+      "where": "Bulletin.ch; Bieser J., Sahli M."
+    },
+    {
       "date": "09/2023",
       "kind": "column",
       "what": "The effect of copyright on the digitisation and availability of visual artworks",
