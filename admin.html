@@ -110,6 +110,14 @@ main{padding:34px 0 90px}
   padding:2px 12px;font-size:.74rem;font-weight:600;cursor:pointer;color:var(--ink2);transition:all .18s;flex-shrink:0}
 .todo button:hover{border-color:var(--ink);color:var(--ink)}
 .todos .allgood{font-size:.86rem;color:var(--ink2)}
+.todo.draft{gap:9px}
+.todo.draft .dtag{font-size:.6rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:#fff;
+  background:var(--blue);border-radius:999px;padding:2px 9px;flex-shrink:0}
+.todo.draft .dtxt{flex:1;min-width:0;color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.todo.draft .dtxt b{color:var(--ink)}
+.todo.draft .dts{color:var(--ink3);font-size:.74rem;margin-left:9px}
+.todo.draft button{margin-left:0}
+@media(max-width:620px){.todo.draft .dts{display:none}}
 
 .tabs{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
 @media(max-width:700px){.tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
@@ -288,7 +296,8 @@ main{padding:34px 0 90px}
       </button>
     </div>
 
-    <div class="todos hide" id="todos"><h4>Needs attention</h4><div id="todolist"></div></div>
+    <div class="todos hide" id="todos"><h4>Needs attention</h4>
+      <div id="draftlist"></div><div id="todolist"></div></div>
 
     <div class="tabs" id="tabs"></div>
     <input id="q" class="search" placeholder="Search…">
@@ -347,7 +356,7 @@ const REST_KINDS = ['policy', 'organized', 'service'];
 if (localStorage.getItem('kr_theme') === 'dark') document.documentElement.classList.add('dark');
 
 const TAGS = {
-  ip : ['IP & Copyright', 'var(--red)'],
+  ip : ['Intellectual property', 'var(--red)'],
   art: ['Art Markets & Creative Industries', 'var(--blue)'],
   dig: ['Digitization & Heritage', 'var(--ochre)'],
   sus: ['Sustainability', 'var(--purple)']
@@ -584,9 +593,17 @@ function computeTodos(){
 }
 
 function paintTodos(){
-  const t = computeTodos(), box = $('#todos');
-  if (!t.length){ box.classList.add('hide'); return; }
+  const t = computeTodos(), box = $('#todos'), drafts = loadDrafts();
+  if (!t.length && !drafts.length){ box.classList.add('hide'); return; }
   box.classList.remove('hide');
+  $('#draftlist').innerHTML = drafts.map(d =>
+    '<div class="todo draft"><span class="dtag">Draft</span>' +
+    '<span class="dtxt"><b>' + esc(d.kindLabel) + '</b> · ' + esc(d.label.slice(0, 60)) +
+    '<span class="dts">' + esc(d.ts) + '</span></span>' +
+    '<button data-resume="' + d.did + '">continue</button>' +
+    '<button data-discard="' + d.did + '">discard</button></div>').join('');
+  $$('#draftlist button[data-resume]').forEach(b => b.onclick = () => resumeDraft(b.dataset.resume));
+  $$('#draftlist button[data-discard]').forEach(b => b.onclick = () => { dropDraft(b.dataset.discard); render(); });
   $('#todolist').innerHTML = t.map((x, i) =>
     '<div class="todo"><b>' + x.n + '</b> ' + esc(x.n === 1 && x.one ? x.one : x.txt) +
     '<button data-todo="' + i + '">show</button></div>').join('');
@@ -734,8 +751,74 @@ function wireRows(){
   });
 }
 
+/* ============================================== unfinished drafts (local) */
+/* Kept in this browser only, never on GitHub. Closing the sheet by accident
+   costs nothing: the entry waits under "Needs attention" until you finish it. */
+const DKEY = 'kr_drafts';
+const loadDrafts = () => { try { return JSON.parse(localStorage.getItem(DKEY)) || []; } catch(e){ return []; } };
+const putDrafts  = a => localStorage.setItem(DKEY, JSON.stringify(a.slice(0, 6)));
+const dropDraft  = did => { putDrafts(loadDrafts().filter(x => x.did !== did)); };
+
+function draftLabel(w){
+  const d = w.draft || {};
+  return (d.title || d.what || d.org || d.text || d.reviewing || '').trim();
+}
+function draftKindLabel(w){
+  return w.kind === 'talk' ? 'Talk' : w.kind === 'paper' ? 'Paper'
+       : (w.sub ? KINDS[w.sub].label : 'Entry');
+}
+/* a fingerprint of the entry being edited, so a resumed draft cannot be
+   written over the wrong row if the list shifted in the meantime */
+function anchorOf(kind, sub, src, i){
+  if (i === null || i === undefined || i < 0) return null;
+  try {
+    if (kind === 'paper' || src === 'pubs') return 'p:' + PUBS.publications[i].id;
+    if (kind === 'talk') return 't:' + CV.talks[i].date + '|' + CV.talks[i].what;
+    return 'o:' + JSON.stringify(CV[KINDS[sub].arr][i]).slice(0, 140);
+  } catch(e){ return null; }
+}
+function findAnchor(kind, sub, src, anchor){
+  if (!anchor) return null;
+  const arr = (kind === 'paper' || src === 'pubs') ? (PUBS.publications || [])
+            : kind === 'talk' ? (CV.talks || []) : (CV[KINDS[sub].arr] || []);
+  for (let i = 0; i < arr.length; i++)
+    if (anchorOf(kind, sub, src, i) === anchor) return i;
+  return null;
+}
+function stashDraft(){
+  if (!W || !W.did) return;
+  const label = draftLabel(W);
+  const rest = loadDrafts().filter(x => x.did !== W.did);
+  if (!label) return putDrafts(rest);            // nothing typed yet, nothing to keep
+  rest.unshift({ did: W.did, kind: W.kind, sub: W.sub, src: W.src, editIndex: W.editIndex,
+                 anchor: W.anchor, step: W.step, draft: W.draft,
+                 ts: new Date().toISOString().slice(0, 16).replace('T', ' '),
+                 label: label, kindLabel: draftKindLabel(W) });
+  putDrafts(rest);
+}
+function resumeDraft(did){
+  const d = loadDrafts().find(x => x.did === did);
+  if (!d) return;
+  let idx = d.editIndex;
+  if (d.anchor){
+    const found = findAnchor(d.kind, d.sub, d.src, d.anchor);
+    if (found === null){
+      toast('That entry has changed in the meantime, so the draft no longer fits. It has been discarded.', true);
+      dropDraft(did); render(); return;
+    }
+    idx = found;
+  }
+  W = { kind: d.kind, sub: d.sub, src: d.src || 'cv', editIndex: idx,
+        draft: d.draft, step: d.step || 0, did: d.did, anchor: d.anchor };
+  const ac = d.kind === 'talk' ? 'var(--blue)' : d.kind === 'paper' ? 'var(--red)' : 'var(--ochre)';
+  $('#sheet').classList.remove('hide');
+  $('#sheet').style.setProperty('--ac', ac);
+  $('#kick').textContent = 'Draft · ' + draftKindLabel(W);
+  paintStep();
+}
+
 /* ================================================================== wizard */
-let W = null;   // {kind, sub, editIndex, draft, step}
+let W = null;   // {kind, sub, editIndex, draft, step, did, anchor}
 
 const blankTalk = () => {
   const n = new Date();
@@ -767,8 +850,10 @@ function openWizard(kind, i, sub, src){
     if (!Array.isArray(draft.tags))  draft.tags = [];
     if (!Array.isArray(draft.links)) draft.links = [];
   }
-  W = { kind: kind, sub: sub || null, src: src || 'cv',
-        editIndex: (i === null || i < 0) ? null : i, draft: draft, step: 0 };
+  const editIndex = (i === null || i < 0) ? null : i;
+  W = { kind: kind, sub: sub || null, src: src || 'cv', editIndex: editIndex, draft: draft, step: 0,
+        did: 'd' + Date.now() + Math.floor(Math.random() * 1000),
+        anchor: anchorOf(kind, sub || null, src || 'cv', editIndex) };
   if (kind === 'other' && sub) W.step = 1;                     // editing skips the type question
   const ac = kind === 'talk' ? 'var(--blue)' : kind === 'paper' ? 'var(--red)' : 'var(--ochre)';
   $('#sheet').classList.remove('hide');
@@ -777,7 +862,7 @@ function openWizard(kind, i, sub, src){
   $('#kick').textContent = (W.editIndex === null && !(sub && KINDS[sub].single) ? 'New · ' : 'Edit · ') + name;
   paintStep();
 }
-function closeWizard(){ $('#sheet').classList.add('hide'); W = null; }
+function closeWizard(){ stashDraft(); $('#sheet').classList.add('hide'); W = null; render(); }
 $('#close').onclick = closeWizard;
 $('#sheet').onclick = e => { if (e.target.id === 'sheet') closeWizard(); };
 document.addEventListener('keydown', e => {
@@ -800,7 +885,7 @@ function go(d){
 }
 
 function grow(t){ t.style.height = 'auto'; t.style.height = (t.scrollHeight + 2) + 'px'; }
-function checkValid(){ $('#next').disabled = !valid(); }
+function checkValid(){ $('#next').disabled = !valid(); stashDraft(); }
 
 function valid(){
   const d = W.draft;
@@ -1302,6 +1387,7 @@ async function save(){
       }
       await writeFile(FILE_CV, CV, label);
     }
+    if (W){ dropDraft(W.did); W.did = null; }   // saved, so it is no longer a draft
     closeWizard(); render(); savedToast();
   } catch (err){
     toast('Not saved: ' + esc(err.message) + ' Press ↻ and try again.', true);
