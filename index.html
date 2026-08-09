@@ -39,12 +39,25 @@ nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 8
 .navlinks{display:flex;gap:22px;align-items:center}
 .navlinks a{text-decoration:none;font-size:.85rem;font-weight:500;color:var(--ink2);transition:color .2s}
 .navlinks a:hover{color:var(--ink)}
-.dots{display:flex;gap:7px;margin-left:10px}
+.dots{display:flex;gap:7px;margin-left:10px;align-items:center}
+/* say what the traffic lights do, without spoiling the joke */
+.dothint{font-size:.75rem;font-weight:600;color:var(--ink2);background:var(--card);border:1px solid var(--line);
+  border-radius:999px;padding:3px 11px;margin-right:2px;white-space:nowrap;opacity:0;transform:translateX(6px);
+  transition:opacity .18s,transform .18s;pointer-events:none}
+.dothint.on{opacity:1;transform:none}
+@media(max-width:760px){.dothint{display:none}}
 .dot{width:14px;height:14px;border-radius:50%;border:none;cursor:pointer;transition:transform .25s cubic-bezier(.34,1.56,.64,1);padding:0}
 .dot:hover{transform:scale(1.35)}
 .dot:active{transform:scale(.85)}
 .dot.r{background:#D64533}.dot.o{background:#E08A2E}.dot.g{background:#4C9152}
 @media(max-width:760px){.navlinks a{display:none}.navlinks a.navcv{display:inline}}
+/* on a phone the section links are hidden above, so they get their own
+   swipeable row rather than leaving three unlabelled dots as the navigation */
+#navsub{display:none;border-top:1px solid var(--line);background:color-mix(in srgb,var(--paper) 88%,transparent)}
+#navsub .wrap{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;padding-top:7px;padding-bottom:7px}
+#navsub .wrap::-webkit-scrollbar{display:none}
+#navsub a{text-decoration:none;font-size:.8rem;font-weight:500;color:var(--ink2);white-space:nowrap}
+@media(max-width:760px){#navsub{display:block}}
 
 /* ---------- landing: the SAHLI-TRON ---------- */
 header{min-height:calc(100svh - 60px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 20px 30px;position:relative}
@@ -72,7 +85,22 @@ html.dark .monitor{background:#CBBE9F}
 .chinr{display:flex;align-items:center;gap:12px}
 .slit{width:74px;height:7px;background:#211E1B;border-radius:4px;position:relative}
 .slit::after{content:"";position:absolute;left:6px;top:2px;width:14px;height:3px;background:#E9DFC7;border-radius:2px}
-.plight{width:11px;height:11px;border-radius:50%;background:#4C9152;border:2px solid #211E1B;animation:pglow 2s infinite}
+.plight{width:11px;height:11px;border-radius:50%;background:#4C9152;border:2px solid #211E1B;animation:pglow 2s infinite;
+  padding:0;cursor:pointer;transition:background .25s}
+.plight:hover{background:#5FBF67}
+.plight.dead{background:#7A3C33;animation:none}
+/* CRT power-down: the picture collapses to a line, then to a dot, then dark */
+.crtwrap{position:absolute;inset:22px;z-index:2;transform-origin:center;pointer-events:none}
+.screen.off .crt,.screen.off .crtline,.screen.off #paint,.screen.off .ptools,.screen.off .phint{visibility:hidden}
+.screen.off::before{animation:none;opacity:.15}
+.zap{position:absolute;left:8%;right:8%;top:50%;height:3px;background:#CFFFD4;border-radius:3px;
+  box-shadow:0 0 18px 5px rgba(180,255,190,.85);z-index:6;transform:translateY(-50%) scaleX(1);
+  animation:zapout .55s cubic-bezier(.6,0,.9,.2) forwards}
+@keyframes zapout{0%{transform:translateY(-50%) scaleX(1);opacity:1}
+  55%{transform:translateY(-50%) scaleX(.9);opacity:1}
+  100%{transform:translateY(-50%) scaleX(.008);opacity:0}}
+.flashon{position:absolute;inset:0;background:rgba(180,255,190,.5);z-index:6;animation:flashon .35s ease-out forwards}
+@keyframes flashon{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
 @keyframes pglow{0%,100%{box-shadow:0 0 3px #4C9152}50%{box-shadow:0 0 11px #4C9152}}
 .stand{width:130px;height:26px;background:#DCD0B4;border:4px solid #211E1B;border-top:none;margin:-2px auto 0;border-radius:0 0 8px 8px}
 .base{width:230px;height:16px;background:#E9DFC7;border:4px solid #211E1B;margin:-2px auto 0;border-radius:8px;box-shadow:7px 8px 0 rgba(33,30,27,.14)}
@@ -96,6 +124,9 @@ html.dark .mousey{background:#CBBE9F}
 .mousey.wig{animation:mwig .9s ease}
 @keyframes mwig{0%,100%{transform:rotate(9deg)}30%{transform:rotate(2deg) translateY(-5px)}60%{transform:rotate(14deg) translateY(-2px)}}
 #paint{position:absolute;inset:0;z-index:2;display:none;touch-action:none;cursor:crosshair}
+/* drawing on a tilted, bobbing screen is no fun: hold still and straighten up */
+.computer.steady{animation:none}
+.computer.steady .monitor,.computer.steady:hover .monitor{transform:rotate(0deg) scale(1.015)}
 .screen.paint #paint{display:block}
 .screen.paint .crt,.screen.paint .crtline{visibility:hidden}
 .ptools{position:absolute;bottom:9px;right:12px;z-index:5;display:none;gap:7px}
@@ -336,13 +367,19 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
   <a class="logo" href="#top">Matthias Sahli</a>
   <div class="navlinks">
     <a href="#about">About</a><a href="#research">Research</a><a href="#teaching">Teaching</a><a href="#thesis">Theses</a><a class="navcv" href="https://scholar.google.com/citations?user=ui-NYv8AAAAJ" target="_blank" rel="noopener">Scholar ↗</a>
+    <span class="dothint" id="dothint"></span>
     <div class="dots">
-      <button class="dot r" title="Back to top" aria-label="Back to top"></button>
-      <button class="dot o" title="Jump to research" aria-label="Jump to research"></button>
-      <button class="dot g" title="Toggle dark mode" aria-label="Toggle dark mode"></button>
+      <button class="dot r" data-hint="Back to top" title="Back to top" aria-label="Back to top"></button>
+      <button class="dot o" data-hint="Research" title="Jump to research" aria-label="Jump to research"></button>
+      <button class="dot g" data-hint="Dark mode" title="Toggle dark mode" aria-label="Toggle dark mode"></button>
     </div>
   </div>
-</div></nav>
+</div>
+  <div id="navsub"><div class="wrap">
+    <a href="#about">About</a><a href="#research">Research</a><a href="#teaching">Teaching</a>
+    <a href="#thesis">Theses</a><a href="cv.pdf" target="_blank" rel="noopener">CV</a>
+  </div></div>
+</nav>
 
 <header id="top">
   <h1 class="vhidden">Matthias Sahli — economist studying the creative industries</h1>
@@ -358,7 +395,7 @@ footer h2{font-size:1.9rem;margin-bottom:8px}
       </div>
       <div class="chin">
         <span class="brand">SAHLI·TRON 2000</span>
-        <span class="chinr"><span class="slit"></span><span class="plight"></span></span>
+        <span class="chinr"><span class="slit"></span><button class="plight" id="plight" title="Power" aria-label="Power"></button></span>
       </div>
     </div>
     <div class="stand"></div>
@@ -517,6 +554,13 @@ const SCHOLAR = 'https://scholar.google.com/citations?user=ui-NYv8AAAAJ';
 let dark = matchMedia('(prefers-color-scheme: dark)').matches;
 const applyTheme = () => document.documentElement.classList.toggle('dark', dark);
 applyTheme();
+const dothint = $('#dothint');
+$$('.dot').forEach(d => {
+  const show = () => { dothint.textContent = d.dataset.hint; dothint.classList.add('on'); };
+  const hide = () => dothint.classList.remove('on');
+  d.addEventListener('mouseenter', show); d.addEventListener('focus', show);
+  d.addEventListener('mouseleave', hide); d.addEventListener('blur', hide);
+});
 $('.dot.r').onclick = () => scrollTo({top:0,behavior:'smooth'});
 $('.dot.o').onclick = () => $('#research').scrollIntoView({behavior:'smooth'});
 $('.dot.g').onclick = () => { dark = !dark; applyTheme(); };
@@ -528,36 +572,72 @@ const crt = $('#crt'), crtform = $('#crtform'), crtinput = $('#crtinput');
 const ROT = ['art_markets','copyright','digitization','sustainability','museums','film_finance','creative_industries'];
 const BOOT = ['SAHLI·OS v2.6 — booting…','loading datasets……… ok','brewing coffee…………… ok'];
 let screenHTML = '', mode = 'boot';
+/* only one thing may write to the screen at a time. Bumping runId retires
+   whatever was typing before, so a reboot cannot overlap the boot sequence. */
+let runId = 0;
 const cursor = '<span class="cursor"></span>';
 const sleep = ms => new Promise(r=>setTimeout(r,ms));
 
-async function typeText(txt, speed=42){
-  for(const ch of txt){ screenHTML += ch; crt.innerHTML = screenHTML + cursor; await sleep(speed + Math.random()*30); }
+async function typeText(txt, speed=42, my){
+  for(const ch of txt){
+    if(my !== undefined && my !== runId) return;
+    screenHTML += ch; crt.innerHTML = screenHTML + cursor; await sleep(speed + Math.random()*30);
+  }
 }
 async function runScreen(){
+  const my = ++runId;
   for(const line of BOOT){
+    if(my !== runId) return;
     crt.innerHTML = screenHTML + cursor;
-    await typeText(line, 8); screenHTML += '<br>'; await sleep(150);
+    await typeText(line, 8, my); screenHTML += '<br>'; await sleep(150);
   }
   await sleep(400);
+  if(my !== runId) return;
   screenHTML = '';                                   // clear → fixed screen size
-  await typeText('> hi, i\'m matthias 👋', 55);
+  await typeText('> hi, i\'m matthias 👋', 55, my);
   screenHTML += '<br>';
   await sleep(300);
-  await typeText('> an economist studying', 38);
+  await typeText('> an economist studying', 38, my);
+  if(my !== runId) return;
   screenHTML += '<br>&nbsp;&nbsp;';
   crtform.classList.add('show');                     // the prompt appears
   mode = 'rotate';
   let i = 0;
-  while(mode === 'rotate'){                          // rotating words, typed & deleted
+  const live = () => mode === 'rotate' && my === runId;
+  while(live()){                                     // rotating words, typed & deleted
     const w = ROT[i % ROT.length], base = screenHTML;
-    for(let c=1;c<=w.length && mode==='rotate';c++){ crt.innerHTML = base + w.slice(0,c) + cursor; await sleep(60); }
-    for(let t=0;t<38 && mode==='rotate';t++) await sleep(50);
-    for(let c=w.length;c>=0 && mode==='rotate';c--){ crt.innerHTML = base + w.slice(0,c) + cursor; await sleep(26); }
+    for(let c=1;c<=w.length && live();c++){ crt.innerHTML = base + w.slice(0,c) + cursor; await sleep(60); }
+    for(let t=0;t<38 && live();t++) await sleep(50);
+    for(let c=w.length;c>=0 && live();c--){ crt.innerHTML = base + w.slice(0,c) + cursor; await sleep(26); }
     i++;
   }
 }
 runScreen();
+
+/* ---- easter egg: the power light actually turns the thing off ---- */
+let rebooting = false;
+$('#plight').onclick = async e => {
+  e.stopPropagation();
+  if(rebooting) return;
+  rebooting = true;
+  const light = $('#plight'), scr = $('#screenbox');
+  if(painting) togglePaint();
+  mode = 'off'; runId++;                          // retires whatever is typing
+  const zap = document.createElement('div'); zap.className = 'zap';
+  scr.appendChild(zap);
+  light.classList.add('dead');
+  await sleep(560);
+  scr.classList.add('off'); zap.remove();
+  crtform.classList.remove('show');
+  await sleep(900);                               // a moment of honest darkness
+  scr.classList.remove('off');
+  light.classList.remove('dead');
+  const flash = document.createElement('div'); flash.className = 'flashon';
+  scr.appendChild(flash); setTimeout(()=>flash.remove(), 400);
+  screenHTML = ''; crt.innerHTML = cursor; mode = 'boot';
+  rebooting = false;
+  runScreen();
+};
 
 /* keyword intent router — edit freely */
 const go = sel => $(sel).scrollIntoView({behavior:'smooth'});
@@ -577,12 +657,14 @@ const ROUTES = [
   {k:['help','?'], r:'commands: research · thesis · teaching · data · cv · about · contact · dark', a:null},
 ];
 async function answer(q){
+  const my = ++runId;
   mode = 'chat';
   const route = ROUTES.find(rt => rt.k.some(k => q.includes(k)));
   screenHTML = `<span class="dim">$ ${q.replace(/</g,'&lt;').slice(0,60)}</span><br>`;
   crt.innerHTML = screenHTML + cursor;
   await sleep(250);
-  await typeText('> ' + (route ? route.r : `hm, "${q.slice(0,24)}" — not sure. try: research · thesis · cv · contact`), 24);
+  await typeText('> ' + (route ? route.r : `hm, "${q.slice(0,24)}" — not sure. try: research · thesis · cv · contact`), 24, my);
+  if(my !== runId) return;
   if(route && route.a){ await sleep(650); route.a(); }
 }
 crtform.onsubmit = e => { e.preventDefault(); const q = crtinput.value.trim().toLowerCase(); if(q){ answer(q); crtinput.value=''; } };
@@ -608,14 +690,15 @@ function togglePaint(){
   painting = !painting;
   screenBox.classList.toggle('paint', painting);
   mousey.classList.toggle('on', painting);
-  if(painting){ sizeCanvas(); $('#phint').style.display = ''; }
+  document.querySelector('.computer').classList.toggle('steady', painting);
+  if(painting){ setTimeout(sizeCanvas, 420); $('#phint').style.display = ''; }
 }
 mousey.onclick = togglePaint;
 mousey.onkeydown = e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); togglePaint(); } };
 $('#pexit').onclick = e => { e.stopPropagation(); togglePaint(); };
 $('#pclear').onclick = e => { e.stopPropagation(); ctx && ctx.clearRect(0,0,cv.width/dpr,cv.height/dpr); };
 
-const at = e => { const r = cv.getBoundingClientRect(); return {x:e.clientX-r.left, y:e.clientY-r.top}; };
+const at = e => ({ x: e.offsetX, y: e.offsetY });
 cv.addEventListener('pointerdown', e=>{
   drawing = true; last = at(e); cv.setPointerCapture(e.pointerId);
   $('#phint').style.display = 'none';
@@ -688,7 +771,15 @@ function paintData(){
 
   // publication alert on the post-it
   const newest = PUBS_VISIBLE.filter(p=>p.status==='published' && p.year).sort((a,b)=>b.year-a.year)[0];
-  if(newest) $('#postittext').textContent = `“${newest.short || newest.title}” — ${newest.venue}`;
+  if(newest){
+    $('#postittext').textContent = `“${newest.short || newest.title}” — ${newest.venue}`;
+    // straight to the paper: DOI first, then any link, then Scholar
+    const L = newest.links || [];
+    const url = (L.find(l=>/doi/i.test(l.label))||{}).url || (L[0]||{}).url || newest.scholarUrl || '';
+    const a = $('#postit');
+    if(url){ a.href = url; a.target = '_blank'; a.rel = 'noopener'; }
+    else   { a.href = '#research'; a.removeAttribute('target'); }
+  }
 
   // metric tiles
   $('#chartsub').textContent = `Source: ${SRC} · updated weekly`;
