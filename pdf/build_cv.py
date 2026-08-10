@@ -179,7 +179,7 @@ def build(cv, pubdata, short=False):
     body.append(sec("Education", edu))
 
     if not short:
-        body.append(sec("Further positions", rows(cv["otherPositions"], "years", org_row)))
+        body.append(sec("Professional experience", rows(cv["otherPositions"], "years", org_row)))
 
     only = ("published", "review") if short else None
     body.append(sec("Research", metrics_block(pubdata.get("metrics", {}))
