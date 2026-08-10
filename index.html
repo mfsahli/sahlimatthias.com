@@ -141,7 +141,12 @@ html.dark .stand{background:#B9AB8B}
   74%{opacity:1}
   100%{transform:rotate(50deg) translate(64px,560px);opacity:0}
 }
-@media(max-width:700px){.postit2{display:none}}
+/* the phone gets it too, just smaller and tucked in tighter. There is no hover
+   there, so the tag is dropped and the sliver alone has to do the inviting. */
+@media(max-width:700px){
+  .postit2{width:120px;right:112px;top:0;font-size:.64rem;padding:8px 10px 10px}
+  .postit2::after{display:none}
+}
 .computer.steady .postit2{opacity:.25;pointer-events:none}
 .mousey{position:absolute;bottom:6px;right:-64px;width:44px;height:58px;background:#E9DFC7;border:4px solid #211E1B;border-radius:20px 20px 24px 24px;box-shadow:5px 6px 0 rgba(33,30,27,.14);transform:rotate(9deg)}
 html.dark .mousey{background:#CBBE9F}
