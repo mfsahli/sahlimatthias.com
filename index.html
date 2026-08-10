@@ -133,11 +133,13 @@ html.dark .stand{background:#B9AB8B}
 /* the writing stays private until the note has fallen */
 .postit2 span{display:block;opacity:0;transition:opacity .2s .15s}
 .postit2.fall span{opacity:1}
-.postit2.fall{animation:noteFall 2.2s cubic-bezier(.45,0,.75,1) forwards;pointer-events:none;z-index:6}
+.postit2.fall{animation:noteFall 2.9s cubic-bezier(.38,.04,.68,1) forwards;pointer-events:none;z-index:6}
 @keyframes noteFall{
-  0%{transform:rotate(-8deg) translate(0,0)}
-  12%{transform:rotate(4deg) translate(6px,-14px)}
-  100%{transform:rotate(52deg) translate(60px,520px);opacity:0}
+  /* it stays fully readable for most of the way down and only fades at the end */
+  0%{transform:rotate(-8deg) translate(0,0);opacity:1}
+  10%{transform:rotate(3deg) translate(5px,-16px);opacity:1}
+  74%{opacity:1}
+  100%{transform:rotate(50deg) translate(64px,560px);opacity:0}
 }
 @media(max-width:700px){.postit2{display:none}}
 .computer.steady .postit2{opacity:.25;pointer-events:none}
@@ -722,7 +724,7 @@ const NOTES = [
   n2.onclick = () => {
     if(fallen || n2.classList.contains('fall')) return;
     n2.classList.add('fall');
-    setTimeout(() => { n2.classList.add('gone'); n2.classList.remove('fall'); fallen = true; leftView = false; }, 2300);
+    setTimeout(() => { n2.classList.add('gone'); n2.classList.remove('fall'); fallen = true; leftView = false; }, 3000);
   };
   // scroll away and come back, and a fresh note is stuck to the monitor again
   new IntersectionObserver(es => es.forEach(e => {
