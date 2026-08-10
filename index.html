@@ -115,17 +115,25 @@ html.dark .stand{background:#B9AB8B}
 .postit::before{content:"";position:absolute;top:-13px;left:50%;transform:translateX(-50%) rotate(-4deg);width:56px;height:18px;background:rgba(255,255,255,.6);border:1.5px dashed rgba(33,30,27,.35)}
 .postit .pn{color:var(--red);text-transform:uppercase;letter-spacing:.08em;font-size:.64rem}
 /* the second note: smaller, lilac, mostly hidden behind the yellow one */
-.postit2{position:absolute;top:-4px;right:69px;z-index:4;width:132px;background:#E7D3F4;color:#211E1B;
-  border:2.5px solid #211E1B;padding:9px 12px 11px;font-family:inherit;font-size:.7rem;font-weight:600;
+.postit2{position:absolute;top:-6px;right:41px;z-index:4;width:160px;background:#E7D3F4;color:#211E1B;
+  border:2.5px solid #211E1B;padding:11px 13px 13px;font-family:inherit;font-size:.74rem;font-weight:600;
   line-height:1.35;text-align:left;transform:rotate(-8deg);box-shadow:5px 6px 0 rgba(33,30,27,.16);
   cursor:pointer;transition:transform .25s}
 .postit2::before{content:"";position:absolute;top:-11px;left:50%;transform:translateX(-50%) rotate(5deg);
   width:44px;height:15px;background:rgba(255,255,255,.6);border:1.5px dashed rgba(33,30,27,.35)}
 .postit2:hover{transform:rotate(-12deg) translate(-5px,-4px)}
+/* a small nudge so people know the corner is not just decoration */
+.postit2::after{content:"click me";position:absolute;left:-62px;top:52%;
+  transform:translateY(-50%) rotate(8deg);background:var(--ink);color:var(--paper);font-size:.58rem;
+  font-weight:700;letter-spacing:.09em;text-transform:uppercase;border-radius:999px;padding:3px 9px;
+  white-space:nowrap;opacity:0;transition:opacity .18s;pointer-events:none}
+.postit2:hover::after{opacity:1}
+.postit2.fall::after{display:none}
+.postit2.gone{display:none}
 /* the writing stays private until the note has fallen */
 .postit2 span{display:block;opacity:0;transition:opacity .2s .15s}
 .postit2.fall span{opacity:1}
-.postit2.fall{animation:noteFall 1.5s cubic-bezier(.4,0,.75,1) forwards;pointer-events:none;z-index:6}
+.postit2.fall{animation:noteFall 2.2s cubic-bezier(.45,0,.75,1) forwards;pointer-events:none;z-index:6}
 @keyframes noteFall{
   0%{transform:rotate(-8deg) translate(0,0)}
   12%{transform:rotate(4deg) translate(6px,-14px)}
@@ -708,12 +716,19 @@ const NOTES = [
 ];
 {
   const n2 = $('#postit2');
-  n2.innerHTML = '<span>' + NOTES[Math.floor(Math.random() * NOTES.length)] + '</span>';
+  const pick = () => { n2.innerHTML = '<span>' + NOTES[Math.floor(Math.random() * NOTES.length)] + '</span>'; };
+  let fallen = false, leftView = false;
+  pick();
   n2.onclick = () => {
-    if(n2.classList.contains('fall')) return;
+    if(fallen || n2.classList.contains('fall')) return;
     n2.classList.add('fall');
-    setTimeout(() => n2.remove(), 1600);
+    setTimeout(() => { n2.classList.add('gone'); n2.classList.remove('fall'); fallen = true; leftView = false; }, 2300);
   };
+  // scroll away and come back, and a fresh note is stuck to the monitor again
+  new IntersectionObserver(es => es.forEach(e => {
+    if(!e.isIntersecting){ leftView = true; return; }
+    if(fallen && leftView){ pick(); n2.classList.remove('gone'); fallen = false; leftView = false; }
+  }), {threshold: .25}).observe($('.computer'));
 }
 
 /* ---- easter egg: the mouse turns the CRT into a tiny paint program ---- */
