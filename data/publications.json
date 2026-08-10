@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-09",
+  "generated": "2026-08-10",
   "source": "google_scholar (mirror) + manual pipeline info",
   "metrics": {
     "publications": 15,
@@ -258,7 +258,7 @@
       "venue": "Working paper",
       "year": 2026,
       "status": "review",
-      "note": "Submitted to npj Heritage Science",
+      "note": "R&R npj Heritage Science",
       "tags": [
         "sus"
       ],
