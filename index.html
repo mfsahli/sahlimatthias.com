@@ -123,10 +123,16 @@ html.dark .mousey{background:#CBBE9F}
 .mousey.on{transform:rotate(9deg) translateY(2px);box-shadow:2px 3px 0 rgba(33,30,27,.14)}
 .mousey.wig{animation:mwig .9s ease}
 @keyframes mwig{0%,100%{transform:rotate(9deg)}30%{transform:rotate(2deg) translateY(-5px)}60%{transform:rotate(14deg) translateY(-2px)}}
-#paint{position:absolute;inset:0;z-index:2;display:none;touch-action:none;cursor:crosshair}
+/* a canvas is a replaced element: with width:auto it sizes itself from its
+   width attribute and quietly ignores inset, so the surface grew on every
+   measurement. An explicit 100% pins it to the screen instead. */
+#paint{position:absolute;inset:0;width:100%;height:100%;z-index:2;display:none;touch-action:none;cursor:crosshair}
 /* drawing on a tilted, bobbing screen is no fun: hold still and straighten up */
 .computer.steady{animation:none}
 .computer.steady .monitor,.computer.steady:hover .monitor{transform:rotate(0deg) scale(1.015)}
+/* the note overlaps the top right corner of the screen: get it out of the way */
+.postit{transition:transform .25s,opacity .25s}
+.computer.steady .postit{opacity:.25;pointer-events:none;transform:rotate(6deg) translateY(-14px)}
 .screen.paint #paint{display:block}
 .screen.paint .crt,.screen.paint .crtline{visibility:hidden}
 .ptools{position:absolute;bottom:9px;right:12px;z-index:5;display:none;gap:7px}
@@ -674,32 +680,44 @@ $('#screenbox').onclick = () => { if(!painting) crtinput.focus(); };
 const cv = $('#paint'), mousey = $('#mousey'), screenBox = $('#screenbox');
 let painting = false, drawing = false, ctx = null, dpr = 1, last = null;
 
+/* The drawing surface must match the element's LAYOUT size, because that is the
+   coordinate system offsetX/offsetY speak. getBoundingClientRect() reports the
+   visual size instead, which differs as soon as the monitor is scaled, and the
+   transform must be set absolutely so it can never be applied twice. */
 function sizeCanvas(){
-  const r = cv.getBoundingClientRect();
+  const w = cv.offsetWidth, h = cv.offsetHeight;
+  if(!w || !h) return;
   dpr = window.devicePixelRatio || 1;
-  const keep = cv.width ? cv.toDataURL() : null;
-  cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+  const keep = (cv.width > 1 && cv.height > 1) ? cv.toDataURL() : null;
+  cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
   ctx = cv.getContext('2d');
-  ctx.scale(dpr, dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.lineWidth = 2.6;
   ctx.strokeStyle = '#8DFF92';
   ctx.shadowColor = 'rgba(141,255,146,.9)'; ctx.shadowBlur = 7;
-  if(keep){ const im = new Image(); im.onload = ()=>ctx.drawImage(im,0,0,r.width,r.height); im.src = keep; }
+  if(keep){ const im = new Image(); im.onload = ()=>ctx.drawImage(im,0,0,w,h); im.src = keep; }
+}
+/* re-measure if anything got out of step: first use, a window moved to a second
+   screen with a different pixel density, a zoom change mid-drawing */
+function ensureSized(){
+  const want = Math.round(cv.offsetWidth * (window.devicePixelRatio || 1));
+  if(!ctx || !cv.width || cv.width !== want) sizeCanvas();
 }
 function togglePaint(){
   painting = !painting;
   screenBox.classList.toggle('paint', painting);
   mousey.classList.toggle('on', painting);
   document.querySelector('.computer').classList.toggle('steady', painting);
-  if(painting){ setTimeout(sizeCanvas, 420); $('#phint').style.display = ''; }
+  if(painting){ sizeCanvas(); setTimeout(sizeCanvas, 450); $('#phint').style.display = ''; }
 }
 mousey.onclick = togglePaint;
 mousey.onkeydown = e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); togglePaint(); } };
 $('#pexit').onclick = e => { e.stopPropagation(); togglePaint(); };
-$('#pclear').onclick = e => { e.stopPropagation(); ctx && ctx.clearRect(0,0,cv.width/dpr,cv.height/dpr); };
+$('#pclear').onclick = e => { e.stopPropagation(); ctx && ctx.clearRect(0,0,cv.offsetWidth,cv.offsetHeight); };
 
 const at = e => ({ x: e.offsetX, y: e.offsetY });
 cv.addEventListener('pointerdown', e=>{
+  ensureSized();
   drawing = true; last = at(e); cv.setPointerCapture(e.pointerId);
   $('#phint').style.display = 'none';
   ctx.beginPath(); ctx.arc(last.x, last.y, 1.3, 0, 6.284); ctx.fillStyle='#8DFF92'; ctx.fill();
@@ -712,6 +730,7 @@ cv.addEventListener('pointermove', e=>{
 });
 addEventListener('pointerup', ()=>{ drawing = false; last = null; });
 addEventListener('resize', ()=>{ if(painting) sizeCanvas(); });
+matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`).addEventListener?.('change', ()=>{ if(painting) sizeCanvas(); });
 
 /* one quiet wiggle when the landing first appears, so the mouse looks clickable */
 new IntersectionObserver((es,obs)=>es.forEach(e=>{
