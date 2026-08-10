@@ -2,7 +2,7 @@
   "generated": "2026-08-10",
   "source": "google_scholar (mirror) + manual pipeline info",
   "metrics": {
-    "publications": 15,
+    "publications": 16,
     "citations": 66,
     "hIndex": 4,
     "venues": 5,
@@ -446,6 +446,22 @@
       "title": "Organisational environmental life cycle assessment of three European national libraries",
       "short": "Organisational environmental life cycle asse…",
       "authors": "James Suckling, Jan Bieser, Michael Day, Nick Ilott, Mi Lin,  Jeff Love, Marco Martens, Richard Murphy, Matthias Nepfer, Maureen Pennock, Uta Pottgiesser, Matthias Sahli, Oliver Sievi, and Jonathan Chenoweth",
+      "venue": "Working paper",
+      "year": 2026,
+      "status": "progress",
+      "note": "In preparation",
+      "tags": [
+        "sus"
+      ],
+      "citations": 0,
+      "links": [],
+      "manual": true
+    },
+    {
+      "id": "decarbonization-of-supply-chains-systema",
+      "title": "Decarbonization of Supply Chains Systematically Managing and Reducing Supply Chain Emissions",
+      "short": "Decarbonization of Supply Chains Systematica…",
+      "authors": "Senn, M., J. Bieser, and M. Sahli",
       "venue": "Working paper",
       "year": 2026,
       "status": "progress",
