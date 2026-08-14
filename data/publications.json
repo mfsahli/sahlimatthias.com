@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-13",
+  "generated": "2026-08-14",
   "source": "google_scholar (mirror) + manual pipeline info",
   "metrics": {
     "publications": 16,
@@ -212,7 +212,7 @@
       "venue": "ACEI Working Paper Series",
       "year": 2026,
       "status": "review",
-      "note": "Submitted to",
+      "note": "Submitted to Oxford Economic Papers",
       "tags": [
         "art"
       ],
