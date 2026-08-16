@@ -550,7 +550,7 @@ function otherSub(o){
   const it = o.it;
   if (o.kind === 'service') return (it.reviewing || '').slice(0, 70) + '…';
   if (o.kind === 'highlight') return 'Homepage · Beyond papers';
-  if (o.kind === 'teaching') return it.role || '';
+  if (o.kind === 'teaching') return String(it.role || '').split('\n')[0].split('|')[0].trim();
   if (o.kind === 'outreach') return [OUTREACH_KINDS[it.kind] || '', it.where].filter(Boolean).join(' · ');
   return it.role || '';
 }
@@ -828,7 +828,7 @@ const blankPaper = () => ({ id: '', title: '', short: '', authors: 'M. Sahli', v
                             status: '', note: '', tags: [], citations: 0, finding: '', links: [], manual: true });
 const blankOther = k => ({
   outreach : { date: '', kind: 'podcast', what: '', where: '', url: '' },
-  teaching : { years: thisYear() + ' –', org: '', role: '', eval: '' },
+  teaching : { years: thisYear() + ' –', org: '', role: '', note: '' },
   grants   : { year: String(thisYear()), what: '' },
   policy   : { year: String(thisYear()), what: '', role: 'Co-author' },
   organized: { date: String(thisYear()), what: '', role: '' },
@@ -1105,14 +1105,14 @@ function otherStep(s){
 
     if (k === 'teaching') return '' +
       '<h2 class="q">What are you teaching?</h2>' +
-      '<p class="qh">School, courses and period. Several modules at the same school belong on one line.</p>' +
+      '<p class="qh">School, courses and period. One course per line — several modules at the same school belong on separate lines under one school.</p>' +
       '<div><span class="lb2">School</span>' +
       '<input class="inp" id="f_org" placeholder="Bern University of Applied Sciences (BFH), Business School" value="' + esc(d.org || '') + '"></div>' +
-      '<div class="sub"><span class="lb2">Courses and role</span>' +
-      '<textarea class="inp" id="f_role" rows="2" placeholder="Entrepreneurial Law (Master) · Digitalrecht (Bachelor); lecturer and module coordination">' + esc(d.role || '') + '</textarea></div>' +
+      '<div class="sub"><span class="lb2">Courses and role — one per line, evaluation after a “|”</span>' +
+      '<textarea class="inp" id="f_role" rows="3" placeholder="Entrepreneurial Law (Master), lecturer and module coordination | 5.5 / 6&#10;Digitalrecht (Bachelor), lecturer | 5.25 / 6&#10;Data Literacy (continuing education), lecturer">' + esc(d.role || '') + '</textarea></div>' +
       '<div class="sub two">' +
         '<div><span class="lb2">Period</span><input class="inp" id="f_years" placeholder="2026 –" value="' + esc(d.years || '') + '"></div>' +
-        '<div><span class="lb2">Evaluation (optional)</span><input class="inp" id="f_eval" placeholder="Student evaluation 5.25 / 6" value="' + esc(d.eval || '') + '"></div>' +
+        '<div><span class="lb2">Note on the scale (optional)</span><input class="inp" id="f_note" placeholder="1 = best possible score" value="' + esc(d.note || '') + '"></div>' +
       '</div>';
 
     if (k === 'grants') return '' +
@@ -1198,8 +1198,18 @@ function renderPreview(){
     return;
   }
   if (k === 'teaching'){
-    box.innerHTML = head + '<div class="pt">' + esc(d.org) + '</div><div class="pm">' + esc(d.years) + ' · ' + esc(d.role) +
-      (d.eval ? '<br>★ ' + esc(d.eval) : '') + '</div>';
+    /* one course per line; an evaluation after "|" is shown green next to it */
+    const courses = String(d.role || '').split('\n').map(s => s.trim()).filter(Boolean)
+      .map(ln => {
+        const i = ln.indexOf('|');
+        const what = i < 0 ? ln : ln.slice(0, i).trim();
+        const ev   = i < 0 ? ''  : ln.slice(i + 1).trim();
+        return '· ' + esc(what) + (ev ? ' <span style="color:var(--green,#3E7E44);font-weight:600">★ ' + esc(ev) + '</span>' : '');
+      }).join('<br>');
+    box.innerHTML = head + '<div class="pt">' + esc(d.org) + '</div><div class="pm">' + esc(d.years) +
+      (courses ? '<br>' + courses : '') +
+      (d.eval ? '<br>★ ' + esc(d.eval) : '') +
+      (d.note ? '<br><span style="opacity:.65">' + esc(d.note) + '</span>' : '') + '</div>';
     return;
   }
   const when = d.date || d.year || '';
@@ -1226,6 +1236,7 @@ function wireStep(){
   bind('#f_role', v => d.role = v);
   bind('#f_years', v => d.years = v);
   bind('#f_eval', v => d.eval = v);
+  bind('#f_note', v => d.note = v);
   bind('#f_date', v => d.date = v);
   bind('#f_icon', v => d.icon = v);
   bind('#f_text', v => d.text = v);
