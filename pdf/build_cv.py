@@ -53,8 +53,26 @@ def org_row(it):
     return s
 
 def teach_row(it):
-    s = f'<b>{e(it["org"])}</b><br><span>{e(it["role"])}</span>'
-    if it.get("eval"): s += f'<br><span class="eval">&#9733; {e(it["eval"])}</span>'
+    """One school per row. 'role' holds one course per line; an optional
+    evaluation follows the course after a '|' and is printed green next to it.
+    'note' is an optional grey line under the list (scale explanation etc.) --
+    empty or missing means nothing is printed. A legacy 'eval' field still
+    renders as a single green line under the list."""
+    s = f'<b>{e(it["org"])}</b>'
+    courses = [ln.strip() for ln in str(it.get("role", "")).split("\n") if ln.strip()]
+    if courses:
+        s += '<div class="tlist">'
+        for ln in courses:
+            what, sep, ev = ln.partition("|")
+            s += f"<div>{e(what.strip())}"
+            if sep and ev.strip():
+                s += f' <span class="eval">&#9733; {e(ev.strip())}</span>'
+            s += "</div>"
+        s += "</div>"
+    if it.get("eval"):
+        s += f'<span class="eval">&#9733; {e(it["eval"])}</span>'
+    if it.get("note"):
+        s += f'<div class="tnote">{e(it["note"])}</div>'
     return s
 
 PUB_GROUPS = [
