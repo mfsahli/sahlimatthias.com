@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>CV layout — control room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+<style>
+/* ==================================================================
+   CV layout editor — the PDF, editable.
+   Renders pdf/cv.json with the same markup and the same CSS as
+   pdf/cv_template.html, but every piece of text is a contenteditable
+   field. Saving writes pdf/cv.json through the GitHub API, which
+   triggers .github/workflows/rebuild-cv.yml and both PDFs are rebuilt.
+   ================================================================== */
+:root{
+  --paper:#F1F2F4; --paper2:#E9EBEE; --card:#FAFBFC; --ink:#1F2023; --ink2:#565A62; --ink3:#878B93;
+  --line:#DCDFE4; --red:#C93A2B; --blue:#3B6EA5; --ochre:#C77016; --purple:#7D5BA6;
+  --green:#3E7E44;
+  --crt-bg:#10140B; --crt-tx:#8DFF92;
+  --shadow:0 2px 8px rgba(33,30,27,.06),0 12px 32px rgba(33,30,27,.07);
+  --shadow-lg:0 4px 12px rgba(33,30,27,.08),0 24px 48px rgba(33,30,27,.12);
+}
+html.dark{
+  --paper:#211E1B; --paper2:#282420; --card:#2B2723; --ink:#F1ECE3; --ink2:#B5AC9F; --ink3:#847C71;
+  --line:#3A342E; --red:#E8654F; --blue:#5E96D8; --ochre:#CE8020; --purple:#9E74C8; --green:#5FA765;
+  --shadow:0 2px 8px rgba(0,0,0,.25),0 12px 32px rgba(0,0,0,.3);
+  --shadow-lg:0 4px 12px rgba(0,0,0,.3),0 24px 48px rgba(0,0,0,.45);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;
+  -webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
+h1,h2,h3{font-weight:800;letter-spacing:-.025em;line-height:1.15}
+button,input,select,textarea{font-family:inherit;color:inherit}
+::selection{background:var(--red);color:#fff}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+.hide{display:none !important}
+
+/* ============ top bar ============ */
+.top{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 84%,transparent);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topin{display:flex;align-items:center;gap:10px;height:60px}
+.mark{display:flex;align-items:center;gap:9px;font-weight:800;font-size:1rem;letter-spacing:-.02em}
+.led{width:9px;height:9px;border-radius:50%;background:var(--green);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--green) 55%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.spacer{flex:1}
+.iconbtn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);
+  border-radius:999px;padding:6px 14px;font-size:.78rem;font-weight:600;cursor:pointer;text-decoration:none;
+  transition:transform .2s,box-shadow .2s,border-color .2s,color .2s;color:var(--ink2)}
+.iconbtn:hover{transform:translateY(-1px);box-shadow:var(--shadow);color:var(--ink)}
+.zoomer{display:flex;border:1px solid var(--line);background:var(--card);border-radius:999px;overflow:hidden}
+.zoomer button{border:0;background:transparent;padding:6px 11px;font-size:.74rem;font-weight:600;
+  cursor:pointer;color:var(--ink3)}
+.zoomer button.on{background:var(--ink);color:var(--paper)}
+@media(max-width:760px){.zoomer,.topin .lbl{display:none}}
+
+/* ============ login ============ */
+.gate{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:28px}
+.gatecard{width:min(460px,100%);background:var(--card);border:1px solid var(--line);border-radius:20px;
+  box-shadow:var(--shadow-lg);overflow:hidden;animation:rise .5s cubic-bezier(.2,.9,.3,1)}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.gatetop{background:var(--crt-bg);padding:20px 26px;font-family:'VT323',monospace;color:var(--crt-tx);
+  font-size:1.3rem;letter-spacing:.04em;text-shadow:0 0 8px rgba(120,255,130,.5);position:relative;overflow:hidden}
+.gatetop::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 2px,rgba(0,0,0,.26) 2px 4px)}
+.gatetop span{position:relative}
+.cur{display:inline-block;width:.5em;height:1em;background:var(--crt-tx);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{0%,55%{opacity:1}56%,100%{opacity:0}}
+.gatebody{padding:26px}
+.gatebody h1{font-size:1.35rem;margin-bottom:7px}
+.gatebody p{font-size:.87rem;color:var(--ink2);margin-bottom:20px}
+.field{display:block;margin-bottom:14px}
+.field .lb{display:block;font-size:.7rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:6px}
+.inp{width:100%;background:var(--paper);border:1.5px solid var(--line);border-radius:11px;padding:11px 14px;
+  font-size:.92rem;outline:none;transition:border-color .2s,box-shadow .2s}
+.inp:focus{border-color:var(--ink);box-shadow:0 0 0 3px color-mix(in srgb,var(--ink) 10%,transparent)}
+.check{display:flex;align-items:flex-start;gap:10px;font-size:.83rem;color:var(--ink2);cursor:pointer;margin:4px 0 18px}
+.check input{margin-top:4px;width:16px;height:16px;accent-color:var(--red);cursor:pointer;flex-shrink:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 22px;border-radius:999px;
+  font-weight:600;font-size:.9rem;border:1.5px solid var(--ink);background:transparent;color:var(--ink);
+  cursor:pointer;transition:transform .2s,box-shadow .2s,opacity .2s}
+.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:var(--shadow)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.wide{width:100%}
+.btn.ghost{border-color:transparent;color:var(--ink2)}
+.btn.ghost:hover{color:var(--ink)}
+.btn.sm{padding:8px 16px;font-size:.82rem}
+.err{font-size:.83rem;color:var(--red);margin-top:12px;line-height:1.45}
+.help{font-size:.78rem;color:var(--ink3);margin-top:16px;line-height:1.55}
+.help a{color:var(--ink2)}
+.spin{width:13px;height:13px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;
+  display:inline-block;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ============ page frame ============ */
+main{padding:26px 0 140px}
+.intro{margin-bottom:18px}
+.intro h1{font-size:1.55rem;margin-bottom:5px}
+.intro p{color:var(--ink2);font-size:.9rem}
+.banner{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
+  border-left:4px solid var(--ochre);border-radius:14px;padding:13px 18px;margin-bottom:18px;
+  font-size:.86rem;color:var(--ink2);box-shadow:var(--shadow)}
+.banner b{color:var(--ink)}
+.banner .spacer{flex:1}
+.banner button{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 13px;
+  font-size:.76rem;font-weight:600;cursor:pointer;color:var(--ink2)}
+.banner button:hover{border-color:var(--ink);color:var(--ink)}
+
+/* the sheet: A4 content width, the CV's own typography */
+.sheetwrap{display:flex;justify-content:center}
+.sheet{background:#fff;color:#1F2023;width:180mm;padding:14mm 15mm 18mm;border-radius:3px;
+  box-shadow:var(--shadow-lg);position:relative}
+html.dark .sheet{box-shadow:0 4px 12px rgba(0,0,0,.4),0 24px 60px rgba(0,0,0,.55)}
+@media(max-width:820px){.sheet{width:100%;padding:18px 16px 40px}}
+
+/* ---------- CV typography (mirrors pdf/cv_template.html) ---------- */
+.sheet{--ink:#1F2023; --ink2:#4A4E55; --ink3:#83888F; --cvline:#DCDFE4;
+  --wash:#EEF3FA; --washline:#CBDBEC;
+  --red:#C93A2B; --blue:#3B6EA5; --ochre:#C77016; --purple:#7D5BA6; --green:#3E7E44;
+  font-size:9.1pt;line-height:1.5}
+.sheet a{color:inherit;text-decoration:none}
+.sheet header{display:flex;align-items:center;gap:7mm;padding-bottom:12px;border-bottom:2.4pt solid var(--ink)}
+.hphoto{width:23mm;height:23mm;border-radius:50%;flex-shrink:0;display:block;background:var(--paper2);
+  object-fit:cover}
+.htxt{flex:1;min-width:0}
+.hname{font-size:21pt;font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.hrole{font-size:10pt;font-weight:600;color:var(--ink2);margin-top:3px}
+.haff{font-size:9pt;color:var(--ink2)}
+.hcontact{margin-top:6px;font-size:8.4pt;color:var(--ink2)}
+.hlinks{margin-top:2px;font-size:8.4pt;color:var(--ink2);display:flex;flex-wrap:wrap;align-items:center;gap:2px 4px}
+.hlinks > *{flex:0 0 auto}
+.hlinks .ed{white-space:pre}
+.hlinks .sep{color:var(--ink3);margin:0 4px}
+.hlinks .lnk{border-bottom:.5pt solid #B7BBC2;font-weight:500}
+.sheet section{margin-top:13px}
+.sheet h2{font-size:8pt;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+  display:flex;align-items:center;gap:7px;margin-bottom:7px;padding-bottom:4px;
+  border-bottom:.8pt solid var(--cvline)}
+.sheet h2::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--dot,var(--red));flex-shrink:0}
+.tag{font-size:6.4pt;font-weight:600;color:var(--ink3);border:.8pt solid var(--cvline);
+  border-radius:20px;padding:1px 7px;text-transform:none;letter-spacing:.02em;flex-shrink:0}
+.sheet h2 .spacer{flex:1}
+.lead{font-size:9.1pt;color:var(--ink2);text-align:justify;hyphens:auto}
+.rows{display:block}
+.rows .row{display:grid;grid-template-columns:26mm 1fr;column-gap:7mm;padding:2px 0;position:relative}
+.yr{font-size:8.2pt;font-weight:600;color:var(--ink3);padding-top:.5px}
+.it b,.it .b{font-weight:700}
+.it .m{color:var(--ink2)}
+.pgroup{font-size:7.6pt;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);
+  margin:11px 0 4px;display:flex;align-items:center;gap:8px}
+.pub{display:grid;grid-template-columns:2.6mm 1fr;column-gap:0;margin-bottom:5.5px}
+.pnum{font-size:9.5pt;color:var(--ink3);line-height:1.28}
+.ptitle{font-weight:700;line-height:1.38}
+.pmeta{font-size:8.5pt;color:var(--ink2);margin-top:.5px}
+.pmeta i{font-style:italic}
+.badge{display:inline-block;font-size:6.6pt;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  border:.8pt solid;border-radius:20px;padding:.4px 5px;margin-left:5px;vertical-align:1px;white-space:nowrap}
+.cit{font-size:7.6pt;font-weight:600;color:var(--ink3);white-space:nowrap}
+.metrics{display:flex;background:var(--wash);border:.8pt solid var(--washline);border-radius:5px;
+  overflow:hidden;margin-bottom:9px}
+.metric{flex:1;padding:6px 10px;border-right:.8pt solid var(--washline)}
+.metric:last-child{border-right:none}
+.metric b{display:block;font-size:13pt;font-weight:800;line-height:1.1;letter-spacing:-.02em;color:var(--blue)}
+.metric span{font-size:7.4pt;color:var(--ink2);font-weight:500}
+.talks{display:block;font-size:8.7pt}
+.talks .row{display:grid;grid-template-columns:16mm 1fr;column-gap:5mm;padding:1.3px 0;position:relative}
+.talks .tw{color:var(--ink3);font-weight:600;font-size:8.2pt}
+.talks .tt .m{color:var(--ink2)}
+.talks .tt .lnk{border-bottom:.4pt solid var(--ink3)}
+.ogrp{font-size:7pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);
+  margin:2.4mm 0 .6mm}
+ul.plain{list-style:none;font-size:8.8pt;color:var(--ink2)}
+ul.plain li{padding:1.6px 0;position:relative}
+.kv{display:grid;grid-template-columns:26mm 1fr;column-gap:7mm;font-size:8.8pt}
+.kv > div{padding:1.8px 0}
+.kv .k{font-weight:600;color:var(--ink3);font-size:8.2pt}
+.kv .v{color:var(--ink2)}
+.refgrid{display:grid;grid-template-columns:1fr 1fr;column-gap:8mm;font-size:8.8pt}
+.refgrid .row{padding:1.8px 0;position:relative}
+.refgrid .b{font-weight:600}
+.refgrid .m{color:var(--ink2)}
+.sched{font-size:6.6pt;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--blue);
+  border:.8pt solid var(--blue);border-radius:20px;padding:.3px 5px;margin-left:3px;white-space:nowrap;
+  cursor:pointer;user-select:none}
+.sched.off{color:var(--ink3);border-color:var(--cvline);opacity:.5}
+.eval{color:var(--green);font-weight:600;font-size:8.2pt;white-space:nowrap}
+.eval.quiet{opacity:0;transition:opacity .15s}
+.tlist > div:hover .eval.quiet,.eval.quiet:focus-within{opacity:.55}
+.tlist{margin-top:.5px}
+.tlist > div{color:var(--ink2);position:relative;padding-left:7px}
+.tlist > div::before{content:"\00B7";position:absolute;left:0;color:var(--ink3);font-weight:700}
+.tnote{font-size:8pt;color:var(--ink3)}
+.refnote{font-size:8.2pt;color:var(--ink3);margin-top:5px;font-style:italic}
+
+/* ---------- editing chrome ---------- */
+.ed{outline:none;border-radius:3px;padding:0 2px;margin:0 -2px;white-space:pre-wrap;
+  transition:background .15s,box-shadow .15s;cursor:text;display:inline-block;min-width:12px;max-width:100%}
+.ed:hover{background:#F0F3F7}
+.ed:focus{background:#E9F0FA;box-shadow:0 0 0 1.5px var(--blue)}
+.ed:empty::before{content:attr(data-ph);color:#B7BBC2;transition:opacity .15s}
+/* inside a row an empty field stays quiet until you go near it */
+.row .ed:empty::before,.tlist .ed:empty::before{opacity:0}
+.row:hover .ed:empty::before,.row:focus-within .ed:empty::before,
+.tlist > div:hover .ed:empty::before,.ed:focus:empty::before{opacity:1}
+.ed.block{display:block}
+.ed.dim{color:var(--ink2)}
+html.dark .ed:hover{background:#EDF0F4}
+html.dark .ed:focus{background:#E4EDF9}
+.sel{font:inherit;font-size:inherit;color:inherit;background:transparent;border:0;border-bottom:1px dotted #B7BBC2;
+  padding:0 2px;cursor:pointer;border-radius:2px}
+.sel:hover{background:#F0F3F7}
+
+.row .ctl,.refgrid .row .ctl,ul.plain li .ctl{position:absolute;right:100%;top:0;margin-right:6px;display:flex;gap:2px;
+  opacity:0;transition:opacity .15s;white-space:nowrap;pointer-events:none}
+.row:hover .ctl,.row:focus-within .ctl,li:hover .ctl{opacity:1;pointer-events:auto}
+.ctl button{border:1px solid var(--cvline);background:#fff;border-radius:5px;width:19px;height:19px;
+  font-size:9px;line-height:1;cursor:pointer;color:#83888F;padding:0;display:flex;align-items:center;
+  justify-content:center}
+.ctl button:hover{border-color:#1F2023;color:#1F2023}
+.ctl button.dl:hover{border-color:var(--red);color:var(--red)}
+.tlist > div .ctl{right:auto;left:100%;margin:0 0 0 8px}
+/* the reference grid has two columns, so its controls sit inside the row */
+.refgrid .row .ctl{right:2px;left:auto;top:-1px;margin:0;background:#fff;border-radius:6px;padding:1px;
+  box-shadow:0 1px 6px rgba(33,30,27,.14)}
+.tlist > div .ctl{opacity:0;position:absolute;top:0;display:flex;gap:2px;pointer-events:none}
+.tlist > div:hover .ctl{opacity:1;pointer-events:auto}
+.minix{border:1px solid var(--cvline);background:#fff;border-radius:5px;width:19px;height:19px;font-size:9px;
+  line-height:1;cursor:pointer;color:#83888F;padding:0;flex-shrink:0}
+.minix:hover{border-color:var(--red);color:var(--red)}
+.linkline{display:flex;gap:6px;align-items:center;margin-top:3px}
+.linkline .st{font-weight:600;color:var(--ink2);min-width:26mm}
+@media(max-width:820px){
+  .row .ctl{position:static;opacity:1;pointer-events:auto;margin:3px 0 6px;grid-column:1/-1}
+  .refgrid .row .ctl,ul.plain li .ctl{position:static;opacity:1;pointer-events:auto;margin:3px 0 6px}
+}
+.addrow{margin-top:6px;border:1px dashed var(--cvline);background:transparent;border-radius:6px;
+  padding:3px 11px;font-size:7.6pt;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:#83888F;cursor:pointer;transition:all .18s}
+.addrow:hover{border-color:#1F2023;color:#1F2023;border-style:solid}
+.locked{background:#F7F8FA;border:.8pt dashed var(--cvline);border-radius:6px;padding:8px 11px;
+  font-size:8pt;color:var(--ink3);margin-bottom:9px;line-height:1.5}
+.locked a{border-bottom:.5pt solid #B7BBC2;font-weight:600;color:var(--ink2)}
+.foldbtn{border:0;background:transparent;font:inherit;font-size:7.6pt;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:#83888F;cursor:pointer;padding:0}
+.foldbtn:hover{color:#1F2023}
+
+/* ============ save bar ============ */
+.savebar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:color-mix(in srgb,var(--paper) 90%,transparent);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);
+  transform:translateY(110%);transition:transform .3s cubic-bezier(.2,.9,.3,1)}
+.savebar.on{transform:none}
+.savein{display:flex;align-items:center;gap:12px;height:66px}
+.savein .cnt{font-size:.88rem;color:var(--ink2)}
+.savein .cnt b{color:var(--ink)}
+
+/* ============ modal ============ */
+.modal{position:fixed;inset:0;z-index:60;background:rgba(20,18,16,.5);display:flex;align-items:center;
+  justify-content:center;padding:22px;backdrop-filter:blur(3px)}
+.mcard{width:min(680px,100%);max-height:82svh;display:flex;flex-direction:column;background:var(--card);
+  border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lg);overflow:hidden;
+  animation:rise .35s cubic-bezier(.2,.9,.3,1)}
+.mhead{padding:18px 24px 14px;border-bottom:1px solid var(--line)}
+.mhead h3{font-size:1.05rem}
+.mhead p{font-size:.83rem;color:var(--ink2);margin-top:3px}
+.mbody{padding:8px 24px 18px;overflow:auto}
+.mfoot{padding:14px 24px;border-top:1px solid var(--line);display:flex;gap:10px;align-items:center}
+.dif{padding:10px 0;border-bottom:1px solid var(--line);font-size:.85rem}
+.dif:last-child{border-bottom:0}
+.dif .p{font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);
+  margin-bottom:4px}
+.dif .o{color:var(--red);text-decoration:line-through;opacity:.75}
+.dif .n{color:var(--green)}
+.dif .o,.dif .n{display:block;word-break:break-word}
+.dif.add .p{color:var(--green)}
+.dif.rem .p{color:var(--red)}
+
+/* ============ toast ============ */
+.toast{position:fixed;left:50%;bottom:88px;transform:translate(-50%,140%);background:var(--ink);color:var(--paper);
+  padding:13px 22px;border-radius:13px;font-size:.87rem;font-weight:500;box-shadow:var(--shadow-lg);z-index:70;
+  transition:transform .35s cubic-bezier(.2,.9,.3,1);max-width:min(560px,92vw);text-align:center}
+.toast:empty{display:none}
+.toast.on{transform:translate(-50%,0)}
+.toast.bad{background:var(--red);color:#fff}
+.toast a{color:inherit;text-decoration:underline}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ LOGIN -->
+<div id="gate" class="gate">
+  <div class="gatecard">
+    <div class="gatetop"><span>SAHLI·TRON 2000 — CV LAYOUT<span class="cur"></span></span></div>
+    <div class="gatebody">
+      <h1>CV layout</h1>
+      <p>The PDF, editable. Everything the control room does not ask for — positions, skills, references — you change straight in the page.</p>
+      <label class="field">
+        <span class="lb">GitHub token</span>
+        <input id="tok" class="inp" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
+      </label>
+      <label class="check">
+        <input id="remember" type="checkbox" checked>
+        <span>Keep it stored on this device. Without the tick the token only lasts for this tab.</span>
+      </label>
+      <button id="dologin" class="btn primary wide">Open</button>
+      <div id="loginerr" class="err hide"></div>
+      <div class="help">Same token as the control room. If you are already signed in there, this page opens by itself.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ APP -->
+<div id="app" class="hide">
+  <div class="top"><div class="wrap topin">
+    <div class="mark"><span class="led"></span>CV layout</div>
+    <div class="spacer"></div>
+    <div class="zoomer" id="zoomer">
+      <button data-z="1">100%</button><button data-z="1.25">125%</button><button data-z="1.5">150%</button>
+    </div>
+    <a class="iconbtn" href="admin.html">← Control room</a>
+    <button class="iconbtn" id="reload" title="Discard and reload from GitHub">↻</button>
+    <button class="iconbtn" id="theme" title="Light / dark">◐</button>
+  </div></div>
+
+  <main class="wrap">
+    <div class="intro">
+      <h1>The CV, as it prints</h1>
+      <p id="sub">Loading…</p>
+    </div>
+    <div class="banner hide" id="draftban">
+      <span>Unsaved changes from <b id="draftts"></b> are still here.</span>
+      <span class="spacer"></span>
+      <button id="draftkeep">Keep editing</button>
+      <button id="draftdrop">Throw away</button>
+    </div>
+    <div class="sheetwrap"><div class="sheet" id="sheet"></div></div>
+  </main>
+
+  <div class="savebar" id="savebar"><div class="wrap savein">
+    <span class="cnt" id="cnt"></span>
+    <span class="spacer"></span>
+    <button class="btn ghost sm" id="revert">Discard</button>
+    <button class="btn sm" id="review">Review changes</button>
+    <button class="btn primary sm" id="save">Save</button>
+  </div></div>
+</div>
+
+<div id="modal" class="modal hide"></div>
+<div id="toast" class="toast"></div>
+
+<script>
+/* ================================================================== setup */
+const $  = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const DEFAULT_REPO = 'mfsahli/sahlimatthias.com';
+const FILE_CV   = 'pdf/cv.json';
+const FILE_PUBS = 'data/publications.json';
+const DRAFT_KEY = 'kr_cvdraft';
+
+let TOKEN = sessionStorage.getItem('kr_tok') || localStorage.getItem('kr_tok') || '';
+let REPO  = localStorage.getItem('kr_repo') || DEFAULT_REPO;
+let ORIG = null;      /* cv.json as it stands on GitHub */
+let CV   = null;      /* the working copy being edited  */
+let PUBS = null;      /* publications, read-only here   */
+let FOLD = { talks: true, outreach: false };
+
+if (localStorage.getItem('kr_theme') === 'dark') document.documentElement.classList.add('dark');
+
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const clone = o => JSON.parse(JSON.stringify(o));
+
+/* ================================================================== base64 */
+function b64enc(str){
+  const bytes = new TextEncoder().encode(str);
+  let bin = '', CH = 0x8000;
+  for (let i = 0; i < bytes.length; i += CH) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + CH));
+  return btoa(bin);
+}
+function b64dec(b64){
+  const bin = atob(String(b64).replace(/\s/g, ''));
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+
+/* ================================================================== GitHub */
+async function gh(path, opts = {}){
+  const url = 'https://api.github.com/repos/' + REPO + (path ? '/' + path : '');
+  const r = await fetch(url, Object.assign({}, opts, {
+    cache: 'no-store',
+    headers: Object.assign({
+      'Authorization': 'Bearer ' + TOKEN,
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28'
+    }, opts.headers || {})
+  }));
+  if (!r.ok){
+    let m = r.status + '';
+    try { const j = await r.json(); m += ' · ' + (j.message || ''); } catch(e){}
+    if (r.status === 401) m = 'Token invalid or expired.';
+    if (r.status === 404) m = 'Repository or file not found (' + REPO + ').';
+    if (r.status === 403) m = 'The token has no write access to this repository.';
+    if (r.status === 409) m = 'The file changed in the meantime.';
+    throw new Error(m);
+  }
+  return r.status === 204 ? null : r.json();
+}
+async function readFile(p){
+  const j = await gh('contents/' + p + '?nocache=' + Date.now());
+  return JSON.parse(b64dec(j.content));
+}
+
+/* ================================================================== toast */
+let toastTimer;
+function toast(msg, bad){
+  const t = $('#toast');
+  t.innerHTML = msg;
+  t.classList.toggle('bad', !!bad);
+  t.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('on'), bad ? 9000 : 6500);
+}
+
+/* ================================================================== login */
+$('#tok').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+$('#dologin').onclick = login;
+
+async function login(){
+  const val = $('#tok').value.trim();
+  if (val) TOKEN = val;
+  if (!TOKEN) return;
+  const btn = $('#dologin');
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Checking…';
+  $('#loginerr').classList.add('hide');
+  try {
+    await gh('');
+    if ($('#remember').checked){ localStorage.setItem('kr_tok', TOKEN); sessionStorage.removeItem('kr_tok'); }
+    else { sessionStorage.setItem('kr_tok', TOKEN); localStorage.removeItem('kr_tok'); }
+    await boot();
+  } catch (err){
+    $('#loginerr').textContent = err.message;
+    $('#loginerr').classList.remove('hide');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Open';
+  }
+}
+
+async function boot(){
+  $('#gate').classList.add('hide');
+  $('#app').classList.remove('hide');
+  $('#sub').textContent = 'Loading…';
+  try {
+    const [cv, pubs] = await Promise.all([readFile(FILE_CV), readFile(FILE_PUBS)]);
+    ORIG = cv; PUBS = pubs;
+    const draft = loadDraft();
+    if (draft && JSON.stringify(draft.data) !== JSON.stringify(ORIG)){
+      CV = draft.data;
+      $('#draftts').textContent = draft.ts;
+      $('#draftban').classList.remove('hide');
+    } else {
+      CV = clone(ORIG);
+      dropDraft();
+    }
+    $('#sub').innerHTML = 'Every field below goes straight into cv.pdf and cv_short.pdf. ' +
+      'Saving rebuilds both, which takes about two minutes.';
+    render();
+  } catch (err){
+    $('#sub').textContent = 'Could not load: ' + err.message;
+  }
+}
+if (TOKEN) boot();
+
+$('#reload').onclick = () => {
+  if (dirty() && !confirm('Throw away your unsaved changes and reload from GitHub?')) return;
+  dropDraft(); location.reload();
+};
+$('#theme').onclick = () => {
+  const d = document.documentElement.classList.toggle('dark');
+  localStorage.setItem('kr_theme', d ? 'dark' : 'light');
+};
+$('#zoomer').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  localStorage.setItem('kr_cvzoom', b.dataset.z); applyZoom();
+};
+function applyZoom(){
+  const z = localStorage.getItem('kr_cvzoom') || '1';
+  $('#sheet').style.zoom = z;
+  $$('#zoomer button').forEach(b => b.classList.toggle('on', b.dataset.z === z));
+}
+$('#draftkeep').onclick = () => $('#draftban').classList.add('hide');
+$('#draftdrop').onclick = () => { dropDraft(); CV = clone(ORIG); $('#draftban').classList.add('hide'); render(); };
+
+/* ================================================================== drafts */
+function saveDraft(){
+  try { localStorage.setItem(DRAFT_KEY, JSON.stringify({ ts: new Date().toLocaleString('de-CH'), data: CV })); }
+  catch(e){}
+}
+function loadDraft(){
+  try { return JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null'); } catch(e){ return null; }
+}
+const dropDraft = () => localStorage.removeItem(DRAFT_KEY);
+
+/* ============================================================ path helpers */
+function get(p){
+  return p.split('.').reduce((o, k) => (o == null ? o : o[/^\d+$/.test(k) ? +k : k]), CV);
+}
+function set(p, v){
+  const ks = p.split('.'), last = ks.pop();
+  const tgt = ks.reduce((o, k) => o[/^\d+$/.test(k) ? +k : k], CV);
+  tgt[/^\d+$/.test(last) ? +last : last] = v;
+}
+
+/* ============================================================ field markup */
+/* one editable piece of text; data-p is where it lives in cv.json */
+function ed(path, cls, ph){
+  return '<span class="ed ' + (cls || '') + '" contenteditable="plaintext-only" spellcheck="false" ' +
+         'data-p="' + esc(path) + '" data-ph="' + esc(ph || '') + '">' + esc(get(path) ?? '') + '</span>';
+}
+const ctl = (list, i) => '<span class="ctl">' +
+  '<button data-act="up"   data-list="' + list + '" data-i="' + i + '" title="Move up">▲</button>' +
+  '<button data-act="down" data-list="' + list + '" data-i="' + i + '" title="Move down">▼</button>' +
+  '<button data-act="del" class="dl" data-list="' + list + '" data-i="' + i + '" title="Delete">✕</button>' +
+  '</span>';
+const addBtn = (list, label) => '<button class="addrow" data-add="' + list + '">+ ' + label + '</button>';
+const FULLONLY = '<span class="spacer"></span><span class="tag">full CV only</span>';
+
+/* what a new entry looks like, per list */
+const BLANK = {
+  'positions'        : { years:'', org:'', place:'', role:'' },
+  'education'        : { years:'', org:'', place:'', role:'' },
+  'visiting'         : { years:'', org:'', place:'', role:'' },
+  'otherPositions'   : { years:'', org:'', place:'', role:'' },
+  'teaching'         : { years:'', org:'', role:'', note:'' },
+  'talks'            : { date:'', what:'', where:'', scheduled:false },
+  'outreach'         : { date:'', kind:'report', what:'', where:'', url:'' },
+  'organized'        : { date:'', what:'', role:'' },
+  'policy'           : { year:'', what:'', role:'' },
+  'grants'           : { year:'', what:'' },
+  'doctoralCourses'  : '',
+  'person.links'     : { label:'', url:'' },
+  'references.people': { name:'', org:'' }
+};
+const OUTREACH_KINDS = { podcast:'Podcast', column:'Column', blog:'Blog', video:'Recording',
+                         report:'Report / note', press:'Press' };
+
+/* ================================================================== render */
+const DOTS = ['var(--red)', 'var(--ochre)', 'var(--green)', 'var(--blue)', 'var(--purple)'];
+let dotI = 0;
+function sec(title, inner, fullOnly){
+  const c = DOTS[dotI++ % DOTS.length];
+  return '<section><h2 style="--dot:' + c + '">' + title + (fullOnly ? FULLONLY : '') + '</h2>' + inner + '</section>';
+}
+
+/* years | content rows, exactly the PDF's org_row */
+function orgRows(list){
+  const arr = get(list) || [];
+  return '<div class="rows">' + arr.map((it, i) =>
+    '<div class="row">' + ctl(list, i) +
+    '<div class="yr">' + ed(list + '.' + i + '.years', 'dim', '2024 – present') + '</div>' +
+    '<div class="it">' +
+      '<div>' + ed(list + '.' + i + '.org', 'b', 'Organisation') +
+        ' <span class="m">· ' + ed(list + '.' + i + '.place', 'dim', 'City, Country') + '</span></div>' +
+      '<div class="m">' + ed(list + '.' + i + '.role', 'dim', 'Role') + '</div>' +
+    '</div></div>').join('') +
+    '</div>' + addBtn(list, 'Add entry');
+}
+
+/* Teaching: one school per row, one course per line, the evaluation printed
+   green next to its own course. In cv.json all of that is a single string
+   ("course | 5.25 / 6" per line) — the two are kept in sync on every keystroke. */
+function teachingRows(){
+  const arr = CV.teaching || [];
+  return '<div class="rows">' + arr.map((it, i) => {
+    const lines = String(it.role || '').split('\n');   /* empty lines stay: they are rows waiting to be filled */
+    return '<div class="row">' + ctl('teaching', i) +
+      '<div class="yr">' + ed('teaching.' + i + '.years', 'dim', '2026 –') + '</div>' +
+      '<div class="it">' +
+        '<div>' + ed('teaching.' + i + '.org', 'b', 'School') + '</div>' +
+        '<div class="tlist">' + lines.map((ln, j) => {
+            const cut = ln.indexOf('|');
+            const what = (cut < 0 ? ln : ln.slice(0, cut)).trim();
+            const ev   = (cut < 0 ? ''  : ln.slice(cut + 1)).trim();
+            return '<div data-tc="' + i + '">' +
+              '<span class="ed" contenteditable="plaintext-only" data-tw="' + i + '.' + j + '" ' +
+                'data-ph="Course (level), your role">' + esc(what) + '</span>' +
+              ' <span class="eval' + (ev ? '' : ' quiet') + '">★ <span class="ed" contenteditable="plaintext-only" ' +
+                'data-te="' + i + '.' + j + '" data-ph="5.5 / 6">' + esc(ev) + '</span></span>' +
+              '<span class="ctl"><button class="dl" data-act="delcourse" data-i="' + i + '" data-j="' + j + '" ' +
+                'title="Remove this course">✕</button></span>' +
+            '</div>';
+          }).join('') + '</div>' +
+        '<button class="addrow" style="margin:3px 0 0" data-addcourse="' + i + '">+ course</button>' +
+        '<div class="tnote">' + ed('teaching.' + i + '.note', 'dim', 'note on the scale — optional') + '</div>' +
+      '</div></div>';
+  }).join('') + '</div>' + addBtn('teaching', 'Add school');
+}
+/* read the course lines back out of the page and into cv.json */
+function syncCourses(i){
+  const rows = $$('#sheet [data-tc="' + i + '"]');
+  CV.teaching[i].role = rows.map(r => {
+    const w = r.querySelector('[data-tw]').innerText.trim();
+    const e = r.querySelector('[data-te]').innerText.trim();
+    return w + (e ? ' | ' + e : '');
+  }).join('\n');
+}
+
+function talksRows(){
+  const arr = CV.talks || [];
+  const head = '<div class="pgroup"><button class="foldbtn" data-fold="talks">' +
+    (FOLD.talks ? '▸ show all ' + arr.length + ' talks' : '▾ hide talks') + '</button>' +
+    '<span style="text-transform:none;letter-spacing:0;font-weight:500">' +
+    'Talks are usually easier to add in the <a href="admin.html" style="border-bottom:.5pt solid #B7BBC2">control room</a>.</span></div>';
+  if (FOLD.talks) return head;
+  return head + '<div class="talks">' + arr.map((t, i) =>
+    '<div class="row">' + ctl('talks', i) +
+    '<div class="tw">' + ed('talks.' + i + '.date', 'dim', '11/2026') + '</div>' +
+    '<div class="tt">' + ed('talks.' + i + '.what', '', 'Conference, venue') +
+      ' <span class="m">· ' + ed('talks.' + i + '.where', 'dim', 'Bern, Switzerland') + '</span>' +
+      ' <span class="sched' + (t.scheduled ? '' : ' off') + '" data-flag="talks.' + i + '.scheduled">scheduled</span>' +
+    '</div></div>').join('') + '</div>' + addBtn('talks', 'Add talk');
+}
+
+function outreachRows(){
+  const arr = CV.outreach || [];
+  const head = '<div class="locked">Scholar entries you routed to “media” in the control room are printed here too — ' +
+    'they live in publications.json and are not editable on this page.</div>';
+  return head + '<div class="talks">' + arr.map((m, i) =>
+    '<div class="row">' + ctl('outreach', i) +
+    '<div class="tw">' + ed('outreach.' + i + '.date', 'dim', '2026') + '</div>' +
+    '<div class="tt">' +
+      '<select class="sel" data-sel="outreach.' + i + '.kind">' +
+        Object.entries(OUTREACH_KINDS).map(([k, l]) =>
+          '<option value="' + k + '"' + (m.kind === k ? ' selected' : '') + '>' + l + '</option>').join('') +
+      '</select> ' +
+      ed('outreach.' + i + '.what', '', 'Title or topic') +
+      ' <span class="m">· ' + ed('outreach.' + i + '.where', 'dim', 'Outlet') + '</span>' +
+      '<div class="m" style="font-size:7.6pt">' + ed('outreach.' + i + '.url', 'dim', 'https://…') + '</div>' +
+    '</div></div>').join('') + '</div>' + addBtn('outreach', 'Add entry');
+}
+
+/* date | what | role — organized events and policy work */
+function whatRows(list, dateKey, roleLabel){
+  const arr = get(list) || [];
+  return '<div class="rows">' + arr.map((it, i) =>
+    '<div class="row">' + ctl(list, i) +
+    '<div class="yr">' + ed(list + '.' + i + '.' + dateKey, 'dim', '2026') + '</div>' +
+    '<div class="it">' + ed(list + '.' + i + '.what', 'block', 'What it was') +
+      '<div class="m">' + ed(list + '.' + i + '.role', 'dim', roleLabel) + '</div>' +
+    '</div></div>').join('') + '</div>' + addBtn(list, 'Add entry');
+}
+
+function grantRows(){
+  const arr = CV.grants || [];
+  return '<div class="rows">' + arr.map((it, i) =>
+    '<div class="row">' + ctl('grants', i) +
+    '<div class="yr">' + ed('grants.' + i + '.year', 'dim', '2026') + '</div>' +
+    '<div class="it">' + ed('grants.' + i + '.what', 'block', 'Grant, prize, award') + '</div>' +
+    '</div>').join('') + '</div>' + addBtn('grants', 'Add entry');
+}
+
+function courseList(){
+  const arr = CV.doctoralCourses || [];
+  return '<ul class="plain">' + arr.map((c, i) =>
+    '<li>' + ctl('doctoralCourses', i) + ed('doctoralCourses.' + i, 'block', 'Course, school, year') + '</li>').join('') +
+    '</ul>' + addBtn('doctoralCourses', 'Add course');
+}
+
+function refBlock(){
+  const arr = (CV.references && CV.references.people) || [];
+  return '<div class="refgrid">' + arr.map((r, i) =>
+    '<div class="row">' + ctl('references.people', i) +
+    '<div>' + ed('references.people.' + i + '.name', 'b', 'Prof. Dr. …') + '</div>' +
+    '<div class="m">' + ed('references.people.' + i + '.org', 'dim', 'Institution') + '</div>' +
+    '</div>').join('') + '</div>' + addBtn('references.people', 'Add reference') +
+    '<div class="refnote">' + ed('references.note', '', 'E-mail addresses available on request.') + '</div>';
+}
+
+/* the publication block is mirrored from Google Scholar — shown, not edited */
+const PUB_GROUPS = [['published','Peer-reviewed publications'], ['review','Under review'],
+                    ['progress','Work in progress'], ['other','Book chapters, dissertation &amp; other output']];
+const BADGE_COLOR = { review:'var(--ochre)', progress:'var(--purple)', other:'var(--ink3)' };
+function researchBlock(){
+  const m = (PUBS && PUBS.metrics) || {}, pubs = (PUBS && PUBS.publications) || [];
+  const cells = [[m.publications,'publications &amp; papers'], [m.citations,'citations'],
+                 [m.hIndex,'h-index'], [m.venues,'peer-reviewed venues']];
+  let out = '<div class="locked">Publications and the numbers above come from Google Scholar. ' +
+    'Sort or hide them in the <a href="admin.html">control room</a> under “Papers”.</div>';
+  out += '<div class="metrics">' + cells.map(([v, l]) =>
+    '<div class="metric"><b>' + (v ?? '–') + '</b><span>' + l + '</span></div>').join('') + '</div>';
+  PUB_GROUPS.forEach(([key, label]) => {
+    const g = pubs.filter(p => p.status === key && !p.hidden).sort((a, b) => (b.year || 0) - (a.year || 0));
+    if (!g.length) return;
+    out += '<div class="pgroup">' + label + (key === 'progress' || key === 'other' ? FULLONLY : '') + '</div>';
+    g.forEach(p => {
+      const col = BADGE_COLOR[key];
+      const badge = p.note && col ? '<span class="badge" style="color:' + col + ';border-color:' + col + '">' +
+        esc(p.note) + '</span>' : '';
+      const cit = p.citations ? ' <span class="cit">· ' + p.citations + ' citation' + (p.citations !== 1 ? 's' : '') + '</span>' : '';
+      out += '<div class="pub"><div class="pnum">•</div><div>' +
+        '<div class="ptitle">' + esc(p.title || '') + badge + '</div>' +
+        '<div class="pmeta">' + esc(p.authors || '') + ' · <i>' + esc(p.venue || '') + '</i>' +
+        (p.year ? ' · ' + p.year : '') + cit + '</div></div></div>';
+    });
+  });
+  return out;
+}
+
+function render(){
+  dotI = 0;
+  const p = CV.person || {};
+  /* the header prints labels only — the addresses behind them are edited in the strip below */
+  const links = (p.links || []).map((l, i) =>
+    '<span class="sep">·</span><span class="lnk">' + ed('person.links.' + i + '.label', '', 'label') + '</span>').join('');
+
+  let h = '<header>' +
+    '<img class="hphoto" src="pdf/photo.png" alt="">' +
+    '<div class="htxt">' +
+      '<div class="hname">' + ed('person.name', '', 'Name') + '</div>' +
+      '<div class="hrole">' + ed('person.role', '', 'Role') + '</div>' +
+      '<div class="haff">' + ed('person.affiliation', '', 'Affiliation') + '</div>' +
+      '<div class="hcontact">' + ed('person.address', '', 'Address') + '</div>' +
+      '<div class="hlinks"><span class="lnk">' + ed('person.email', '', 'email') + '</span>' + links + '</div>' +
+    '</div></header>';
+
+  h += '<div class="locked" style="margin-top:9px">Where the header links point. The label is what prints.' +
+    (p.links || []).map((l, i) => '<div class="linkline">' +
+      '<span class="st">' + esc(l.label || '(no label)') + '</span><span>→</span>' +
+      ed('person.links.' + i + '.url', 'dim', 'https://…') +
+      '<button class="minix" data-act="del" data-list="person.links" data-i="' + i + '" title="Remove link">✕</button>' +
+      '</div>').join('') +
+    '<div style="margin-top:6px">' + addBtn('person.links', 'Add link') + '</div></div>';
+
+  h += sec('Summary',
+    '<p class="lead">' + ed('summary', 'block', 'The long summary, printed in the full CV.') + '</p>' +
+    '<div class="pgroup" style="margin-top:9px">Short CV version<span class="spacer"></span>' +
+      '<span class="tag" style="font-size:6.4pt;border:.8pt solid var(--cvline);border-radius:20px;padding:1px 7px;text-transform:none">short CV only</span></div>' +
+    '<p class="lead">' + ed('summaryShort', 'block', 'The shorter summary, printed in cv_short.pdf.') + '</p>');
+
+  h += sec('Academic positions', orgRows('positions'));
+  h += sec('Education', orgRows('education') +
+    '<div class="pgroup">Visiting' + FULLONLY + '</div>' + orgRows('visiting'));
+  h += sec('Professional experience', orgRows('otherPositions'), true);
+  h += sec('Research', researchBlock());
+  h += sec('Teaching', teachingRows());
+  h += sec('Selected talks', talksRows(), true);
+  h += sec('Outreach, media coverage &amp; other output', outreachRows(), true);
+  h += sec('Organized conferences &amp; seminars', whatRows('organized', 'date', 'Your role'), true);
+  h += sec('Policy work', whatRows('policy', 'year', 'Your role'), true);
+  h += sec('Grants &amp; awards', grantRows());
+  h += sec('Academic service',
+    '<div class="kv">' +
+      '<div class="k">Peer review</div><div class="v">' + ed('service.reviewing', 'block', 'Journal (3) · …') + '</div>' +
+      '<div class="k">Memberships</div><div class="v">' + ed('service.memberships', 'block', 'Society (2022–2024) · …') + '</div>' +
+    '</div>', true);
+  h += sec('Doctoral courses', courseList(), true);
+  h += sec('Research interests &amp; skills',
+    '<div class="kv">' +
+      '<div class="k">Interests</div><div class="v">' + ed('interests', 'block', 'Fields, separated by ·') + '</div>' +
+      '<div class="k">Languages</div><div class="v">' + ed('skills.languages', 'block', 'German · English · …') + '</div>' +
+      '<div class="k">Software</div><div class="v">' + ed('skills.software', 'block', 'Stata · R · …') + '</div>' +
+    '</div>');
+  h += sec('References', refBlock(), true);
+
+  $('#sheet').innerHTML = h;
+  applyZoom();
+  paintBar();
+}
+
+/* ================================================================== edits */
+const sheet = () => $('#sheet');
+
+document.addEventListener('input', e => {
+  const el = e.target.closest('.ed');
+  if (!el) return;
+  if (el.dataset.tw || el.dataset.te){                    /* a teaching course line */
+    syncCourses(+(el.dataset.tw || el.dataset.te).split('.')[0]);
+    saveDraft(); paintBar(); return;
+  }
+  if (!el.dataset.p) return;
+  set(el.dataset.p, el.innerText.replace(/ /g, ' ').replace(/\n$/, ''));
+  saveDraft(); paintBar();
+});
+document.addEventListener('change', e => {
+  const s = e.target.closest('[data-sel]');
+  if (!s) return;
+  set(s.dataset.sel, s.value); saveDraft(); paintBar();
+});
+/* paste as plain text, always */
+document.addEventListener('paste', e => {
+  const el = e.target.closest('.ed');
+  if (!el) return;
+  e.preventDefault();
+  const t = (e.clipboardData || window.clipboardData).getData('text/plain');
+  document.execCommand('insertText', false, t.replace(/\r/g, ''));
+});
+
+document.addEventListener('click', e => {
+  const fold = e.target.closest('[data-fold]');
+  if (fold){ FOLD[fold.dataset.fold] = !FOLD[fold.dataset.fold]; render(); return; }
+
+  const flag = e.target.closest('[data-flag]');
+  if (flag){ set(flag.dataset.flag, !get(flag.dataset.flag)); saveDraft(); render(); return; }
+
+  const ac = e.target.closest('[data-addcourse]');
+  if (ac){
+    const i = +ac.dataset.addcourse;
+    const cur = String(CV.teaching[i].role || '');
+    CV.teaching[i].role = cur.endsWith('\n') || !cur ? cur : cur + '\n';
+    saveDraft(); render();
+    const fresh = $$('#sheet [data-tw]').filter(x => x.dataset.tw.startsWith(i + '.')).pop();
+    if (fresh){ fresh.focus(); fresh.scrollIntoView({ block:'center', behavior:'smooth' }); }
+    return;
+  }
+  const dc = e.target.closest('[data-act="delcourse"]');
+  if (dc){
+    const i = +dc.dataset.i, j = +dc.dataset.j;
+    const lines = String(CV.teaching[i].role || '').split('\n');
+    lines.splice(j, 1);
+    CV.teaching[i].role = lines.join('\n');
+    saveDraft(); render();
+    return;
+  }
+
+  const add = e.target.closest('[data-add]');
+  if (add){
+    const list = add.dataset.add;
+    const arr = get(list) || [];
+    arr.push(typeof BLANK[list] === 'object' ? clone(BLANK[list]) : BLANK[list]);
+    set(list, arr); saveDraft(); render();
+    /* jump into the new row */
+    const fresh = $$('#sheet .ed').filter(x => (x.dataset.p || '').startsWith(list + '.' + (arr.length - 1) + '.') ||
+                                               x.dataset.p === list + '.' + (arr.length - 1));
+    if (fresh[0]){ fresh[0].focus(); fresh[0].scrollIntoView({ block:'center', behavior:'smooth' }); }
+    return;
+  }
+
+  const b = e.target.closest('[data-act]');
+  if (!b) return;
+  const list = b.dataset.list, i = +b.dataset.i, arr = get(list);
+  if (!arr) return;
+  if (b.dataset.act === 'del'){
+    const what = typeof arr[i] === 'string' ? arr[i] : (arr[i].what || arr[i].org || arr[i].name || arr[i].label || 'this entry');
+    if (!confirm('Delete “' + String(what).split('\n')[0].slice(0, 60) + '”?')) return;
+    arr.splice(i, 1);
+  }
+  if (b.dataset.act === 'up'   && i > 0)              arr.splice(i - 1, 0, arr.splice(i, 1)[0]);
+  if (b.dataset.act === 'down' && i < arr.length - 1) arr.splice(i + 1, 0, arr.splice(i, 1)[0]);
+  saveDraft(); render();
+});
+
+/* ================================================================== diff */
+function diff(a, b, path, out){
+  out = out || [];
+  if (Array.isArray(a) || Array.isArray(b)){
+    const A = a || [], B = b || [];
+    const n = Math.min(A.length, B.length);
+    for (let i = 0; i < n; i++) diff(A[i], B[i], path + '[' + (i + 1) + ']', out);
+    for (let i = n; i < B.length; i++) out.push({ kind:'add', path: path + '[' + (i + 1) + ']', now: flat(B[i]) });
+    for (let i = n; i < A.length; i++) out.push({ kind:'rem', path: path + '[' + (i + 1) + ']', was: flat(A[i]) });
+    return out;
+  }
+  if (a && b && typeof a === 'object' && typeof b === 'object'){
+    new Set([...Object.keys(a), ...Object.keys(b)]).forEach(k =>
+      diff(a[k], b[k], path ? path + ' · ' + k : k, out));
+    return out;
+  }
+  if (String(a ?? '') !== String(b ?? '')) out.push({ kind:'mod', path: path, was: a, now: b });
+  return out;
+}
+const flat = o => typeof o === 'object' && o !== null
+  ? Object.values(o).filter(v => typeof v !== 'object').join(' · ') : String(o ?? '');
+
+/* nicer names in the change list than the raw json keys */
+const NICE = { person:'Header', summary:'Summary', summaryShort:'Short summary', positions:'Academic positions',
+  education:'Education', visiting:'Visiting', otherPositions:'Professional experience', teaching:'Teaching',
+  talks:'Talks', outreach:'Outreach', organized:'Organized events', policy:'Policy work', grants:'Grants & awards',
+  service:'Academic service', doctoralCourses:'Doctoral courses', interests:'Research interests', skills:'Skills',
+  references:'References', highlights:'Homepage highlights', archive:'Archive' };
+function prettyPath(p){
+  const parts = p.split(' · ');
+  parts[0] = (NICE[parts[0].replace(/\[\d+\]$/, '')] || parts[0]) + (parts[0].match(/\[\d+\]$/) || [''])[0];
+  return parts.join(' · ');
+}
+
+const changes = () => ORIG ? diff(ORIG, CV, '') : [];
+const dirty  = () => ORIG && JSON.stringify(ORIG) !== JSON.stringify(CV);
+
+function paintBar(){
+  const n = changes().length;
+  $('#savebar').classList.toggle('on', n > 0);
+  $('#cnt').innerHTML = n ? '<b>' + n + '</b> change' + (n === 1 ? '' : 's') + ' waiting' : '';
+}
+
+$('#review').onclick = () => {
+  const cs = changes();
+  const body = cs.length ? cs.map(c =>
+    '<div class="dif ' + c.kind + '"><div class="p">' + esc(prettyPath(c.path)) +
+    (c.kind === 'add' ? ' — new' : c.kind === 'rem' ? ' — deleted' : '') + '</div>' +
+    (c.kind !== 'add' ? '<span class="o">' + esc(c.was || c.wasFlat || '(empty)') + '</span>' : '') +
+    (c.kind !== 'rem' ? '<span class="n">' + esc(c.now || '(empty)') + '</span>' : '') +
+    '</div>').join('') : '<p style="padding:14px 0;color:var(--ink2)">Nothing changed yet.</p>';
+  openModal('Review changes', 'Everything below is written to pdf/cv.json in one commit.', body,
+    '<button class="btn ghost sm" data-close>Close</button><span style="flex:1"></span>' +
+    '<button class="btn primary sm" id="msave">Save</button>');
+  $('#msave').onclick = () => { closeModal(); save(); };
+};
+$('#revert').onclick = () => {
+  if (!confirm('Throw away all changes and go back to the saved version?')) return;
+  CV = clone(ORIG); dropDraft(); render();
+};
+
+function openModal(title, sub, body, foot){
+  $('#modal').innerHTML = '<div class="mcard"><div class="mhead"><h3>' + title + '</h3>' +
+    (sub ? '<p>' + sub + '</p>' : '') + '</div><div class="mbody">' + body + '</div>' +
+    '<div class="mfoot">' + foot + '</div></div>';
+  $('#modal').classList.remove('hide');
+  $$('#modal [data-close]').forEach(b => b.onclick = closeModal);
+}
+const closeModal = () => { $('#modal').classList.add('hide'); $('#modal').innerHTML = ''; };
+$('#modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+
+/* ================================================================== save */
+async function save(){
+  const btn = $('#save');
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Saving…';
+  try {
+    /* did anyone else touch cv.json since this page loaded? */
+    const cur = await gh('contents/' + FILE_CV + '?nocache=' + Date.now());
+    const remote = JSON.parse(b64dec(cur.content));
+    if (JSON.stringify(remote) !== JSON.stringify(ORIG)){
+      const n = diff(ORIG, remote, '').length;
+      if (!confirm('cv.json changed on GitHub in the meantime (' + n + ' change' + (n === 1 ? '' : 's') +
+                   ') — probably from the control room.\n\nSaving now overwrites that. Continue anyway?')){
+        btn.disabled = false; btn.textContent = 'Save';
+        return;
+      }
+    }
+    const n = changes().length;
+    await gh('contents/' + FILE_CV, {
+      method: 'PUT',
+      body: JSON.stringify({
+        message: 'CV layout: ' + n + ' change' + (n === 1 ? '' : 's'),
+        content: b64enc(JSON.stringify(CV, null, 2) + '\n'),
+        sha: cur.sha
+      })
+    });
+    ORIG = clone(CV); dropDraft(); paintBar();
+    toast('Saved. Both PDFs are rebuilt in about two minutes. ' +
+      '<a href="https://github.com/' + REPO + '/actions" target="_blank" rel="noopener">Watch it happen</a>');
+  } catch (err){
+    toast('Could not save: ' + err.message, true);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Save';
+  }
+}
+$('#save').onclick = save;
+
+window.addEventListener('beforeunload', e => { if (dirty()){ e.preventDefault(); e.returnValue = ''; } });
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 's'){ e.preventDefault(); if (dirty()) save(); }
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>

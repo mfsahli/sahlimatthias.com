@@ -40,7 +40,8 @@ button,input,select,textarea{font-family:inherit;color:inherit}
 .led{width:9px;height:9px;border-radius:50%;background:var(--green);animation:pulse 2.4s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--green) 55%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
 .spacer{flex:1}
-.iconbtn{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font-size:.78rem;
+.iconbtn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--card);
+  border-radius:999px;padding:6px 14px;font-size:.78rem;text-decoration:none;
   font-weight:600;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;color:var(--ink2)}
 .iconbtn:hover{transform:translateY(-1px);box-shadow:var(--shadow);color:var(--ink)}
 
@@ -272,6 +273,7 @@ main{padding:34px 0 90px}
   <div class="top"><div class="wrap topin">
     <div class="mark"><span class="led"></span>Control room</div>
     <div class="spacer"></div>
+    <a class="iconbtn" href="cv-editor.html" title="Edit the CV as it prints">📄 CV layout</a>
     <button class="iconbtn" id="reload" title="Reload">↻</button>
     <button class="iconbtn" id="theme" title="Light / dark">◐</button>
     <button class="iconbtn" id="logout">Sign out</button>
