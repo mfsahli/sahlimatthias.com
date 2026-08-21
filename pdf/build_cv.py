@@ -83,6 +83,17 @@ PUB_GROUPS = [
 ]
 BADGE_COLOR = {"review": "var(--ochre)", "progress": "var(--purple)", "other": "var(--ink3)"}
 
+
+def paper_url(p):
+    """Bevorzugt die DOI, sonst den ersten Link, sonst Scholar."""
+    for l in (p.get("links") or []):
+        if "doi" in (l.get("label", "") + l.get("url", "")).lower():
+            return l.get("url", "")
+    for l in (p.get("links") or []):
+        if l.get("url"):
+            return l["url"]
+    return p.get("scholarUrl", "") or ""
+
 def publications_block(pubs, only=None):
     out = []
     for key, label in PUB_GROUPS:
@@ -104,9 +115,13 @@ def publications_block(pubs, only=None):
                 cit = f' <span class="cit">&middot; {n} citation{"s" if n != 1 else ""}</span>'
             venue = f'<i>{e(p.get("venue",""))}</i>' if p.get("venue") else ""
             year  = f' &middot; {p["year"]}' if p.get("year") else ""
+            u = paper_url(p)
+            title = e(p.get("title", ""))
+            if u:
+                title = f'<a href="{e(u)}">{title}</a>'
             out.append(
                 '<div class="pub"><div class="pnum">&bull;</div><div>'
-                f'<div class="ptitle">{e(p.get("title",""))}{badge}</div>'
+                f'<div class="ptitle">{title}{badge}</div>'
                 f'<div class="pmeta">{e(p.get("authors",""))} &middot; {venue}{year}{cit}</div>'
                 "</div></div>")
     return "".join(out)
