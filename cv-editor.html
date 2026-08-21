@@ -186,7 +186,8 @@ ul.plain li{padding:1.6px 0;position:relative}
 .sched{font-size:6.6pt;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--blue);
   border:.8pt solid var(--blue);border-radius:20px;padding:.3px 5px;margin-left:3px;white-space:nowrap;
   cursor:pointer;user-select:none}
-.sched.off{color:var(--ink3);border-color:var(--cvline);opacity:.5}
+.sched.off{color:var(--ink3);border-color:var(--cvline);opacity:0;transition:opacity .15s}
+.row:hover .sched.off,.sched.off:hover{opacity:.55}
 .eval{color:var(--green);font-weight:600;font-size:8.2pt;white-space:nowrap}
 .eval.quiet{opacity:0;transition:opacity .15s}
 .tlist > div:hover .eval.quiet,.eval.quiet:focus-within{opacity:.55}
@@ -554,8 +555,10 @@ function sec(title, inner, fullOnly){
   return '<section><h2 style="--dot:' + c + '">' + title + (fullOnly ? FULLONLY : '') + '</h2>' + inner + '</section>';
 }
 
-/* years | content rows, exactly the PDF's org_row */
-function orgRows(list){
+/* years | content rows, exactly the PDF's org_row.
+   minorFlag: professional experience can be marked as "full CV only" — early
+   jobs that the two-page version leaves out (build_cv.py skips them there). */
+function orgRows(list, minorFlag){
   const arr = get(list) || [];
   return '<div class="rows">' + arr.map((it, i) =>
     '<div class="row">' + ctl(list, i) +
@@ -563,7 +566,10 @@ function orgRows(list){
     '<div class="it">' +
       '<div>' + ed(list + '.' + i + '.org', 'b', 'Organisation') +
         ' <span class="m">· ' + ed(list + '.' + i + '.place', 'dim', 'City, Country') + '</span></div>' +
-      '<div class="m">' + ed(list + '.' + i + '.role', 'dim', 'Role') + '</div>' +
+      '<div class="m">' + ed(list + '.' + i + '.role', 'dim', 'Role') +
+        (minorFlag ? ' <span class="sched' + (it.minor ? '' : ' off') + '" data-flag="' + list + '.' + i + '.minor" ' +
+          'title="Leave this entry out of the short CV">full CV only</span>' : '') +
+      '</div>' +
     '</div></div>').join('') +
     '</div>' + addBtn(list, 'Add entry');
 }
@@ -742,7 +748,7 @@ function render(){
   h += sec('Academic positions', orgRows('positions'));
   h += sec('Education', orgRows('education') +
     '<div class="pgroup">Visiting' + FULLONLY + '</div>' + orgRows('visiting'));
-  h += sec('Professional experience', orgRows('otherPositions'), true);
+  h += sec('Professional experience', orgRows('otherPositions', true));
   h += sec('Research', researchBlock());
   h += sec('Teaching', teachingRows());
   h += sec('Selected talks', talksRows(), true);
