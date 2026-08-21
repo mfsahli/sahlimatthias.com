@@ -442,7 +442,7 @@ html.seenfinder #thesis .newdot{display:none}
 #thesis .fc{position:absolute;background:var(--card);border:1.5px solid var(--line);border-radius:999px;
   padding:5px 13px;font-size:.8rem;font-weight:600;color:var(--ink2);white-space:nowrap;
   box-shadow:var(--shadow);opacity:0;transform:translate(-50%,-50%) scale(.86);
-  transition:opacity .5s var(--ease),transform .8s var(--ease),left .8s var(--ease),top .8s var(--ease)}
+  transition:opacity .65s var(--ease),transform 1.15s var(--ease),left 1.15s var(--ease),top 1.15s var(--ease)}
 #thesis .fc.spread{opacity:1;transform:translate(-50%,-50%) scale(1)}
 #thesis .fc.home{opacity:0;transform:translate(-50%,-50%) scale(.6)}
 #thesis .plabel{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
@@ -579,7 +579,7 @@ html.seenfinder #thesis .newdot{display:none}
 </div>
   <div id="navsub"><div class="wrap">
     <a href="#about">About</a><a href="#research">Research</a><a href="#teaching">Teaching</a>
-    <a href="#thesis">Thesis finder</a><a href="cv.pdf" target="_blank" rel="noopener">CV</a>
+    <a href="#thesis">Theses</a><a href="cv.pdf" target="_blank" rel="noopener">CV</a>
   </div></div>
 </nav>
 
@@ -1200,16 +1200,17 @@ function gather(then){
     c.style.left = (50 + Math.cos(a) * r * (NARROW() ? 28 : 42)) + '%';
     c.style.top  = (53 + Math.sin(a) * r * 34) + '%';
     field.appendChild(c);
-    setTimeout(() => c.classList.add('spread'), 40 + i * 26);
+    setTimeout(() => c.classList.add('spread'), 60 + i * 38);
   });
-  const spreadDone = 40 + words.length * 26 + 320;
+  /* nach dem Verteilen kurz stehen lassen, dann erst einsammeln */
+  const spreadDone = 60 + words.length * 38 + 560;
   setTimeout(() => {
     Array.from(field.children).forEach((c, i) => setTimeout(() => {
       c.style.left = '50%'; c.style.top = '52%';
       c.classList.add('home');
-    }, i * 12));
+    }, i * 20));
   }, spreadDone);
-  setTimeout(() => { field.remove(); INTRO = 'done'; then(); }, spreadDone + 760);
+  setTimeout(() => { field.remove(); INTRO = 'done'; then(); }, spreadDone + 1150);
 }
 
 function stepLevel(box){
