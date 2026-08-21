@@ -28,12 +28,6 @@
       "org": "Bern University of Applied Sciences (BFH)",
       "place": "Business School, Bern, Switzerland",
       "role": "Postdoctoral Researcher"
-    },
-    {
-      "years": "2019 – 2024",
-      "org": "World Intellectual Property Organization (WIPO)",
-      "place": "Department for Economics and Data Analytics, Geneva, Switzerland",
-      "role": "PhD Research Fellow (2019–2023), then Postdoctoral Research Fellow (2023–2024)"
     }
   ],
   "education": [
@@ -84,22 +78,30 @@
   ],
   "otherPositions": [
     {
+      "years": "2019 – 2024",
+      "org": "World Intellectual Property Organization (WIPO), United Nations",
+      "place": "Department for Economics and Data Analytics, Geneva, Switzerland",
+      "role": "Economist and researcher — PhD Research Fellow (2019–2023), then Postdoctoral Research Fellow (2023–2024)"
+    },
+    {
       "years": "2017 – 2019",
       "org": "Swiss Federal Institute of Intellectual Property (IPI)",
       "place": "Bern, Switzerland",
-      "role": "Internship (2017–2018), then Junior Economist, Office of the Chief Economist (2018–2019)"
+      "role": "Economist, Office of the Chief Economist — internship (2017–2018), then Junior Economist (2018–2019)"
     },
     {
       "years": "2013 – 2019",
       "org": "Velokurier Bern",
       "place": "Bern, Switzerland",
-      "role": "Bike messenger; member of the cooperative (passive member since)"
+      "role": "Bike messenger; member of the cooperative (passive member since)",
+      "minor": true
     },
     {
       "years": "2011 – 2012",
       "org": "Stiftung RGZ",
       "place": "Zurich, Switzerland",
-      "role": "Community service, school for people with multiple disabilities"
+      "role": "Community service, school for people with multiple disabilities",
+      "minor": true
     }
   ],
   "teaching": [
@@ -359,7 +361,7 @@
       }
     ]
   },
-  "summaryShort": "Postdoctoral researcher at the Bern University of Applied Sciences (BFH) Business School, previously at the World Intellectual Property Organization (WIPO) of the United Nations; PhD in Economics, University of Neuchâtel (2023). I work on the economics of intellectual property, innovation, digitization and the creative industries, building new datasets and running rigorous econometric analyses to inform policy.",
+  "summaryShort": "Postdoctoral researcher at the Bern University of Applied Sciences (BFH) Business School, previously an economist at the World Intellectual Property Organization (WIPO) of the United Nations and at the Swiss Federal Institute of Intellectual Property — seven years of applied economics outside the university sector; PhD in Economics, University of Neuchâtel (2023). I work on the economics of intellectual property, innovation, digitization and the creative industries, building new datasets and running rigorous econometric analyses to inform policy.",
   "outreach": [
     {
       "date": "2026",

@@ -196,8 +196,12 @@ def build(cv, pubdata, short=False):
         edu += '<div class="pgroup">Visiting</div>' + rows(cv["visiting"], "years", org_row)
     body.append(sec("Education", edu))
 
-    if not short:
-        body.append(sec("Professional experience", rows(cv["otherPositions"], "years", org_row)))
+    # Professional experience is printed in BOTH versions: for a university of
+    # applied sciences it is the section that carries the non-academic track.
+    # Entries flagged "minor" (early jobs, community service) only make the full CV.
+    exp = [e for e in cv["otherPositions"] if not (short and e.get("minor"))]
+    if exp:
+        body.append(sec("Professional experience", rows(exp, "years", org_row)))
 
     only = ("published", "review") if short else None
     body.append(sec("Research", metrics_block(pubdata.get("metrics", {}))
