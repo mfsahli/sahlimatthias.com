@@ -2,7 +2,8 @@ name: Update publications and CV
 
 on:
   schedule:
-    - cron: "0 6 * * 1"   # every Monday, 06:00 UTC (~07:00/08:00 Bern time)
+    - cron: "23 5 * * 1"  # Monday 05:23 UTC (~07:23 Bern) — odd minute, off-peak: far more reliable than 06:00
+    - cron: "23 5 * * 2"  # Tuesday backup — if GitHub skips Monday's tick, this catches it (exits with "Nothing changed" otherwise)
   workflow_dispatch: {}    # manual trigger via the Actions tab
 
 permissions:
