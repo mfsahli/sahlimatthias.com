@@ -1,0 +1,62 @@
+name: Update publications and CV
+
+on:
+  schedule:
+    - cron: "23 5 * * *"  # DAILY 05:23 UTC (~07:23 Bern). GitHub silently drops scheduled runs on
+                          # quiet repos (observed twice, 2026-08-31 + 09-01) — with 7 attempts a week
+                          # at least one always lands. Commits only happen when data actually changed
+                          # ("Nothing changed" exit), and 7 SerpAPI calls/week is well within 250/month.
+  workflow_dispatch: {}    # manual trigger via the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: site-write        # never runs at the same time as Rebuild CV
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the PDF renderer
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Update publications, rebuild the CV, commit and push
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+        run: |
+          git config user.name  "publication-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          # Someone (the control room, or a manual upload) may push while this
+          # job is running. In that case the push is rejected, and we start over
+          # on top of their commit instead of overwriting it: pull, run the
+          # scripts again against the fresh files, commit again.
+          for attempt in 1 2 3; do
+            python3 scripts/update_publications.py
+            python3 pdf/build_cv.py --local
+
+            git add data/publications.json index.html cv.pdf cv_short.pdf
+            if git diff --cached --quiet; then
+              echo "Nothing changed."
+              exit 0
+            fi
+            git commit -m "chore: weekly publication and CV update"
+
+            if git push; then
+              echo "Pushed on attempt $attempt."
+              exit 0
+            fi
+
+            echo "Push rejected - somebody else was faster. Rebasing and rebuilding."
+            git reset --hard HEAD~1
+            git pull --rebase --quiet
+          done
+
+          echo "Still could not push after three attempts."
+          exit 1
