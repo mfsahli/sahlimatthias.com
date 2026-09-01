@@ -1,9 +1,9 @@
 {
-  "generated": "2026-08-24",
+  "generated": "2026-09-01",
   "source": "google_scholar (mirror) + manual pipeline info",
   "metrics": {
     "publications": 15,
-    "citations": 66,
+    "citations": 67,
     "hIndex": 4,
     "venues": 5,
     "citationsByYear": [
@@ -29,7 +29,7 @@
       },
       {
         "year": 2026,
-        "citations": 22
+        "citations": 23
       }
     ],
     "sourceLabel": "Google Scholar",
@@ -216,7 +216,7 @@
       "tags": [
         "art"
       ],
-      "citations": 1,
+      "citations": 2,
       "finding": "21,000+ exhibition records linked to 33,000 auction transactions to examine how museum visibility — and gender representation — translates into market outcomes.",
       "links": [
         {
@@ -225,7 +225,7 @@
         }
       ],
       "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:RHpTSmoSYBkC"
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:4JMBOYKVnBMC"
     },
     {
       "id": "elvis-ghost",
