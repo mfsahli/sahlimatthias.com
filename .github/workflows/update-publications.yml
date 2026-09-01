@@ -2,8 +2,10 @@ name: Update publications and CV
 
 on:
   schedule:
-    - cron: "23 5 * * 1"  # Monday 05:23 UTC (~07:23 Bern) — odd minute, off-peak: far more reliable than 06:00
-    - cron: "23 5 * * 2"  # Tuesday backup — if GitHub skips Monday's tick, this catches it (exits with "Nothing changed" otherwise)
+    - cron: "23 5 * * *"  # DAILY 05:23 UTC (~07:23 Bern). GitHub silently drops scheduled runs on
+                          # quiet repos (observed twice, 2026-08-31 + 09-01) — with 7 attempts a week
+                          # at least one always lands. Commits only happen when data actually changed
+                          # ("Nothing changed" exit), and 7 SerpAPI calls/week is well within 250/month.
   workflow_dispatch: {}    # manual trigger via the Actions tab
 
 permissions:
