@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-01",
+  "generated": "2026-09-02",
   "source": "google_scholar (mirror) + manual pipeline info",
   "metrics": {
     "publications": 15,
@@ -235,7 +235,7 @@
       "venue": "WIPO Economic Working Paper No. 89",
       "year": 2025,
       "status": "review",
-      "note": "Submitted to Strategic Management Journal",
+      "note": "Under review at Strategic Management Journal",
       "tags": [
         "ip"
       ],
