@@ -1,9 +1,9 @@
 {
-  "generated": "2026-09-04",
+  "generated": "2026-09-05",
   "source": "google_scholar (mirror) + manual pipeline info",
   "metrics": {
     "publications": 15,
-    "citations": 67,
+    "citations": 69,
     "hIndex": 4,
     "venues": 5,
     "citationsByYear": [
@@ -152,7 +152,7 @@
         "ip",
         "art"
       ],
-      "citations": 13,
+      "citations": 14,
       "finding": "Thirty years of film-financing practice traced through interviews and U.S. Uniform Commercial Code filings: how movies are financed with IP as collateral.",
       "links": [
         {
@@ -225,7 +225,7 @@
         }
       ],
       "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:RHpTSmoSYBkC"
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:4JMBOYKVnBMC"
     },
     {
       "id": "elvis-ghost",
@@ -239,7 +239,7 @@
       "tags": [
         "ip"
       ],
-      "citations": 0,
+      "citations": 1,
       "finding": "Upon the loss of publicity rights, celebrities become less popular and engage in less commercial activity — with direct implications for AI-generated digital replicas.",
       "links": [
         {
