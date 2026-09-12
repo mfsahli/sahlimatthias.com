@@ -12,7 +12,7 @@
 :root{
   --paper:#F1F2F4; --paper2:#E9EBEE; --card:#FAFBFC; --ink:#1F2023; --ink2:#565A62; --ink3:#878B93;
   --line:#DCDFE4; --red:#C93A2B; --blue:#3B6EA5; --ochre:#C77016; --purple:#7D5BA6;
-  --green:#3E7E44; --orange:#D98324;
+  --green:#3E7E44; --orange:#D98324; --teal:#2A8A85; --pink:#B8437A; --navy:#3D4A7A;
   --crt-bg:#10140B; --crt-tx:#8DFF92;
   --shadow:0 2px 8px rgba(33,30,27,.06),0 12px 32px rgba(33,30,27,.07);
   --shadow-lg:0 4px 12px rgba(33,30,27,.08),0 24px 48px rgba(33,30,27,.12);
@@ -20,6 +20,7 @@
 html.dark{
   --paper:#211E1B; --paper2:#282420; --card:#2B2723; --ink:#F1ECE3; --ink2:#B5AC9F; --ink3:#847C71;
   --line:#3A342E; --red:#E8654F; --blue:#5E96D8; --ochre:#CE8020; --purple:#9E74C8; --green:#5FA765;
+  --orange:#E89A4A; --teal:#4FB3AD; --pink:#E07AA8; --navy:#8492CC;
   --shadow:0 2px 8px rgba(0,0,0,.25),0 12px 32px rgba(0,0,0,.3);
   --shadow-lg:0 4px 12px rgba(0,0,0,.3),0 24px 48px rgba(0,0,0,.45);
 }
@@ -163,6 +164,22 @@ main{padding:34px 0 90px}
 .mini.armed{background:var(--red);border-color:var(--red);color:#fff;width:auto;padding:0 10px;font-size:.7rem;font-weight:700}
 .empty{padding:38px 20px;text-align:center;color:var(--ink3);font-size:.88rem}
 .foothint{font-size:.78rem;color:var(--ink3);margin-top:14px;line-height:1.5}
+.topics{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px 18px;margin-top:26px;box-shadow:var(--shadow)}
+.topics h4{font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ink2);margin-bottom:4px}
+.topics .th{font-size:.82rem;color:var(--ink3);margin-bottom:12px;line-height:1.5}
+.topics .chip .n{color:var(--ink3);font-weight:500;margin-left:5px}
+.topics .chip.on .n{color:inherit;opacity:.7}
+.topics .chip.new{border-style:dashed;color:var(--ink2)}
+.tedit{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);display:grid;gap:12px}
+.tedit .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tedit .inp{max-width:360px}
+.sw{display:flex;gap:8px;flex-wrap:wrap}
+.sw button{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0;
+  box-shadow:inset 0 0 0 2px var(--card);transition:transform .15s}
+.sw button:hover{transform:scale(1.12)}
+.sw button.on{border-color:var(--ink)}
+.tedit .warn{font-size:.8rem;color:var(--ink3)}
+.tedit .btn.danger{color:var(--red)}
 
 /* ============ wizard ============ */
 .sheet{position:fixed;inset:0;z-index:60;background:color-mix(in srgb,var(--paper) 62%,transparent);
@@ -305,6 +322,13 @@ main{padding:34px 0 90px}
     <input id="q" class="search" placeholder="Search…">
     <button class="fchip" id="fchip"></button>
     <div class="list" id="list"></div>
+
+    <div class="topics" id="topics">
+      <h4>Topics</h4>
+      <div class="th">The topic chips on the website, under Research. Click one to rename, recolour or remove it. Papers get their topics in the paper form.</div>
+      <div class="chips" id="topiclist"></div>
+      <div class="tedit hide" id="tedit"></div>
+    </div>
     <p class="foothint">Every change is a commit on GitHub, with a timestamp and a before-and-after.
       Deleted entries move into the file's archive instead of disappearing.</p>
   </main>
@@ -357,12 +381,15 @@ const REST_KINDS = ['policy', 'organized', 'service'];
 
 if (localStorage.getItem('kr_theme') === 'dark') document.documentElement.classList.add('dark');
 
-const TAGS = {
+/* topic catalogue: stored in data/publications.json as "tags" and read by the website; this is only the fallback */
+const TAGS_DEFAULT = {
   ip : ['Intellectual property', 'var(--red)'],
   art: ['Art Markets & Creative Industries', 'var(--blue)'],
   dig: ['Digitization & Heritage', 'var(--ochre)'],
   sus: ['Sustainability', 'var(--purple)']
 };
+let TAGS = Object.assign({}, TAGS_DEFAULT);
+const PALETTE = ['red', 'blue', 'ochre', 'purple', 'green', 'orange', 'teal', 'pink', 'navy'];
 const PAPER_ST = ['published', 'review', 'progress', 'other'];
 const isPaper = p => PAPER_ST.includes(p.status);
 const STATUS = {
@@ -497,6 +524,7 @@ async function boot(){
   try {
     const [cv, pubs] = await Promise.all([readFile(FILE_CV), readFile(FILE_PUBS)]);
     CV = cv; PUBS = pubs;
+    TAGS = (pubs.tags && Object.keys(pubs.tags).length) ? pubs.tags : Object.assign({}, TAGS_DEFAULT);
     render();
   } catch (err){
     $('#sub').textContent = 'Could not load: ' + err.message;
@@ -652,6 +680,7 @@ function render(){
                        : TAB === 'paper' ? paperList(pubs)
                        :                   otherList(forTab);
   paintTodos();
+  paintTopics();
   wireRows();
 }
 
@@ -1327,8 +1356,74 @@ function uniqueId(base, skip){
   let n = 2; while (taken.has(base + '-' + n)) n++;
   return base + '-' + n;
 }
+/* ================================================================== topics */
+let TEDIT = null;                       // null = closed, '' = new, key = editing that topic
+const tagCount = k => (PUBS.publications || []).filter(p => (p.tags || []).includes(k)).length;
+function paintTopics(){
+  $('#topiclist').innerHTML = Object.entries(TAGS).map(([k, v]) =>
+      '<button class="chip' + (TEDIT === k ? ' on' : '') + '" data-topic="' + k + '"><span class="cd" style="background:' +
+      v[1] + '"></span>' + esc(v[0]) + '<span class="n">' + tagCount(k) + '</span></button>').join('') +
+    '<button class="chip new' + (TEDIT === '' ? ' on' : '') + '" data-topic="">+ New topic</button>';
+  $$('#topiclist .chip').forEach(c => c.onclick = () => { TEDIT = TEDIT === c.dataset.topic ? null : c.dataset.topic; paintTopics(); });
+  const box = $('#tedit');
+  if (TEDIT === null){ box.classList.add('hide'); box.innerHTML = ''; return; }
+  const cur = TAGS[TEDIT], n = TEDIT ? tagCount(TEDIT) : 0;
+  const color = cur ? cur[1] : 'var(--' + (PALETTE.find(c => !Object.values(TAGS).some(t => t[1] === 'var(--' + c + ')')) || 'teal') + ')';
+  box.classList.remove('hide');
+  box.innerHTML =
+    '<div class="row"><input class="inp" id="t_name" placeholder="e.g. Generative AI" maxlength="40" value="' + esc(cur ? cur[0] : '') + '"></div>' +
+    '<div class="sw" id="t_sw">' + PALETTE.map(c => '<button data-c="var(--' + c + ')" title="' + c + '" style="background:var(--' + c + ')"' +
+      (color === 'var(--' + c + ')' ? ' class="on"' : '') + '></button>').join('') + '</div>' +
+    '<div class="row"><button class="btn primary" id="t_save">' + (cur ? 'Save' : 'Add topic') + '</button>' +
+    (cur ? '<button class="btn ghost danger" id="t_del">Remove</button>' : '') +
+    '<button class="btn ghost" id="t_cancel">Cancel</button>' +
+    (cur && n ? '<span class="warn">Used by ' + n + ' paper' + (n > 1 ? 's' : '') + '. Removing takes it off them.</span>' : '') + '</div>';
+  let pick = color;
+  $$('#t_sw button').forEach(b => b.onclick = () => { pick = b.dataset.c; $$('#t_sw button').forEach(x => x.classList.toggle('on', x === b)); });
+  $('#t_name').focus();
+  $('#t_name').onkeydown = e => { if (e.key === 'Enter') $('#t_save').click(); };
+  $('#t_cancel').onclick = () => { TEDIT = null; paintTopics(); };
+  $('#t_save').onclick = async () => {
+    const name = $('#t_name').value.trim();
+    if (!name) { $('#t_name').focus(); return; }
+    const dup = Object.entries(TAGS).find(([k, v]) => k !== TEDIT && v[0].toLowerCase() === name.toLowerCase());
+    if (dup) { toast('There is already a topic called “' + esc(dup[1][0]) + '”.', true); return; }
+    let key = TEDIT;
+    if (!key){
+      key = slug(name).slice(0, 24).replace(/-$/, '') || 'topic';
+      let m = 2, base = key; while (TAGS[key]) key = base + '-' + m++;
+    }
+    const next = Object.assign({}, TAGS); next[key] = [name, pick];
+    await saveTopics(next, (cur ? 'topics: update ' : 'topics: add ') + name);
+  };
+  if (cur) $('#t_del').onclick = async () => {
+    if (n && !confirm('Remove “' + cur[0] + '” from ' + n + ' paper' + (n > 1 ? 's' : '') + ' and from the website?')) return;
+    const next = Object.assign({}, TAGS); delete next[TEDIT];
+    const snap = JSON.stringify(PUBS.publications || []);
+    (PUBS.publications || []).forEach(p => { if (p.tags) p.tags = p.tags.filter(t => t !== TEDIT); });
+    await saveTopics(next, 'topics: remove ' + cur[0], () => { PUBS.publications = JSON.parse(snap); });
+  };
+}
+async function saveTopics(next, message, undo){
+  const btn = $('#t_save'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Saving…';
+  const prev = TAGS;
+  try {
+    TAGS = next;
+    recomputeMetrics();
+    await writeFile(FILE_PUBS, PUBS, message);
+    TEDIT = null;
+    toast('Saved. The website shows the new topics right away.');
+    render();
+  } catch (err){
+    TAGS = prev; PUBS.tags = prev; if (undo) undo();
+    toast('Could not save: ' + esc(err.message), true);
+    paintTopics();
+  }
+}
+
 function recomputeMetrics(){
   const pubs = (PUBS.publications || []).filter(p => !p.hidden && isPaper(p));
+  PUBS.tags = TAGS;
   PUBS.metrics = PUBS.metrics || {};
   PUBS.metrics.publications = pubs.length;
   PUBS.metrics.venues = new Set(pubs.filter(p => p.status === 'published' && p.venue).map(p => p.venue)).size;
