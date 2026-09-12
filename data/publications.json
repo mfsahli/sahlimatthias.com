@@ -1,37 +1,30 @@
 {
-  "generated": "2026-09-12",
+  "generated": "2026-08-07",
   "source": "google_scholar (mirror) + manual pipeline info",
-  "metrics": {
-    "publications": 15,
-    "citations": 70,
-    "hIndex": 4,
-    "venues": 5,
-    "citationsByYear": [
-      {
-        "year": 2021,
-        "citations": 1
-      },
-      {
-        "year": 2022,
-        "citations": 2
-      },
-      {
-        "year": 2023,
-        "citations": 9
-      },
-      {
-        "year": 2024,
-        "citations": 18
-      },
-      {
-        "year": 2025,
-        "citations": 10
-      },
-      {
-        "year": 2026,
-        "citations": 24
-      }
+  "tags": {
+    "ip": [
+      "Intellectual property",
+      "var(--red)"
     ],
+    "art": [
+      "Art Markets & Creative Industries",
+      "var(--blue)"
+    ],
+    "dig": [
+      "Digitization & Heritage",
+      "var(--ochre)"
+    ],
+    "sus": [
+      "Sustainability",
+      "var(--purple)"
+    ]
+  },
+  "metrics": {
+    "publications": 13,
+    "citations": 66,
+    "hIndex": 4,
+    "venues": 6,
+    "citationsByYear": [],
     "sourceLabel": "Google Scholar",
     "yearSourceLabel": "Google Scholar"
   },
@@ -49,7 +42,7 @@
         "art",
         "dig"
       ],
-      "citations": 11,
+      "citations": 10,
       "finding": "Exploiting the 1926 US public-domain cutoff: public domain status raises artist-level image availability on online platforms by ≈19%.",
       "links": [
         {
@@ -69,8 +62,7 @@
           "url": "https://cepr.org/voxeu/columns/effect-copyright-digitisation-and-availability-visual-artworks"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:_kc_bZDykSQC"
+      "manual": true
     },
     {
       "id": "book-digitalization",
@@ -92,8 +84,7 @@
           "url": "https://doi.org/10.1016/j.clrc.2026.100440"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:r0BpntZqJG4C"
+      "manual": true
     },
     {
       "id": "legacy-artists",
@@ -114,8 +105,7 @@
           "url": "https://doi.org/10.1007/s10824-025-09550-4"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:ZeXyd9-uunAC"
+      "manual": true
     },
     {
       "id": "ipres-sustainability",
@@ -137,8 +127,7 @@
           "url": "https://doi.org/10.5281/zenodo.16843717"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:-f6ydRqryjwC"
+      "manual": true
     },
     {
       "id": "million-dollar-baby",
@@ -152,7 +141,7 @@
         "ip",
         "art"
       ],
-      "citations": 14,
+      "citations": 13,
       "finding": "Thirty years of film-financing practice traced through interviews and U.S. Uniform Commercial Code filings: how movies are financed with IP as collateral.",
       "links": [
         {
@@ -160,8 +149,7 @@
           "url": "https://doi.org/10.1080/13662716.2024.2328004"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:aqlVkmm33-oC"
+      "manual": true
     },
     {
       "id": "intermediary-liability",
@@ -183,12 +171,11 @@
           "url": "https://doi.org/10.1007/s10824-023-09470-1"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:UeHWp8X0CEIC"
+      "manual": true
     },
     {
       "id": "digitization-diffusion",
-      "title": "From Digitization to Diffusion: Evidence on the Economic Value of Open Cultural Heritage in the Generative AI",
+      "title": "From Digitization to Diffusion: Evidence on the Economic Value of Open Cultural Heritage",
       "short": "From digitization to diffusion",
       "authors": "M. Sahli, J. Bieser, J. Chenoweth, J. Suckling, J. Love, E. Lin, M. Martens, M. Pennock & U. Pottgiesser",
       "venue": "Working paper",
@@ -212,20 +199,14 @@
       "venue": "ACEI Working Paper Series",
       "year": 2026,
       "status": "review",
-      "note": "Submitted to Journal of Cultural Economics",
+      "note": "Submitted to Journal of Economic Behavior & Organization",
       "tags": [
         "art"
       ],
-      "citations": 2,
+      "citations": 1,
       "finding": "21,000+ exhibition records linked to 33,000 auction transactions to examine how museum visibility — and gender representation — translates into market outcomes.",
-      "links": [
-        {
-          "label": "",
-          "url": "https://files.culturaleconomics.org/papers/AWP-04-2026.pdf"
-        }
-      ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:RHpTSmoSYBkC"
+      "links": [],
+      "manual": true
     },
     {
       "id": "elvis-ghost",
@@ -235,11 +216,11 @@
       "venue": "WIPO Economic Working Paper No. 89",
       "year": 2025,
       "status": "review",
-      "note": "Under review at Strategic Management Journal",
+      "note": "Submitted to Strategic Management Journal",
       "tags": [
         "ip"
       ],
-      "citations": 1,
+      "citations": 0,
       "finding": "Upon the loss of publicity rights, celebrities become less popular and engage in less commercial activity — with direct implications for AI-generated digital replicas.",
       "links": [
         {
@@ -247,8 +228,7 @@
           "url": "https://ideas.repec.org/p/wip/wpaper/89.html"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:IWHjjKOFINEC"
+      "manual": true
     },
     {
       "id": "libraries-lcsa",
@@ -256,9 +236,9 @@
       "short": "Sustainability of national libraries",
       "authors": "M. Sahli et al.",
       "venue": "Working paper",
-      "year": 2026,
+      "year": 2025,
       "status": "review",
-      "note": "R&R npj Heritage Science",
+      "note": "Submitted to npj Heritage Science",
       "tags": [
         "sus"
       ],
@@ -269,13 +249,13 @@
     },
     {
       "id": "open-by-design",
-      "title": "Open by Design: Open Distribution as a Strategic Choice for Cultural Organizations",
+      "title": "Open by Design: An Empirical Comparison of National Library Digitization Strategies on Wikimedia Commons",
       "short": "Open by Design (library digitization)",
       "authors": "M. Sahli, E. Bertacchini & J. Bieser",
       "venue": "Working paper",
       "year": 2026,
-      "status": "review",
-      "note": "Submitted to Public Money & Management",
+      "status": "progress",
+      "note": "In preparation",
       "tags": [
         "dig"
       ],
@@ -299,16 +279,11 @@
       "finding": "Musicians and performing artists were among the most vulnerable groups during the pandemic.",
       "links": [
         {
-          "label": "DOI",
-          "url": "https://doi.org/10.2139/ssrn.4422313"
-        },
-        {
           "label": "WIPO Working Paper No. 65",
           "url": "https://ideas.repec.org/p/wip/wpaper/65.html"
         }
       ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:d1gkVwhDpl0C"
+      "manual": true
     },
     {
       "id": "dissertation",
@@ -322,153 +297,6 @@
       "tags": [
         "art",
         "ip"
-      ],
-      "citations": 0,
-      "links": [
-        {
-          "label": "",
-          "url": "https://libra.unine.ch/entities/publication/cb2c32ba-15b9-48fb-b7ad-7bc7f4cbf8d7"
-        }
-      ],
-      "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:qxL8FJ1GzNcC"
-    },
-    {
-      "id": "elvis-ghost-jordans-airness-and-the-new",
-      "title": "Elvis’ ghost, Jordan’s Airness, and the new economics of publicity rights",
-      "short": "Elvis’ ghost, Jordan’s Airness, and the new…",
-      "authors": "B Lutes, A Cuntz, M Sahli",
-      "venue": "https://cepr.org/voxeu/columns/elvis-ghost-jordans-airness-and-new-economics …, 2025",
-      "year": 2025,
-      "status": "media",
-      "tags": [],
-      "citations": 0,
-      "links": [],
-      "manual": false,
-      "statusLocked": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:e5wmG9Sq2KIC"
-    },
-    {
-      "id": "voxeu-column-how-the-us-film-industry-mi",
-      "title": "VoxEU column: How the US film industry mitigates financial risk",
-      "short": "VoxEU column",
-      "authors": "A Cuntz, A Muscarnera, PC Oguguo, M Sahli",
-      "venue": "https://cepr.org/voxeu/columns/how-us-film-industry-mitigates-financial-risk, 2023",
-      "year": 2023,
-      "status": "media",
-      "tags": [],
-      "citations": 0,
-      "links": [],
-      "manual": false,
-      "statusLocked": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:8k81kl-MbHgC"
-    },
-    {
-      "id": "risky-trade-appropriation-art-copyright",
-      "title": "Risky Trade? Appropriation Art, Copyright and Secondary Market Effects",
-      "short": "Risky Trade? Appropriation Art, Copyright an…",
-      "authors": "A Cuntz, M Sahli",
-      "venue": "https://culturaleconomics.org/risky-trade-appropriation-art-copyright-and …, 2023",
-      "year": 2023,
-      "status": "media",
-      "tags": [],
-      "citations": 0,
-      "links": [],
-      "manual": false,
-      "statusLocked": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:hqOjcs7Dif8C"
-    },
-    {
-      "id": "pommerehne-prize-presidents-prize-and-yo",
-      "title": "Pommerehne Prize, President’s Prize and Young Researchers Workshop Best Paper Award",
-      "short": "Pommerehne Prize, President’s Prize and Youn…",
-      "authors": "F Etro, D Noonan",
-      "venue": "Journal of Cultural Economics 45 (3), 513-514, 2021",
-      "year": 2021,
-      "status": "other",
-      "tags": [],
-      "citations": 0,
-      "links": [
-        {
-          "label": "",
-          "url": "https://link.springer.com/article/10.1007/s10824-021-09426-3"
-        }
-      ],
-      "manual": false,
-      "statusLocked": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:2osOgNQ5qMEC",
-      "hidden": true
-    },
-    {
-      "id": "voxeu-column-appropriation-artists-follo",
-      "title": "VoxEU column: Appropriation artists: Follow-on innovation versus intermediary liability and trade",
-      "short": "VoxEU column",
-      "authors": "A Cuntz, M Sahli",
-      "venue": "https://cepr.org/voxeu/columns/appropriation-artists-follow-innovation …, 2021",
-      "year": 2021,
-      "status": "media",
-      "tags": [],
-      "citations": 0,
-      "links": [],
-      "manual": false,
-      "statusLocked": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:Y0pCki6q_DkC"
-    },
-    {
-      "id": "cleaner-and-responsible-consumption",
-      "title": "Cleaner and Responsible Consumption",
-      "authors": "S Halli, C Kaya",
-      "venue": "—",
-      "year": null,
-      "status": "other",
-      "tags": [],
-      "citations": 0,
-      "links": [],
-      "manual": false,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:bEWYMUwI8FkC",
-      "hidden": true
-    },
-    {
-      "id": "in-this-section",
-      "title": "In this section",
-      "authors": "A Cuntz, A Muscarnera, PC Oguguo, M Sahli",
-      "venue": "—",
-      "year": null,
-      "status": "other",
-      "tags": [],
-      "citations": 0,
-      "links": [],
-      "manual": false,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:iH-uZ7U-co4C",
-      "hidden": true
-    },
-    {
-      "id": "organisational-environmental-life-cycle",
-      "title": "Organisational environmental life cycle assessment of three European national libraries",
-      "short": "Organisational environmental life cycle asse…",
-      "authors": "James Suckling, Jan Bieser, Michael Day, Nick Ilott, Mi Lin,  Jeff Love, Marco Martens, Richard Murphy, Matthias Nepfer, Maureen Pennock, Uta Pottgiesser, Matthias Sahli, Oliver Sievi, and Jonathan Chenoweth",
-      "venue": "Working paper",
-      "year": 2026,
-      "status": "progress",
-      "note": "In preparation",
-      "tags": [
-        "sus"
-      ],
-      "citations": 0,
-      "links": [],
-      "manual": true
-    },
-    {
-      "id": "decarbonization-of-supply-chains-systema",
-      "title": "Decarbonization of Supply Chains Systematically Managing and Reducing Supply Chain Emissions",
-      "short": "Decarbonization of Supply Chains Systematica…",
-      "authors": "Senn, M., J. Bieser, and M. Sahli",
-      "venue": "Working paper",
-      "year": 2026,
-      "status": "progress",
-      "note": "In preparation",
-      "tags": [
-        "sus"
       ],
       "citations": 0,
       "links": [],
