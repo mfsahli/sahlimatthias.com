@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-07",
+  "generated": "2026-09-12",
   "source": "google_scholar (mirror) + manual pipeline info",
   "tags": {
     "ip": [
@@ -17,13 +17,17 @@
     "sus": [
       "Sustainability",
       "var(--purple)"
+    ],
+    "generative-ai": [
+      "generative AI",
+      "var(--pink)"
     ]
   },
   "metrics": {
     "publications": 13,
     "citations": 66,
     "hIndex": 4,
-    "venues": 6,
+    "venues": 5,
     "citationsByYear": [],
     "sourceLabel": "Google Scholar",
     "yearSourceLabel": "Google Scholar"
