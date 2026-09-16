@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-15",
+  "generated": "2026-09-16",
   "source": "google_scholar (mirror) + manual pipeline info",
   "tags": {
     "ip": [
@@ -25,7 +25,7 @@
   },
   "metrics": {
     "publications": 20,
-    "citations": 70,
+    "citations": 73,
     "hIndex": 4,
     "venues": 5,
     "citationsByYear": [
@@ -51,7 +51,7 @@
       },
       {
         "year": 2026,
-        "citations": 24
+        "citations": 27
       }
     ],
     "sourceLabel": "Google Scholar",
@@ -128,7 +128,7 @@
       "tags": [
         "art"
       ],
-      "citations": 3,
+      "citations": 4,
       "finding": "Regression-discontinuity and event-study designs around artist death show how death reshapes exhibition activity and auction prices.",
       "links": [
         {
@@ -197,7 +197,7 @@
         "ip",
         "art"
       ],
-      "citations": 19,
+      "citations": 20,
       "finding": "The Cariou v. Prince decision triggered a temporary decline in global auctions of Appropriation Art — court rulings ripple through art markets.",
       "links": [
         {
@@ -239,11 +239,11 @@
       "tags": [
         "art"
       ],
-      "citations": 2,
+      "citations": 3,
       "finding": "21,000+ exhibition records linked to 33,000 auction transactions to examine how museum visibility — and gender representation — translates into market outcomes.",
       "links": [],
       "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:RHpTSmoSYBkC"
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:4JMBOYKVnBMC"
     },
     {
       "id": "elvis-ghost",
