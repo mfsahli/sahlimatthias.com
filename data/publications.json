@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-16",
+  "generated": "2026-09-17",
   "source": "google_scholar (mirror) + manual pipeline info",
   "tags": {
     "ip": [
@@ -287,13 +287,13 @@
     },
     {
       "id": "open-by-design",
-      "title": "Open by Design: An Empirical Comparison of National Library Digitization Strategies on Wikimedia Commons",
+      "title": "Open by Design: Open Distribution as a Strategic Choice for\nCultural Organizations",
       "short": "Open by Design (library digitization)",
       "authors": "M. Sahli, E. Bertacchini & J. Bieser",
       "venue": "Working paper",
       "year": 2026,
-      "status": "progress",
-      "note": "In preparation",
+      "status": "review",
+      "note": "Submitted to Public Money & Management",
       "tags": [
         "dig"
       ],
