@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-01",
+  "generated": "2026-10-02",
   "source": "google_scholar (mirror) + manual pipeline info",
   "tags": {
     "ip": [
@@ -24,10 +24,10 @@
     ]
   },
   "metrics": {
-    "publications": 18,
+    "publications": 19,
     "citations": 73,
     "hIndex": 4,
-    "venues": 5,
+    "venues": 6,
     "citationsByYear": [
       {
         "year": 2021,
@@ -243,7 +243,7 @@
       "finding": "21,000+ exhibition records linked to 33,000 auction transactions to examine how museum visibility — and gender representation — translates into market outcomes.",
       "links": [],
       "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:RHpTSmoSYBkC"
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:4JMBOYKVnBMC"
     },
     {
       "id": "elvis-ghost",
@@ -439,6 +439,19 @@
       "manual": false,
       "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:bEWYMUwI8FkC",
       "hidden": true
+    },
+    {
+      "id": "decarbonizing-supply-chains-systematical",
+      "title": "Decarbonizing Supply Chains: Systematically Managing and Reducing Supply Chain Emissions",
+      "authors": "M Senn, M Sahli, J Bieser",
+      "venue": "Berner Fachhochschule, Wirtschaft, 2026",
+      "year": 2026,
+      "status": "published",
+      "tags": [],
+      "citations": 0,
+      "links": [],
+      "manual": false,
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:M3NEmzRMIkIC"
     }
   ]
 }
