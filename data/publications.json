@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-02",
+  "generated": "2026-10-03",
   "source": "google_scholar (mirror) + manual pipeline info",
   "tags": {
     "ip": [
@@ -27,7 +27,7 @@
     "publications": 19,
     "citations": 73,
     "hIndex": 4,
-    "venues": 6,
+    "venues": 5,
     "citationsByYear": [
       {
         "year": 2021,
@@ -443,14 +443,21 @@
     {
       "id": "decarbonizing-supply-chains-systematical",
       "title": "Decarbonizing Supply Chains: Systematically Managing and Reducing Supply Chain Emissions",
+      "short": "Decarbonizing Supply Chains",
       "authors": "M Senn, M Sahli, J Bieser",
       "venue": "Berner Fachhochschule, Wirtschaft, 2026",
       "year": 2026,
-      "status": "published",
+      "status": "other",
       "tags": [],
       "citations": 0,
-      "links": [],
+      "links": [
+        {
+          "label": "DOI",
+          "url": "https://doi.org/https://doi.org/10.24451/arbor.14535"
+        }
+      ],
       "manual": false,
+      "statusLocked": true,
       "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:M3NEmzRMIkIC"
     }
   ]
