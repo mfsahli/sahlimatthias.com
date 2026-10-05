@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-04",
+  "generated": "2026-10-05",
   "source": "google_scholar (mirror) + manual pipeline info",
   "tags": {
     "ip": [
@@ -25,7 +25,7 @@
   },
   "metrics": {
     "publications": 19,
-    "citations": 73,
+    "citations": 74,
     "hIndex": 4,
     "venues": 5,
     "citationsByYear": [
@@ -51,7 +51,7 @@
       },
       {
         "year": 2026,
-        "citations": 27
+        "citations": 28
       }
     ],
     "sourceLabel": "Google Scholar",
@@ -174,7 +174,7 @@
         "ip",
         "art"
       ],
-      "citations": 14,
+      "citations": 15,
       "finding": "Thirty years of film-financing practice traced through interviews and U.S. Uniform Commercial Code filings: how movies are financed with IP as collateral.",
       "links": [
         {
@@ -243,7 +243,7 @@
       "finding": "21,000+ exhibition records linked to 33,000 auction transactions to examine how museum visibility — and gender representation — translates into market outcomes.",
       "links": [],
       "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:4JMBOYKVnBMC"
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:RHpTSmoSYBkC"
     },
     {
       "id": "elvis-ghost",
