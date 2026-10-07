@@ -193,6 +193,30 @@ def outreach_block(items):
     out.append("</div>")
     return "".join(out)
 
+def cited_paper(pid, pubs):
+    """'A. Cuntz & M. Sahli (2022), Title' for the paper a policy citation points to."""
+    p = next((x for x in pubs if x.get("id") == pid), None)
+    if not p:
+        return ""
+    yr = f' ({p["year"]})' if p.get("year") else ""
+    return f'{p.get("authors", "")}{yr}, {p.get("title", "")}'
+
+def policy_citations_block(cv, pubs):
+    """Policy publications that cite our work (cv.json -> policyCitations)."""
+    items = [c for c in cv.get("policyCitations", []) if c.get("what")]
+    if not items:
+        return ""
+    def row(c):
+        what = e(c["what"])
+        if c.get("url"):
+            what = f'<a href="{e(c["url"])}">{what}</a>'
+        sub = [e(c["by"])] if c.get("by") else []
+        cp = cited_paper(c.get("paper"), pubs)
+        if cp:
+            sub.append("cites " + e(cp))
+        return what + (f'<br><span>{" &middot; ".join(sub)}</span>' if sub else "")
+    return rows(items, "year", row)
+
 # ---------------------------------------------------------------- build
 def build(cv, pubdata, short=False):
     p = cv["person"]
@@ -232,9 +256,12 @@ def build(cv, pubdata, short=False):
         body.append(sec("Organized conferences &amp; seminars",
                         rows(cv["organized"], "date",
                              lambda it: f'{e(it["what"])}<br><span>{e(it.get("role",""))}</span>')))
-        body.append(sec("Policy work",
-                        rows(cv["policy"], "year",
-                             lambda it: f'{e(it["what"])} <span>&middot; {e(it.get("role",""))}</span>')))
+        pol = rows(cv.get("policy", []), "year",
+                   lambda it: f'{e(it["what"])} <span>&middot; {e(it.get("role",""))}</span>')
+        cites = policy_citations_block(cv, pubdata.get("publications", []))
+        if cites:
+            pol += '<div class="pgroup">Cited in policy publications</div>' + cites
+        body.append(sec("Policy work", pol))
 
     body.append(sec("Grants &amp; awards", rows(cv["grants"], "year", lambda it: e(it["what"]))))
 

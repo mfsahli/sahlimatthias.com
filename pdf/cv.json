@@ -319,6 +319,16 @@
       "role": "Co-author"
     }
   ],
+  "policyCitations": [
+    {
+      "year": "2026",
+      "what": "Crato, N., Di Novi, C. & Meroni, E. C., “Harnessing Administrative Data for Policy Evaluation in Labour, Education and Health Economics”, in Data-Driven Learning in the EU, Springer",
+      "by": "Edited volume, European Commission Joint Research Centre",
+      "label": "EU Joint Research Centre",
+      "paper": "covid-artists",
+      "url": "https://doi.org/10.1007/978-3-031-99032-8_30"
+    }
+  ],
   "grants": [
     {
       "year": "2026",
@@ -457,6 +467,10 @@
     {
       "icon": "🏛️",
       "text": "Policy: two WTO TRIPS submissions on IP & innovation"
+    },
+    {
+      "icon": "📑",
+      "text": "Cited in an EU Joint Research Centre volume (2026)"
     },
     {
       "icon": "🏆",
