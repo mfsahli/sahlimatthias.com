@@ -377,7 +377,7 @@ const TABS = [
   { k: 'highlight', label: 'Highlights' },
   { k: 'other',     label: 'More' }
 ];
-const REST_KINDS = ['policy', 'organized', 'service'];
+const REST_KINDS = ['policy', 'citation', 'organized', 'service'];
 
 if (localStorage.getItem('kr_theme') === 'dark') document.documentElement.classList.add('dark');
 
@@ -412,6 +412,8 @@ const KINDS = {
               hint:'Third-party funding, prize, travel grant.'},
   policy   : {icon:'🏛️', label:'Policy work', arr:'policy',
               hint:'Submission, statement, advisory mandate.'},
+  citation : {icon:'📑', label:'Policy citation', arr:'policyCitations',
+              hint:'A policy report or official publication that cites one of your papers.'},
   organized: {icon:'📅', label:'Organized event', arr:'organized',
               hint:'A conference, workshop or seminar you helped organize.'},
   highlight: {icon:'✨', label:'Homepage highlight', arr:'highlights',
@@ -563,6 +565,8 @@ function otherItems(){
 const pubToMedia = p => ({ date: p.year ? String(p.year) : '', kind: p.mediaKind || 'report',
   what: p.title || '', where: p.venue === '—' ? '' : (p.venue || ''),
   url: (p.links && p.links[0] && p.links[0].url) || '' });
+/* the short name of the paper a policy citation points to */
+const citedShort = id => { const p = (PUBS.publications || []).find(x => x.id === id); return p ? (p.short || p.title || '') : ''; };
 function otherText(o){
   const it = o.it;
   if (o.kind === 'service') return [it.reviewing, it.memberships].join(' ');
@@ -582,6 +586,7 @@ function otherSub(o){
   if (o.kind === 'highlight') return 'Homepage · Beyond papers';
   if (o.kind === 'teaching') return String(it.role || '').split('\n')[0].split('|')[0].trim();
   if (o.kind === 'outreach') return [OUTREACH_KINDS[it.kind] || '', it.where].filter(Boolean).join(' · ');
+  if (o.kind === 'citation') return [it.by, citedShort(it.paper) ? 'cites ' + citedShort(it.paper) : 'no paper linked'].filter(Boolean).join(' · ');
   return it.role || '';
 }
 const otherWhen = o => o.kind === 'highlight' ? (o.it.icon || '') : (o.it.date || o.it.year || o.it.years || '');
@@ -862,6 +867,7 @@ const blankOther = k => ({
   teaching : { years: thisYear() + ' –', org: '', role: '', note: '' },
   grants   : { year: String(thisYear()), what: '' },
   policy   : { year: String(thisYear()), what: '', role: 'Co-author' },
+  citation : { year: String(thisYear()), what: '', by: '', label: '', paper: '', url: '' },
   organized: { date: String(thisYear()), what: '', role: '' },
   highlight: { icon: '✨', text: '' },
   service  : { reviewing: '', memberships: '' }
@@ -1162,6 +1168,23 @@ function otherStep(s){
       '<div class="sub"><span class="lb2">Role</span>' +
       '<input class="inp" id="f_role" placeholder="Co-author" value="' + esc(d.role || '') + '"></div>';
 
+    if (k === 'citation') return '' +
+      '<h2 class="q">Who cites your work?</h2>' +
+      '<p class="qh">A policy report, an official publication or a volume by a public body. It appears under Policy work in the CV and as a badge on the paper on the website.</p>' +
+      '<div><span class="lb2">Year</span><input class="inp" id="f_year" inputmode="numeric" maxlength="4" value="' + esc(d.year || '') + '"></div>' +
+      '<div class="sub"><span class="lb2">Citing publication, as it should read in the CV</span>' +
+      '<textarea class="big" rows="3" id="f_what" placeholder="Crato, N. et al., “Harnessing Administrative Data …”, in Data-Driven Learning in the EU, Springer">' + esc(d.what || '') + '</textarea></div>' +
+      '<div class="sub two">' +
+        '<div><span class="lb2">Issued by</span><input class="inp" id="f_by" placeholder="European Commission, Joint Research Centre" value="' + esc(d.by || '') + '"></div>' +
+        '<div><span class="lb2">Short name for the website badge</span><input class="inp" id="f_label" placeholder="EU Joint Research Centre" value="' + esc(d.label || '') + '"></div>' +
+      '</div>' +
+      '<div class="sub"><span class="lb2">Which of your papers is cited?</span>' +
+      '<div class="chips">' + (PUBS.publications || []).filter(p => !p.hidden && isPaper(p) && p.id && (p.manual !== false || p.statusLocked)).map(p =>
+        '<button class="chip' + (d.paper === p.id ? ' on' : '') + '" data-cpaper="' + esc(p.id) + '">' + esc(p.short || p.title) + '</button>').join('') +
+      '</div></div>' +
+      '<div class="sub"><span class="lb2">Link (DOI or URL)</span>' +
+      '<input class="inp" id="f_url" placeholder="https://doi.org/…" value="' + esc(d.url || '') + '"></div>';
+
     if (k === 'highlight') return '' +
       '<h2 class="q">What goes on the homepage?</h2>' +
       '<p class="qh">One short line for the Beyond papers strip. Anything that is not a paper or a talk, but shows what else you do.</p>' +
@@ -1243,6 +1266,12 @@ function renderPreview(){
       (d.note ? '<br><span style="opacity:.65">' + esc(d.note) + '</span>' : '') + '</div>';
     return;
   }
+  if (k === 'citation'){
+    box.innerHTML = head + '<div class="pt">' + esc(d.what) + (d.url ? ' <span class="tagpv" style="color:var(--blue)">↗ Link</span>' : '') + '</div>' +
+      '<div class="pm">' + esc([d.year, d.by, citedShort(d.paper) ? 'cites ' + citedShort(d.paper) : ''].filter(Boolean).join(' · ')) + '</div>' +
+      (d.paper ? '<span class="tagpv" style="color:var(--ink3)">🏛 Policy citation' + (d.label ? ' · ' + esc(d.label) : '') + '</span>' : '');
+    return;
+  }
   const when = d.date || d.year || '';
   const extra = k === 'outreach' ? [OUTREACH_KINDS[d.kind] || '', d.where].filter(Boolean).join(' · ') : (d.role || '');
   box.innerHTML = head +
@@ -1273,6 +1302,13 @@ function wireStep(){
   bind('#f_text', v => d.text = v);
   bind('#f_reviewing', v => d.reviewing = v);
   bind('#f_memberships', v => d.memberships = v);
+  bind('#f_by', v => d.by = v);
+  bind('#f_label', v => d.label = v);
+  $$('#sbody .chip[data-cpaper]').forEach(c => c.onclick = () => {
+    d.paper = d.paper === c.dataset.cpaper ? '' : c.dataset.cpaper;
+    $$('#sbody .chip[data-cpaper]').forEach(x => x.classList.toggle('on', x.dataset.cpaper === d.paper));
+    renderPreview(); stashDraft();
+  });
   bind('#f_note', v => {
     d.note = v;
     $$('#sbody .chip[data-note]').forEach(c => c.classList.toggle('on', v.trim() && v.startsWith(c.dataset.note.trim())));

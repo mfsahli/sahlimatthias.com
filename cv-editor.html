@@ -539,6 +539,7 @@ const BLANK = {
   'outreach'         : { date:'', kind:'report', what:'', where:'', url:'' },
   'organized'        : { date:'', what:'', role:'' },
   'policy'           : { year:'', what:'', role:'' },
+  'policyCitations'  : { year:'', what:'', by:'', label:'', paper:'', url:'' },
   'grants'           : { year:'', what:'' },
   'doctoralCourses'  : '',
   'person.links'     : { label:'', url:'' },
@@ -658,6 +659,23 @@ function whatRows(list, dateKey, roleLabel){
     '</div></div>').join('') + '</div>' + addBtn(list, 'Add entry');
 }
 
+/* policy publications that cite one of our papers; "paper" is a publication id */
+function citeRows(){
+  const arr = CV.policyCitations || [], pubs = ((PUBS && PUBS.publications) || []).filter(p => !p.hidden && p.id &&
+    ['published','review','progress','other'].includes(p.status) && (p.manual !== false || p.statusLocked));
+  return '<div class="rows">' + arr.map((it, i) =>
+    '<div class="row">' + ctl('policyCitations', i) +
+    '<div class="yr">' + ed('policyCitations.' + i + '.year', 'dim', '2026') + '</div>' +
+    '<div class="it">' + ed('policyCitations.' + i + '.what', 'block', 'Citing publication') +
+      '<div class="m">' + ed('policyCitations.' + i + '.by', 'dim', 'Issued by') + ' · cites ' +
+        '<select class="sel" style="width:auto;max-width:100%" data-sel="policyCitations.' + i + '.paper"><option value="">— which paper? —</option>' +
+        pubs.map(p => '<option value="' + esc(p.id) + '"' + (it.paper === p.id ? ' selected' : '') + '>' + esc(p.short || p.title) + '</option>').join('') +
+        '</select></div>' +
+      '<div class="m" style="font-size:7.6pt">' + ed('policyCitations.' + i + '.url', 'dim', 'https://doi.org/…') +
+        ' · badge: ' + ed('policyCitations.' + i + '.label', 'dim', 'Short name for the website') + '</div>' +
+    '</div></div>').join('') + '</div>' + addBtn('policyCitations', 'Add policy citation');
+}
+
 function grantRows(){
   const arr = CV.grants || [];
   return '<div class="rows">' + arr.map((it, i) =>
@@ -754,7 +772,8 @@ function render(){
   h += sec('Selected talks', talksRows(), true);
   h += sec('Outreach, media coverage &amp; other output', outreachRows(), true);
   h += sec('Organized conferences &amp; seminars', whatRows('organized', 'date', 'Your role'), true);
-  h += sec('Policy work', whatRows('policy', 'year', 'Your role'), true);
+  h += sec('Policy work', whatRows('policy', 'year', 'Your role') +
+    '<div class="pgroup">Cited in policy publications</div>' + citeRows(), true);
   h += sec('Grants &amp; awards', grantRows());
   h += sec('Academic service',
     '<div class="kv">' +
@@ -882,7 +901,7 @@ const flat = o => typeof o === 'object' && o !== null
 /* nicer names in the change list than the raw json keys */
 const NICE = { person:'Header', summary:'Summary', summaryShort:'Short summary', positions:'Academic positions',
   education:'Education', visiting:'Visiting', otherPositions:'Professional experience', teaching:'Teaching',
-  talks:'Talks', outreach:'Outreach', organized:'Organized events', policy:'Policy work', grants:'Grants & awards',
+  talks:'Talks', outreach:'Outreach', organized:'Organized events', policy:'Policy work', policyCitations:'Policy citations', grants:'Grants & awards',
   service:'Academic service', doctoralCourses:'Doctoral courses', interests:'Research interests', skills:'Skills',
   references:'References', highlights:'Homepage highlights', archive:'Archive' };
 function prettyPath(p){
