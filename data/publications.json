@@ -448,7 +448,9 @@
       "venue": "Berner Fachhochschule, Wirtschaft, 2026",
       "year": 2026,
       "status": "other",
-      "tags": [],
+      "tags": [
+        "sus"
+      ],
       "citations": 0,
       "links": [
         {
