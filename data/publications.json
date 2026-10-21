@@ -27,7 +27,7 @@
     "publications": 20,
     "citations": 76,
     "hIndex": 4,
-    "venues": 5,
+    "venues": 6,
     "citationsByYear": [
       {
         "year": 2021,
@@ -273,11 +273,10 @@
       "id": "libraries-lcsa",
       "title": "Evaluating the Sustainability of National Libraries: A Life Cycle Sustainability Assessment",
       "short": "Sustainability of national libraries",
-      "authors": "M. Sahli et al.",
-      "venue": "Working paper",
-      "year": 2025,
-      "status": "review",
-      "note": "R&R at npj Heritage Science",
+      "authors": "J. Chenoweth, J. Bieser, M. Day, N. Ilott, M Lin,  J. Love, M. Martens, R. Murphy, M Nepfer, M. Pennock, U. Pottgiesser, M. Sahli, O. Sievi, and J. Suckling",
+      "venue": "Accepted at npj Heritage Science",
+      "year": 2026,
+      "status": "published",
       "tags": [
         "sus"
       ],
