@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-03",
+  "generated": "2026-11-04",
   "source": "google_scholar (mirror) + manual pipeline info",
   "tags": {
     "ip": [
@@ -25,7 +25,7 @@
   },
   "metrics": {
     "publications": 20,
-    "citations": 76,
+    "citations": 77,
     "hIndex": 4,
     "venues": 6,
     "citationsByYear": [
@@ -51,7 +51,7 @@
       },
       {
         "year": 2026,
-        "citations": 30
+        "citations": 31
       }
     ],
     "sourceLabel": "Google Scholar",
@@ -197,7 +197,7 @@
         "ip",
         "art"
       ],
-      "citations": 20,
+      "citations": 21,
       "finding": "The Cariou v. Prince decision triggered a temporary decline in global auctions of Appropriation Art — court rulings ripple through art markets.",
       "links": [
         {
@@ -243,7 +243,7 @@
       "finding": "21,000+ exhibition records linked to 33,000 auction transactions to examine how museum visibility — and gender representation — translates into market outcomes.",
       "links": [],
       "manual": true,
-      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:4JMBOYKVnBMC"
+      "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:RHpTSmoSYBkC"
     },
     {
       "id": "elvis-ghost",
