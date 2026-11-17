@@ -24,7 +24,7 @@
     ]
   },
   "metrics": {
-    "publications": 21,
+    "publications": 22,
     "citations": 77,
     "hIndex": 4,
     "venues": 6,
@@ -479,6 +479,22 @@
       "title": "Additional Considerations for Designing Socially Sustainable in National Libraries - A Social LCA approach",
       "short": "Additional Considerations for Designing Soci…",
       "authors": "Lin E., J. Love, J. Bieser, J. Chenoweth, J. Suckling, M. Sahli, M. Martens, M. Pennock & U. Pottgiesser",
+      "venue": "Working paper",
+      "year": 2026,
+      "status": "progress",
+      "note": "In preparation",
+      "tags": [
+        "sus"
+      ],
+      "citations": 0,
+      "links": [],
+      "manual": true
+    },
+    {
+      "id": "organisational-environmental-life-cycle",
+      "title": "Organisational environmental life cycle assessments of three European national libraries",
+      "short": "Organisational environmental life cycle asse…",
+      "authors": "James Suckling, Jan Bieser, Michael Day, Nick Ilott, Mi Lin,  Jeff Love, Marco Martens, Richard Murphy, Matthias Nepfer, Maureen Pennock, Uta Pottgiesser, Matthias Sahli, Oliver Sievi, and Jonathan Chenoweth",
       "venue": "Working paper",
       "year": 2026,
       "status": "progress",
