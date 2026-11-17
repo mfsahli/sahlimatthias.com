@@ -24,7 +24,7 @@
     ]
   },
   "metrics": {
-    "publications": 20,
+    "publications": 21,
     "citations": 77,
     "hIndex": 4,
     "venues": 6,
@@ -473,6 +473,22 @@
       "links": [],
       "manual": false,
       "scholarUrl": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=ui-NYv8AAAAJ&citation_for_view=ui-NYv8AAAAJ:JV2RwH3_ST0C"
+    },
+    {
+      "id": "additional-considerations-for-designing",
+      "title": "Additional Considerations for Designing Socially Sustainable in National Libraries - A Social LCA approach",
+      "short": "Additional Considerations for Designing Soci…",
+      "authors": "Lin E., J. Love, J. Bieser, J. Chenoweth, J. Suckling, M. Sahli, M. Martens, M. Pennock & U. Pottgiesser",
+      "venue": "Working paper",
+      "year": 2026,
+      "status": "progress",
+      "note": "In preparation",
+      "tags": [
+        "sus"
+      ],
+      "citations": 0,
+      "links": [],
+      "manual": true
     }
   ]
 }
